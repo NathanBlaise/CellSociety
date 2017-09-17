@@ -1,3 +1,11 @@
+
+#Cell Society Design
+Names: 
+Nathan Lewis (nbl7@duke.edu)
+Ben Welton (bw144@duke.edu)
+Heyao Yang (hy133@duke.edu)
+
+
 ###Introduction
 The main aim of this project is to create a program that provides a visual simulation for multiple cell automata from which the user can choose from. The rules for each cell automata are already specified and we will implement these rules in numerous classes in order to update cells on a user-specified grid (dimensions and initial configuration). The calculations for each cell’s update status will be calculated in the back-end of the program and this information will be transformed to a GUI version which displays the grid and cells in different colours to represent state. This will be the most flexible part of the program, having initiated the rules of the simulation we can choose what control the users have over the program and how it looks.
 
