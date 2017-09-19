@@ -2,6 +2,10 @@ package cellsociety_team02.cells;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
 public class Cell {
 	
 	protected ArrayList<Cell> myNeighbours;
@@ -9,14 +13,15 @@ public class Cell {
 	protected int yPos;
 	protected int currentState;
 	protected int nextState;
-	protected int myShape;
-	protected String[] myColors;
+	protected Shape myShape;
+	protected Color[] myColors;
 	
-	public Cell(int xPos, int yPos, int startingState, String[] colors) {
+	public Cell(int xPos, int yPos, int startingState, Color[] colors, int sideLength) {
 		xPos = xPos;
 		yPos = yPos;
 		currentState = startingState;
 		myColors = colors;
+		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
 	}
 	
 	public ArrayList<Cell> getNeighbours(){
@@ -34,6 +39,12 @@ public class Cell {
 	
 	public void updateState() {
 		currentState = nextState;
+		myShape.setFill(myColors[currentState]);
 	}
+	
+	public int getCurrentState() {
+		return currentState;
+	}
+	
 	
 }
