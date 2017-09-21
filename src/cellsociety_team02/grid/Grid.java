@@ -12,8 +12,6 @@ public class Grid {
 	private boolean diffSim; //Boolean used to determine which Cell type we use
 	private Random rand;
 	private int state;
-	private Color[] cellColors;
-	private Grid thisGrid;
 			
 	public Grid(int size, int[] propState, String simType, Color[] colors) {
 		mySize = size;
