@@ -1,27 +1,50 @@
 package cellsociety_team02.simulations;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javafx.scene.paint.Color;
+import cellsociety_team02.cells.Cell;
+import cellsociety_team02.grid.Grid;
 
 public class Simulation {
 	private String layoutFile;
+	private Cell cellType;
+	private Map<String, Integer> simulationAttributes;
+	private List<Integer> cellAttributes;
+	private int gridSize;
 	
-	public Simulation() {
-		
+	
+	public Simulation(){
+		simulationAttributes = new HashMap<>();
+		cellAttributes = new ArrayList<>();
+		loadAttributes();
 	}
 	
-	public File loadInitConfig() {
+	private void loadAttributes() {
+		XMLHandler parser = new XMLHandler(this);
+		parser.addAttributeSet(simulationAttributes);
+		parser.addCellSet(cellAttributes);
+		gridSize = parser.addGridParameters();
+	}
+	
+	protected File loadInitConfig() {
 		return new File(layoutFile);
 	}
 	
-	public int setInitialState() {
-		//give index for color array of new grid cell
-		return 0;
+	public int simulationSize(){
+		return gridSize;
 	}
 	
-	public Color[] createColorArray() {
-		//this will need to be different for sub classes so that the colors correspond to they type
-		return null;
+	public List<Integer> cellFrequencies(){
+		return cellAttributes;
 	}
+	
+	public void changeCellType(Cell type) {
+		cellType = type;
+	}
+
+	
 }
