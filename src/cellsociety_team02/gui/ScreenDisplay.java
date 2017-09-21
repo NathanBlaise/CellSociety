@@ -98,7 +98,8 @@ import javafx.scene.Group;
 			if (gui.isReset) {
 				if (this.root.getChildren().contains(myGrid)) {
 					this.root.getChildren().remove(myGrid);
-					
+					gui.isReset = false;
+					gui.isLoading = false;
 					}
 			}
 
