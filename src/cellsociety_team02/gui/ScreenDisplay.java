@@ -40,7 +40,7 @@ import javafx.scene.Group;
 		 * Constructor: Screen Display class
 		 */
 
-		ScreenDisplay (int width, int height, Paint background) {
+		public ScreenDisplay (int width, int height, Paint background) {
 			frame  = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 					e -> this.step(SECOND_DELAY));
 		     animation.setCycleCount(Timeline.INDEFINITE);
