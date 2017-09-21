@@ -18,7 +18,7 @@ import javafx.scene.Group;
 	import javafx.scene.shape.Shape;
 	import javafx.stage.Stage;
 	import javafx.util.Duration;
-	import cellsociety_team02.gui.GuiUpdate;
+	import cellsociety_team02.gui.GUI;
 
 	public class ScreenDisplay{
 		public static final String TITLE = "Example JavaFX";
@@ -30,7 +30,7 @@ import javafx.scene.Group;
 		
 		public Scene Scene;
 		public Group root = new Group();
-		public GuiUpdate gui;
+		public GUI gui;
 		public GridPane myGrid;
 		public Timeline animation = new Timeline();
 		public KeyFrame frame;
@@ -61,7 +61,7 @@ import javafx.scene.Group;
 		        myGrid.setStyle("-fx-grid-lines-visible: true");
 		        myGrid.setPadding(new Insets(40,40,40,30));
 
-			gui = new GuiUpdate(myGrid);
+			gui = new GUI(myGrid);
 			
 			root.getChildren().addAll(gui.paneBox);
 			
