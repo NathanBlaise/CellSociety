@@ -10,7 +10,7 @@ import cellsociety_team02.cells.Cell;
 import cellsociety_team02.grid.Grid;
 
 public class Simulation {
-	private String layoutFile;
+	private String layoutFile = "data/test.xml";
 	private Cell cellType;
 	private Map<String, Integer> simulationAttributes;
 	private List<Integer> cellAttributes;
@@ -20,7 +20,7 @@ public class Simulation {
 	public Simulation(){
 		simulationAttributes = new HashMap<>();
 		cellAttributes = new ArrayList<>();
-		loadAttributes();
+		//loadAttributes();
 	}
 	
 	private void loadAttributes() {
