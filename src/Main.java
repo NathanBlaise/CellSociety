@@ -17,7 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import cellsociety_team02.gui.GuiUpdate;
+import cellsociety_team02.gui.GUI;
 import cellsociety_team02.gui.ScreenDisplay;
 
 public class Main extends Application {
