@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import cellsociety_team02.grid.*;
 
 public class Cell {
 	
@@ -15,15 +14,17 @@ public class Cell {
 	protected int nextState;
 	protected Shape myShape;
 	protected Color[] myColors;
-	protected Grid myGrid;
+	protected int myGridSize;
+	protected Cell[][] myGridArray;
 	
-	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, Grid grid) {
+	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
 		yPos = yPosition;
 		currentState = startingState;
 		myColors = colors;
 		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
-		myGrid = grid;
+		myGridSize = gridSize;
+		myGridArray = gridArray;
 	}
 	
 	public ArrayList<Cell> getNeighbours(){
@@ -31,8 +32,8 @@ public class Cell {
 		int[] yCoord = {yPos, yPos+1, yPos-1};
 		for(int x: xCoord) {
 			for(int y: yCoord) {
-				if(x>0 && y>0 && x<(myGrid.getSize-1) && y<(myGrid.getSize-1)) {
-					myNeighbours.add(myGrid[x][y]);
+				if(x>0 && y>0 && x<(myGridSize-1) && y<(myGridSize-1)) {
+					myNeighbours.add(myGridArray[x][y]);
 				}
 			}
 		}
