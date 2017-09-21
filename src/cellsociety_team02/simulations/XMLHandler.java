@@ -15,8 +15,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import cellsociety_team02.grid.Grid;
-
 public class XMLHandler {
 	private Document configDoc;
 	
@@ -67,5 +65,10 @@ public class XMLHandler {
 		String size = configDoc.getElementsByTagName("Grid").item(0).getAttributes().getNamedItem("Size").getNodeValue();
 		return Integer.parseInt(size);
 	}
+	
+	public static void main (String[] args) {
+        XMLHandler parser = new XMLHandler(new Simulation());
+        System.out.println(parser.addGridParameters());
+    }
 
 }

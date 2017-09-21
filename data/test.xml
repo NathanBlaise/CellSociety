@@ -1,0 +1,36 @@
+<Simulation>
+
+	<Attributes>
+		<Type>Segregation</Type>
+		<Title>Segregation Simulation</Title>
+		<Author>Ben Welton</Author>
+	</Attributes>
+
+	<Cells>
+		<Cell>
+			<Name>Population 1</Name>
+			<Value>0</Value>
+			<Proportion>30</Proportion>
+			<Color>Red</Color>
+		</Cell>
+
+		<Cell>
+			<Name>Population 2</Name>
+			<Value>1</Value>
+			<Proportion>30</Proportion>
+			<Color>Blue</Color>
+		</Cell>
+
+		<Cell>
+			<Name>Empty</Name>
+			<Value>2</Value>
+			<Proportion>20</Proportion>
+			<Color>White</Color>
+		</Cell>
+	</Cells>
+
+	<Grid>
+		<Size>100</Size>
+	</Grid>
+
+</Simulation> 
