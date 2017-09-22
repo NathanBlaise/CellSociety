@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import cellsociety_team02.cells.Cell;
-import cellsociety_team02.grid.Grid;
 
-public class Simulation {
+public abstract class Simulation {
 	private String layoutFile = "data/test.xml";
 	private Cell cellType;
 	private Map<String, String> simulationAttributes;
@@ -20,7 +19,7 @@ public class Simulation {
 	public Simulation(){
 		simulationAttributes = new HashMap<>();
 		cellAttributes = new ArrayList<>();
-		//loadAttributes();
+		loadAttributes();
 	}
 	
 	private void loadAttributes() {
@@ -33,6 +32,8 @@ public class Simulation {
 	protected File loadInitConfig() {
 		return new File(layoutFile);
 	}
+	
+	public abstract void updateCell(Cell cell);
 	
 	public int simulationSize(){
 		return gridSize;
