@@ -11,7 +11,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -37,7 +36,7 @@ public class XMLHandler {
         
 	}
 	
-	protected void addAttributeSet(Map<String, Integer> simulationAttributes) {
+	protected void addAttributeSet(Map<String, String> simulationAttributes) {
 		NodeList allAttributes = configDoc.getElementsByTagName("Attributes");
 		
 		if(allAttributes.getLength() > 1) {
@@ -48,27 +47,24 @@ public class XMLHandler {
 		Element attributes = (Element) allAttributes.item(0);
 		NodeList vals = attributes.getElementsByTagName("*");
 		for(int i = 0; i<vals.getLength(); i++) {
-			simulationAttributes.put(vals.item(i).getNodeName(), Integer.parseInt(vals.item(i).getNodeValue()));
+			simulationAttributes.put(vals.item(i).getNodeName(), vals.item(i).getTextContent());
 		}
 	}
 	
 	protected void addCellSet(List<Integer> cellSet) {
 		NodeList cells = configDoc.getElementsByTagName("Cell");
 		for(int i = 0; i< cells.getLength(); i++) {
-			Node cell = cells.item(i);
-			String proportionVal = cell.getAttributes().getNamedItem("Proportion").toString();
+			Element cell = (Element) cells.item(i);
+			String proportionVal = cell.getElementsByTagName("Proportion").item(0).getTextContent();
 			cellSet.add(Integer.parseInt(proportionVal));
 		}
 	}
 	
 	protected int addGridParameters() {
-		String size = configDoc.getElementsByTagName("Grid").item(0).getAttributes().getNamedItem("Size").getNodeValue();
+		NodeList grids = configDoc.getElementsByTagName("Grid");
+		Element grid = (Element) grids.item(0);
+		String size = grid.getElementsByTagName("Size").item(0).getTextContent();
 		return Integer.parseInt(size);
 	}
-	
-	public static void main (String[] args) {
-        XMLHandler parser = new XMLHandler(new Simulation());
-        System.out.println(parser.addGridParameters());
-    }
 
 }

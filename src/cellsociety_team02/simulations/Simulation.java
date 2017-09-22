@@ -12,7 +12,7 @@ import cellsociety_team02.grid.Grid;
 public class Simulation {
 	private String layoutFile = "data/test.xml";
 	private Cell cellType;
-	private Map<String, Integer> simulationAttributes;
+	private Map<String, String> simulationAttributes;
 	private List<Integer> cellAttributes;
 	private int gridSize;
 	
