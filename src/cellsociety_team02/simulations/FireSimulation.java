@@ -2,7 +2,7 @@ package cellsociety_team02.simulations;
 
 import java.util.List;
 
-import cellsociety_team02.cells.Cell;
+import cellsociety_team02.cells.*;
 
 public class FireSimulation extends Simulation{
 	private final int EMPTY = 0;
