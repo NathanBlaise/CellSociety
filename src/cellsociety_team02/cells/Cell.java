@@ -61,5 +61,9 @@ public class Cell {
 		return currentState;
 	}
 	
+	public int getNextState() {
+		return nextState;
+	}
+	
 	
 }

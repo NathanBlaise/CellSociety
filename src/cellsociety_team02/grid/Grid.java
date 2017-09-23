@@ -17,7 +17,7 @@ public class Grid {
 		mySize = size;
 		//Initialize array of certain cell and set up diffSim boolean
 		if(simType.equals("Fire") || simType.equals("PredPrey")) {
-			myArray = new PredPreyFireCell[size][size];
+			myArray = new FireCell[size][size];
 			diffSim = true;
 		}
 		else {
@@ -32,7 +32,7 @@ public class Grid {
 				if(randState < propState[0]) state = 0;
 				if(randState > propState[0] && randState < (propState[1] + propState[0])) state = 1;
 				else state = 2;
-				if(diffSim) myArray[i][k] = new PredPreyFireCell(i,k,state,colors,10,mySize,myArray); //Need to work out how to calculate Cell Size - TONY
+				if(diffSim) myArray[i][k] = new FireCell(i,k,state,colors,10,mySize,myArray); //Need to work out how to calculate Cell Size - TONY
 				else myArray[i][k] = new Cell(i,k,state,colors,10,mySize,myArray);
 			}
 		}
