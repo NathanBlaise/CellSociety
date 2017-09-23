@@ -34,6 +34,7 @@ import javafx.scene.Group;
 		public GridPane myGrid;
 		public Timeline animation = new Timeline();
 		public KeyFrame frame;
+		private boolean isStarting = true;
 		
 		
 		/**
@@ -59,13 +60,18 @@ import javafx.scene.Group;
 		        }
 		        
 		        myGrid.setStyle("-fx-grid-lines-visible: true");
-		        myGrid.setPadding(new Insets(40,40,40,30));
+		        myGrid.setPadding(new Insets(40,40,40,70));
 
-			gui = new GUI(myGrid);
+			gui = new GUI();
+			
+			
+			if (isStarting ) {
 			
 			root.getChildren().addAll(gui.paneBox);
+			root.getChildren().addAll(gui.SliderBox);
+			}
 			
-		
+			
 
 		}
 		
@@ -92,6 +98,7 @@ import javafx.scene.Group;
 				if (!this.root.getChildren().contains(myGrid)) {
 					System.out.println("yes");
 				this.root.getChildren().add(myGrid);
+	
 				}
 			}
 			
@@ -101,6 +108,32 @@ import javafx.scene.Group;
 					gui.isReset = false;
 					gui.isLoading = false;
 					}
+			}
+			
+			if (gui.changeSize && gui.isLoading) {
+				if (this.root.getChildren().contains(myGrid)) {
+				this.root.getChildren().remove(myGrid);
+				}
+				if (!this.root.getChildren().contains(myGrid)) {
+					 myGrid = new GridPane();
+					 System.out.println(gui.slideRatio.sideLength);
+					  for(int i = 0; i < gui.slideRatio.sideLength ; i++) {
+				            ColumnConstraints column = new ColumnConstraints(200/(gui.slideRatio.sideLength));
+				            myGrid.getColumnConstraints().add(column);
+				        }
+
+				        for(int i = 0; i < gui.slideRatio.sideLength  ; i++) {
+				            RowConstraints row = new RowConstraints(200/(gui.slideRatio.sideLength));
+				            myGrid.getRowConstraints().add(row);
+				        }
+				        
+				        myGrid.setStyle("-fx-grid-lines-visible: true");
+				        myGrid.setPadding(new Insets(40,40,40,70));
+				this.root.getChildren().add(myGrid);
+				gui.changeSize = false;
+				
+				}
+				
 			}
 
 		}

@@ -23,6 +23,7 @@ import cellsociety_team02.gui.ScreenDisplay;
 public class Main extends Application {
 	public static final String TITLE = "Example JavaFX";
 	public static final int SIZE = 400;
+	public static final int WIDTH = 600;
 	public static final Paint BACKGROUND = Color.WHITE;
 	public static final int FRAMES_PER_SECOND = 60;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -36,7 +37,7 @@ public class Main extends Application {
 	@Override
 	public void start (Stage s) {
 		
-		ScreenDisplay myScene = new ScreenDisplay(SIZE,SIZE,BACKGROUND);
+		ScreenDisplay myScene = new ScreenDisplay(WIDTH,SIZE,BACKGROUND);
 		s.setScene(myScene.getScene());
 		s.setTitle(TITLE);
 		s.show();
