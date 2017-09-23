@@ -67,7 +67,7 @@ public class Cell {
 	public int getCurrentState() {
 		return currentState;
 	}
-	
+
 	public void moveToRandomPlace() {
 		movedCell = false;
 		while(!movedCell) {

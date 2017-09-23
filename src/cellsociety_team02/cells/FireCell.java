@@ -3,9 +3,9 @@ package cellsociety_team02.cells;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 
-public class PredPreyFireCell extends Cell {
+public class FireCell extends Cell {
 	
-	public PredPreyFireCell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray){
+	public FireCell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray){
 		super(xPosition, yPosition, startingState, colors, sideLength, gridSize, gridArray);
 	}
 	
