@@ -38,27 +38,28 @@ public class PredatorPreySimulation extends Simulation {
 		if(emptySpots.size() <= 0 && fishSpots.size() <= 0) return;
 		else if(fishSpots.size() <= 0) newLocation = findNewCell(emptySpots);
 		else newLocation = findNewCell(fishSpots);
+		updateOldCell(cell);
 		
-		if(cell.getNextState() != FISH) cell.setNextState(KELP);
-		if(newLocation.getNextState() == FISH) {
-			fishIsEaten(newLocation);
-			return;
+		if(newLocation.getNextState() == FISH) fishIsEaten(newLocation);
+		else if(newLocation.getNextState() == KELP){
+			sharkSurvives(newLocation, cell);
+			sharkIsStarving(newLocation);
 		}
-		newLocation.setNextState(SHARK);
-		starving(newLocation);
+		
 	}
 
-	private void updateFishLocation(Cell cell) {
+	private void updateFishLocation(PredatorPreyCell cell) {
 		List<Cell> neighbors = cell.getNeighbours();
 		List<Cell> emptySpots = availableCells(neighbors, KELP, FISH);
 		PredatorPreyCell newLocation;
 		
 		if(emptySpots.size() <= 0) return;
 		else newLocation = findNewCell(emptySpots);
-
-		if(cell.getNextState() != SHARK) cell.setNextState(KELP);
-		if(newLocation.getNextState() != SHARK) newLocation.setNextState(FISH);
-		else fishIsEaten(newLocation);
+		updateOldCell(cell);
+		
+		//check if fish moves or dies
+		if(newLocation.getNextState() != SHARK) fishSurvives(newLocation, cell);
+		else if(newLocation.getNextState() == SHARK) fishIsEaten(newLocation);
 	}
 	
 	private List<Cell> availableCells(List<Cell> neighbors, int allowed, int blocked){
@@ -76,11 +77,45 @@ public class PredatorPreySimulation extends Simulation {
 		return (PredatorPreyCell) cells.get(rand.nextInt(cells.size()));
 	}
 	
+	private void updateOldCell(PredatorPreyCell cell) {
+		if(cell.getNextState() != cell.getCurrentState()) cell.setNextState(KELP);
+	}
+	
 	private void fishIsEaten(PredatorPreyCell shark) {
 		shark.setDaysUntilDeath(sharkStarveDays);
 	}
 	
-	private void starving(PredatorPreyCell shark) {
+	private void fishSurvives(PredatorPreyCell newLocation, PredatorPreyCell oldLocation) {
+		newLocation.setNextState(FISH);
+		newLocation.setDaysUntilBreeding(oldLocation.getDaysUntilBreeding() - 1);
+		if(newLocation.getDaysUntilBreeding() <= 0) {
+			if(oldLocation.getNextState() == SHARK) {
+				fishIsEaten(oldLocation);
+			}
+			else {
+				oldLocation.setNextState(FISH);
+				oldLocation.setDaysUntilBreeding(fishBreedingDays);
+			}
+		}
+	}
+	
+	private void sharkSurvives(PredatorPreyCell newLocation, PredatorPreyCell oldLocation) {
+		newLocation.setNextState(SHARK);
+		newLocation.setDaysUntilBreeding(oldLocation.getDaysUntilBreeding() - 1);
+		if(newLocation.getDaysUntilBreeding() <= 0) {
+			if(oldLocation.getNextState() == FISH) {
+				fishIsEaten(oldLocation);
+				oldLocation.setDaysUntilBreeding(sharkBreedingDays);
+			}
+			else {
+				oldLocation.setNextState(SHARK);
+				oldLocation.setDaysUntilBreeding(sharkBreedingDays);
+				oldLocation.setDaysUntilDeath(sharkStarveDays);
+			}
+		}
+	}
+	
+	private void sharkIsStarving(PredatorPreyCell shark) {
 		shark.setDaysUntilDeath(shark.getDaysUntilDeath() - 1);
 		if(shark.getDaysUntilDeath() <= 0) shark.setNextState(KELP);
 	}
