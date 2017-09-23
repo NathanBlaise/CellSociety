@@ -1,6 +1,7 @@
 package cellsociety_team02.cells;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -16,6 +17,8 @@ public class Cell {
 	protected Color[] myColors;
 	protected int myGridSize;
 	protected Cell[][] myGridArray;
+	protected Random rand;
+	protected boolean movedCell;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
@@ -57,9 +60,24 @@ public class Cell {
 		nextState = state;
 	}
 	
+	public int getNextState() {
+		return nextState;
+	}
+	
 	public int getCurrentState() {
 		return currentState;
 	}
 	
-	
+	public void moveToRandomPlace() {
+		movedCell = false;
+		while(!movedCell) {
+			int i = rand.nextInt(myGridSize);
+			int j = rand.nextInt(myGridSize);
+			if(myGridArray[i][j].getCurrentState() == 0 && myGridArray[i][j].getNextState() == 0) {
+				myGridArray[i][j].setNextState(currentState);
+				currentState = 0;
+				movedCell = true;
+			}
+		}
+	}
 }
