@@ -27,10 +27,11 @@ package cellsociety_team02.gui;
 		public static final String TITLE = "Example JavaFX";
 		public static final int SIZE = 400;
 		public static final Paint BACKGROUND = Color.WHITE;
-		public static final int FRAMES_PER_SECOND = 1;
-		public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-		public static final double SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
 		
+		public double FRAMES_PER_SECOND = 1;
+		public double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+		public double SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
+	
 		public Scene Scene;
 		public Group root = new Group();
 		public GUI gui;
@@ -49,6 +50,7 @@ package cellsociety_team02.gui;
 		public ScreenDisplay (int width, int height, Paint background) {
 			frame  = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 					e -> this.step(SECOND_DELAY));
+			
 		     animation.setCycleCount(Timeline.INDEFINITE);
 		     animation.getKeyFrames().add(frame);
 		     
@@ -96,8 +98,22 @@ package cellsociety_team02.gui;
 		}
 
 		public void step (double elapsedTime) {
-			//for play button
+			//change speed
+			if (gui.changeSpeed) {
+			FRAMES_PER_SECOND = 1+gui.values.get("Speed")/10;
+			MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+			SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
+			frame  = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+					e -> this.step(SECOND_DELAY));
 			
+			
+		    animation.setCycleCount(Timeline.INDEFINITE);
+		    animation.getKeyFrames().add(frame);
+		     
+			System.out.println(FRAMES_PER_SECOND);
+			}
+			
+			//for play button
 			if (!gui.isPause) {
 				
 				updateCellArray();
@@ -145,24 +161,11 @@ package cellsociety_team02.gui;
 				this.root.getChildren().remove(myGrid);
 				}
 				if (!this.root.getChildren().contains(myGrid)) {
-						//draw a new grid pane
-						int side = gui.slideRatio.sideLength;
-						
-						drawNewGrid (side);
-						// Redraw the pane every time we change the size
-					    //cellArray.setSize(side);
-				        int [] propState = {10,70,20};
-						Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
-				        cellArray = new Grid(gui.slideRatio.sideLength,propState,"Fire",colors);
-						
-						for (int i= 0; i<gui.slideRatio.sideLength;i++) {
-							for (int j = 0; j<gui.slideRatio.sideLength; j++) {
-								myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
-							}
-						}
-				this.root.getChildren().add(myGrid);
-				gui.changeSize = false;
-				
+					//draw a new grid pane
+					drawNewGrid(gui.slideRatio.sideLength);
+				    addCellsToGrid(gui.slideRatio.sideLength,gui.simToLoad);
+				    this.root.getChildren().add(myGrid);
+				    gui.changeSize = false;
 				}
 				
 			}
@@ -176,34 +179,34 @@ package cellsociety_team02.gui;
 				
 				drawNewGrid(sim.simulationSize());
 				this.root.getChildren().add(myGrid);
-				addCellsToGrid("Fire");
+				addCellsToGrid(sim.simulationSize(),"Fire");
 			}
 			if (gui.simToLoad.equals("Segregation")) {
 				sim = new SegregationSimulation();
 				drawNewGrid(sim.simulationSize());
 				this.root.getChildren().add(myGrid);
-				addCellsToGrid("Segregation");
+				addCellsToGrid(sim.simulationSize(),"Segregation");
 				
 			}
 			if (gui.simToLoad.equals("Predator-Prey")) {
 				sim = new PredatorPreySimulation();
 				drawNewGrid(sim.simulationSize());
 				this.root.getChildren().add(myGrid);
-				addCellsToGrid("Predator-Prey");
+				addCellsToGrid(sim.simulationSize(),"Predator-Prey");
 			}
 			if (gui.simToLoad.equals("Game of Life")) {
 				sim = new LifeSimulation();
 				drawNewGrid(sim.simulationSize());
 				this.root.getChildren().add(myGrid);
-				addCellsToGrid("Game of Life");
+				addCellsToGrid(sim.simulationSize(),"Game of Life");
 			}
 		}
 
-		private void addCellsToGrid(String type) {
-			cellArray = new Grid(sim.simulationSize(),sim.cellFrequencies(),type,sim.cellColors());
+		private void addCellsToGrid(int size, String type) {
+			cellArray = new Grid(size,sim.cellFrequencies(),type,sim.cellColors());
 			
-			for (int i= 0; i<sim.simulationSize();i++) {
-				for (int j = 0; j<sim.simulationSize(); j++) {
+			for (int i= 0; i<size;i++) {
+				for (int j = 0; j<size; j++) {
 					myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
 				}
 			}

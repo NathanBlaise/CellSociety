@@ -56,12 +56,13 @@ public class GUI {
 	// create a combo box to select a certain type of simulation
 	private ComboBox<String> simulationLoader;
 	protected String simToLoad;
-	private HashMap<String, Double> values = new HashMap<String, Double>();
+	protected HashMap<String, Double> values = new HashMap<String, Double>();
 	public SliderBar slideSpeed;
 	public SliderBar slideRatio;
 	public SliderBar slideSize;
 	//help to change the size of gridPane
 	protected boolean isloaded;
+	protected boolean changeSpeed = false;
 	
 	public GUI() {
 		init();
@@ -228,6 +229,10 @@ public class GUI {
 				    
 				        changeSize = true; 
 				}
+				
+				changeSpeed = true;
+				
+				
 				
 				
 				
