@@ -1,0 +1,36 @@
+<Simulation>
+
+	<Attributes>
+		<Type>Fire</Type>
+		<Title>Fire Simulation</Title>
+		<Author>Ben Welton</Author>
+	</Attributes>
+
+	<Cells>
+		<Cell>
+			<Name>EMPTY</Name>
+			<Value>0</Value>
+			<Proportion>0</Proportion>
+			<Color>Yellow</Color>
+		</Cell>
+
+		<Cell>
+			<Name>TREE</Name>
+			<Value>1</Value>
+			<Proportion>95</Proportion>
+			<Color>Green</Color>
+		</Cell>
+
+		<Cell>
+			<Name>BURNING</Name>
+			<Value>2</Value>
+			<Proportion>5</Proportion>
+			<Color>Red</Color>
+		</Cell>
+	</Cells>
+
+	<Grid>
+		<Size>100</Size>
+	</Grid>
+
+</Simulation> 

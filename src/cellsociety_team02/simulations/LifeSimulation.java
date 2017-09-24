@@ -5,9 +5,16 @@ import java.util.List;
 import cellsociety_team02.cells.Cell;
 
 public class LifeSimulation extends Simulation {
-	
 	private final int DEAD = 0;
 	private final int ALIVE = 1;
+	
+	private String layoutFile = "data/Life.xml";
+	
+	public LifeSimulation() {
+		super();
+		super.layoutFile = this.layoutFile;
+		super.loadAttributes();
+	}
 	
 	@Override
 	public void updateCell(Cell cell) {
