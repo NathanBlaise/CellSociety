@@ -8,7 +8,14 @@ public class SegregationSimulation extends Simulation{
 	
 	private final double PERCENTAGE_AGENT = 0.3;
 	
+	private String layoutFile = "data/Segregation.xml";
 	private int total;
+	
+	public SegregationSimulation() {
+		super();
+		super.layoutFile = this.layoutFile;
+		super.loadAttributes();
+	}
 	
 	@Override
 	public void updateCell(Cell cell) {
