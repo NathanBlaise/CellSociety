@@ -11,21 +11,21 @@
 			<Name>Population 1</Name>
 			<Value>0</Value>
 			<Proportion>30</Proportion>
-			<Color>Red</Color>
+			<Color>#E74C3C</Color>
 		</Cell>
 
 		<Cell>
 			<Name>Population 2</Name>
 			<Value>1</Value>
 			<Proportion>30</Proportion>
-			<Color>Blue</Color>
+			<Color>#3498DB</Color>
 		</Cell>
 
 		<Cell>
 			<Name>Empty</Name>
 			<Value>2</Value>
 			<Proportion>20</Proportion>
-			<Color>White</Color>
+			<Color>#FDFEFE</Color>
 		</Cell>
 	</Cells>
 
