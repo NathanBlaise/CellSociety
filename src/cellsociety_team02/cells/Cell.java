@@ -37,7 +37,7 @@ public class Cell {
 		int[] yCoord = {yPos, yPos+1, yPos-1};
 		for(int x: xCoord) {
 			for(int y: yCoord) {
-				if(x>0 && y>0 && x<(myGridSize-1) && y<(myGridSize-1)) {
+				if(x>-1 && y>-1 && x<(myGridSize) && y<(myGridSize)) {
 					myNeighbours.add(myGridArray[x][y]);
 				}
 			}
