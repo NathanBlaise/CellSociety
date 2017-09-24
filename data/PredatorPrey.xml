@@ -11,21 +11,21 @@
 			<Name>KELP</Name>
 			<Value>0</Value>
 			<Proportion>0</Proportion>
-			<Color>Blue</Color>
+			<Color>#3498DB</Color>
 		</Cell>
 
 		<Cell>
 			<Name>FISH</Name>
 			<Value>1</Value>
 			<Proportion>70</Proportion>
-			<Color>Green</Color>
+			<Color>#239B56</Color>
 		</Cell>
 
 		<Cell>
 			<Name>SHARK</Name>
 			<Value>2</Value>
 			<Proportion>30</Proportion>
-			<Color>Yellow</Color>
+			<Color>#F7DC6F</Color>
 		</Cell>
 	</Cells>
 

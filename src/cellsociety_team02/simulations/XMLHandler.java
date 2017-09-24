@@ -14,6 +14,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javafx.scene.paint.Color;
+
 public class XMLHandler {
 	private Document configDoc;
 	
@@ -51,12 +53,14 @@ public class XMLHandler {
 		}
 	}
 	
-	protected void addCellSet(List<Integer> cellSet) {
+	protected void addCellSet(List<Integer> cellSet, List<Color> colorSet) {
 		NodeList cells = configDoc.getElementsByTagName("Cell");
 		for(int i = 0; i< cells.getLength(); i++) {
 			Element cell = (Element) cells.item(i);
 			String proportionVal = cell.getElementsByTagName("Proportion").item(0).getTextContent();
+			String color = cell.getElementsByTagName("Color").item(0).getTextContent();
 			cellSet.add(Integer.parseInt(proportionVal));
+			colorSet.add(Color.web(color));
 		}
 	}
 	

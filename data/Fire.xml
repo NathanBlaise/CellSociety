@@ -11,21 +11,21 @@
 			<Name>EMPTY</Name>
 			<Value>0</Value>
 			<Proportion>0</Proportion>
-			<Color>Yellow</Color>
+			<Color>#F7DC6F</Color>
 		</Cell>
 
 		<Cell>
 			<Name>TREE</Name>
 			<Value>1</Value>
 			<Proportion>95</Proportion>
-			<Color>Green</Color>
+			<Color>#239B56</Color>
 		</Cell>
 
 		<Cell>
 			<Name>BURNING</Name>
 			<Value>2</Value>
 			<Proportion>5</Proportion>
-			<Color>Red</Color>
+			<Color>#CB4335</Color>
 		</Cell>
 	</Cells>
 

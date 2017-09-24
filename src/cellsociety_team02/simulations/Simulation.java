@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import cellsociety_team02.cells.Cell;
+import javafx.scene.paint.Color;
 
 public abstract class Simulation {
 	private Cell cellType;
 	private Map<String, String> simulationAttributes;
 	private List<Integer> cellAttributes;
+	private List<Color> colorAttributes;
 	private int gridSize;
 	
 	protected String layoutFile;
@@ -24,12 +26,13 @@ public abstract class Simulation {
 	private void initAttributes() {
 		simulationAttributes = new HashMap<>();
 		cellAttributes = new ArrayList<>();
+		colorAttributes = new ArrayList<>();
 	}
 	
 	protected void loadAttributes() {
 		XMLHandler parser = new XMLHandler(this);
 		parser.addAttributeSet(simulationAttributes);
-		parser.addCellSet(cellAttributes);
+		parser.addCellSet(cellAttributes, colorAttributes);
 		gridSize = parser.addGridParameters();
 	}
 	
@@ -51,6 +54,10 @@ public abstract class Simulation {
 	
 	public List<Integer> cellFrequencies(){
 		return cellAttributes;
+	}
+	
+	public Color[] cellColors(){
+		return colorAttributes.toArray(new Color[colorAttributes.size()]);
 	}
 	
 	public void changeCellType(Cell type) {
