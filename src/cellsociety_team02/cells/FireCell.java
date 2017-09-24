@@ -11,6 +11,7 @@ public class FireCell extends Cell {
 	
 	@Override
 	public ArrayList<Cell> getNeighbours(){
+		myNeighbours.clear();
 		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
 		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
 		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South

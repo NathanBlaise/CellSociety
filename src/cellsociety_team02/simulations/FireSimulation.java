@@ -24,18 +24,23 @@ public class FireSimulation extends Simulation{
 		else if(cell.getCurrentState() == TREE) {
 			checkSpread(cell);
 		}
+		
+		
 	}
 	
 	private void checkSpread(Cell cell) {
 		List<Cell> neighbors = cell.getNeighbours();
-		
-		if(Math.random() > spreadChance) return;
-		
+		//System.out.println(neighbors.size());
+		if(Math.random() > spreadChance) {
+			cell.setNextState(TREE);
+			return;
+		}
 		for(Cell neighbor:neighbors) {
 			if(neighbor.getCurrentState() == BURNING) {
 				cell.setNextState(BURNING);
 				break;
 			}
+			else cell.setNextState(TREE);
 		}
 	}
 

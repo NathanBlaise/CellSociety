@@ -10,7 +10,7 @@ public class Grid {
 	private int mySize;
 	private Cell[][] myArray;
 	private boolean diffSim; //Boolean used to determine which Cell type we use
-	private Random rand;
+	private Random rand = new Random();
 	private int state;
 			
 	public Grid(int size, int[] propState, String simType, Color[] colors) {
@@ -30,9 +30,10 @@ public class Grid {
 			for(int k=0; k<size; k++) {
 				int randState = rand.nextInt(100);
 				if(randState < propState[0]) state = 0;
-				if(randState > propState[0] && randState < (propState[1] + propState[0])) state = 1;
+				else if(randState > propState[0] && randState < (propState[1] + propState[0])) state = 1;
 				else state = 2;
-				if(diffSim) myArray[i][k] = new FireCell(i,k,state,colors,10,mySize,myArray); //Need to work out how to calculate Cell Size - TONY
+			
+				if(diffSim) myArray[i][k] = new FireCell(i,k,state,colors,200/mySize,mySize,myArray); //Need to work out how to calculate Cell Size - TONY
 				else myArray[i][k] = new Cell(i,k,state,colors,10,mySize,myArray);
 			}
 		}
@@ -40,6 +41,10 @@ public class Grid {
 	
 	public int getSize() {
 		return mySize;
+	}
+	
+	public void setSize(int size) {
+		mySize=size;
 	}
 	
 	public Cell[][] getArr(){
