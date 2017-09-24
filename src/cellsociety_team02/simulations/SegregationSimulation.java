@@ -39,7 +39,6 @@ public class SegregationSimulation extends Simulation{
 				occupiedSpots++;
 			}
 		}
-		System.out.println((double) total/occupiedSpots + " " + total + " " + occupiedSpots);
 		if(occupiedSpots == 0) return;
 		if((double) total/occupiedSpots < PERCENTAGE_AGENT) {
 			moveToEmptyLocation(cell);

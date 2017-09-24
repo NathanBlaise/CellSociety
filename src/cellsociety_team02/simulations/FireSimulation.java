@@ -30,17 +30,14 @@ public class FireSimulation extends Simulation{
 	
 	private void checkSpread(Cell cell) {
 		List<Cell> neighbors = cell.getNeighbours();
-		//System.out.println(neighbors.size());
-		if(Math.random() > spreadChance) {
-			cell.setNextState(TREE);
-			return;
-		}
+
+		if(Math.random() > spreadChance) return;
+
 		for(Cell neighbor:neighbors) {
 			if(neighbor.getCurrentState() == BURNING) {
 				cell.setNextState(BURNING);
 				break;
 			}
-			else cell.setNextState(TREE);
 		}
 	}
 
