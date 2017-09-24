@@ -9,7 +9,7 @@ public class FireSimulation extends Simulation{
 	private final int TREE = 1;
 	private final int BURNING = 2;
 	
-	private String layoutFile = "data/Life.xml";
+	private String layoutFile = "data/Fire.xml";
 	private double spreadChance = 0.5;
 	
 	public FireSimulation() {

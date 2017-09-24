@@ -10,27 +10,27 @@
 		<Cell>
 			<Name>EMPTY</Name>
 			<Value>0</Value>
-			<Proportion>0</Proportion>
+			<Proportion>10</Proportion>
 			<Color>#F7DC6F</Color>
 		</Cell>
 
 		<Cell>
 			<Name>TREE</Name>
 			<Value>1</Value>
-			<Proportion>95</Proportion>
+			<Proportion>70</Proportion>
 			<Color>#239B56</Color>
 		</Cell>
 
 		<Cell>
 			<Name>BURNING</Name>
 			<Value>2</Value>
-			<Proportion>5</Proportion>
+			<Proportion>20</Proportion>
 			<Color>#CB4335</Color>
 		</Cell>
 	</Cells>
 
 	<Grid>
-		<Size>100</Size>
+		<Size>5</Size>
 	</Grid>
 
 </Simulation> 
