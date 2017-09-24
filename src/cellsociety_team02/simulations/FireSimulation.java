@@ -8,7 +8,15 @@ public class FireSimulation extends Simulation{
 	private final int EMPTY = 0;
 	private final int TREE = 1;
 	private final int BURNING = 2;
+	
+	private String layoutFile = "data/Life.xml";
 	private double spreadChance = 0.5;
+	
+	public FireSimulation() {
+		super();
+		super.layoutFile = this.layoutFile;
+		super.loadAttributes();
+	}
 	
 	@Override
 	public void updateCell(Cell cell) {

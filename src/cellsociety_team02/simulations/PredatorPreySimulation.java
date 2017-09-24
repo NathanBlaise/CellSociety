@@ -15,9 +15,17 @@ public class PredatorPreySimulation extends Simulation {
 	private final int KELP = 0;
 	private final int FISH = 1;
 	private final int SHARK = 2;
+	
 	private int sharkBreedingDays;
 	private int fishBreedingDays;
 	private int sharkStarveDays;
+	private String layoutFile = "data/PredatorPrey.xml";
+	
+	public PredatorPreySimulation() {
+		super();
+		super.layoutFile = this.layoutFile;
+		super.loadAttributes();
+	}
 	
 	@Override
 	public void updateCell(Cell cell) {

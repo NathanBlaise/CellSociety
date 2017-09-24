@@ -9,20 +9,24 @@ import java.util.Map;
 import cellsociety_team02.cells.Cell;
 
 public abstract class Simulation {
-	private String layoutFile = "data/test.xml";
 	private Cell cellType;
 	private Map<String, String> simulationAttributes;
 	private List<Integer> cellAttributes;
 	private int gridSize;
 	
+	protected String layoutFile;
+	
 	
 	public Simulation(){
-		simulationAttributes = new HashMap<>();
-		cellAttributes = new ArrayList<>();
-		loadAttributes();
+		initAttributes();
 	}
 	
-	private void loadAttributes() {
+	private void initAttributes() {
+		simulationAttributes = new HashMap<>();
+		cellAttributes = new ArrayList<>();
+	}
+	
+	protected void loadAttributes() {
 		XMLHandler parser = new XMLHandler(this);
 		parser.addAttributeSet(simulationAttributes);
 		parser.addCellSet(cellAttributes);
@@ -31,6 +35,12 @@ public abstract class Simulation {
 	
 	protected File loadInitConfig() {
 		return new File(layoutFile);
+	}
+	
+	public void changeInitConfig(String file) {
+		layoutFile = file;
+		initAttributes();
+		loadAttributes();
 	}
 	
 	public abstract void updateCell(Cell cell);
@@ -46,6 +56,5 @@ public abstract class Simulation {
 	public void changeCellType(Cell type) {
 		cellType = type;
 	}
-
 	
 }
