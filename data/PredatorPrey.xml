@@ -1,0 +1,36 @@
+<Simulation>
+
+	<Attributes>
+		<Type>PredatorPrey</Type>
+		<Title>PredatorPrey Simulation</Title>
+		<Author>Ben Welton</Author>
+	</Attributes>
+
+	<Cells>
+		<Cell>
+			<Name>KELP</Name>
+			<Value>0</Value>
+			<Proportion>0</Proportion>
+			<Color>Blue</Color>
+		</Cell>
+
+		<Cell>
+			<Name>FISH</Name>
+			<Value>1</Value>
+			<Proportion>70</Proportion>
+			<Color>Green</Color>
+		</Cell>
+
+		<Cell>
+			<Name>SHARK</Name>
+			<Value>2</Value>
+			<Proportion>30</Proportion>
+			<Color>Yellow</Color>
+		</Cell>
+	</Cells>
+
+	<Grid>
+		<Size>100</Size>
+	</Grid>
+
+</Simulation> 
