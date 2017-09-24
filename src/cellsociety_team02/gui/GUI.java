@@ -131,7 +131,7 @@ public class GUI {
 		
 		// add SlideBars
 		SliderBox = new VBox();
-		slideSpeed = new SliderBar("Speed", 0.0,0.0,100.0 );
+		slideSpeed = new SliderBar("Speed", 0.0,0.0,20.0 );
 		slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
 		slideSize = new SliderBar("Size",0.0,5.0,10.0);
 		SliderBox.getChildren().add(slideRatio);
@@ -169,7 +169,7 @@ public class GUI {
 		private Slider slider;
 		private TextField valueField;
 		int sideLength;
-		
+		int speed;
 		
 		protected SliderBar(String n, Double x, Double y, Double z) {
 			name = n;
@@ -229,9 +229,14 @@ public class GUI {
 				    
 				        changeSize = true; 
 				}
-				
+				if (name == "Speed") {
 				changeSpeed = true;
+				String speedText = Integer.toString(((int)(slider.getValue()))) ;
+				valueField.setText(speedText);
+
 				
+				slideSpeed.speed = ((int)(slider.getValue()));
+				}
 				
 				
 				

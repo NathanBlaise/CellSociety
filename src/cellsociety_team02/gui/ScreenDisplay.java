@@ -100,17 +100,20 @@ package cellsociety_team02.gui;
 		public void step (double elapsedTime) {
 			//change speed
 			if (gui.changeSpeed) {
-			FRAMES_PER_SECOND = 1+gui.values.get("Speed")/10;
+				
+			FRAMES_PER_SECOND = 1+ gui.slideSpeed.speed;
 			MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 			SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
 			frame  = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
 					e -> this.step(SECOND_DELAY));
 			
 			
-		    animation.setCycleCount(Timeline.INDEFINITE);
+
 		    animation.getKeyFrames().add(frame);
 		     
 			System.out.println(FRAMES_PER_SECOND);
+			
+			gui.changeSpeed = false;
 			}
 			
 			//for play button
@@ -135,6 +138,7 @@ package cellsociety_team02.gui;
 				}
 				gui.isLoading = false;
 				gui.isloaded = true;
+				
 				
 			}
 			
