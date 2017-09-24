@@ -19,14 +19,17 @@ import javafx.scene.Group;
 	import javafx.stage.Stage;
 	import javafx.util.Duration;
 	import cellsociety_team02.gui.GUI;
+import cellsociety_team02.simulations.*;
+import cellsociety_team02.cells.Cell;
+import cellsociety_team02.grid.*;
 
 	public class ScreenDisplay{
 		public static final String TITLE = "Example JavaFX";
 		public static final int SIZE = 400;
 		public static final Paint BACKGROUND = Color.WHITE;
-		public static final int FRAMES_PER_SECOND = 60;
+		public static final int FRAMES_PER_SECOND = 1;
 		public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-		public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+		public static final double SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
 		
 		public Scene Scene;
 		public Group root = new Group();
@@ -34,7 +37,9 @@ import javafx.scene.Group;
 		public GridPane myGrid;
 		public Timeline animation = new Timeline();
 		public KeyFrame frame;
+		public Grid cellArray;
 		private boolean isStarting = true;
+		private Simulation sim;
 		
 		
 		/**
@@ -64,7 +69,6 @@ import javafx.scene.Group;
 
 			gui = new GUI();
 			
-			
 			if (isStarting ) {
 			
 			root.getChildren().addAll(gui.paneBox);
@@ -92,43 +96,139 @@ import javafx.scene.Group;
 		}
 
 		public void step (double elapsedTime) {
+			//for play button
 			
-			
-			if (gui.isLoading) {
-				if (!this.root.getChildren().contains(myGrid)) {
-					System.out.println("yes");
-				this.root.getChildren().add(myGrid);
-	
-				}
+			if (!gui.isPause) {
+				
+				updateCellArray();
+				
 			}
+			
+			// After pressing the button "STEP"
+			if (gui.isStep) {
+				
+				updateCellArray();
+				gui.isStep = !gui.isStep;
+			}
+			
+			// After pressing the button "GO"
+			if (gui.isLoading) {
+				this.root.getChildren().remove(myGrid);
+				if (!this.root.getChildren().contains(myGrid)) {
+				System.out.println(1);
+				int side = 5;
+				
+				drawNewGrid(side);
+				this.root.getChildren().add(myGrid);
+				myGrid.setStyle("-fx-grid-lines-visible: true");
+				myGrid.setPadding(new Insets(40,40,40,70));
+				
+				if (gui.simToLoad.equals("Fire Simulation")) {
+					sim = new FireSimulation();
+					int [] propState = {10,70,20};
+					Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
+			
+					// initialize a cellList
+					cellArray = new Grid(side,propState,"Fire",colors);
+					
+					for (int i= 0; i<5;i++) {
+						for (int j = 0; j<5; j++) {
+							myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+						}
+					}
+				}
+				
+				if (gui.simToLoad.equals("In the name of LOVE")) {
+				
+			
+			
+					// initialize a cellList
+					
+					
+					for (int i= 0; i<5;i++) {
+						for (int j = 0; j<5; j++) {
+							Rectangle Shape = new Rectangle(40, 40, Color.PINK);
+							
+							if (i == 2 && j != 0 && j!=4) {
+								myGrid.add(Shape, i, j);
+							}
+							
+						}
+					}
+				}
+				
+				
+				
+				
+				
+				}
+				
+				
+				
+				gui.isLoading = false;
+				gui.isloaded = true;
+				
+			}
+			
 			
 			if (gui.isReset) {
 				if (this.root.getChildren().contains(myGrid)) {
 					this.root.getChildren().remove(myGrid);
+				
 					gui.isReset = false;
-					gui.isLoading = false;
+					gui.isloaded = false;
+					
+					this.root.getChildren().remove(myGrid);
+					if (!this.root.getChildren().contains(myGrid)) {
+					System.out.println(1);
+					int side = 5;
+					
+					drawNewGrid(side);
+					this.root.getChildren().add(myGrid);
+					myGrid.setStyle("-fx-grid-lines-visible: true");
+					myGrid.setPadding(new Insets(40,40,40,70));
+					
+					if (gui.simToLoad.equals("Fire Simulation")) {
+						sim = new FireSimulation();
+						int [] propState = {10,70,20};
+						Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
+				
+						// initialize a cellList
+						cellArray = new Grid(side,propState,"Fire",colors);
+						
+						for (int i= 0; i<5;i++) {
+							for (int j = 0; j<5; j++) {
+								myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+							}
+						}
+					}
+					}
+					
+					
+				
 					}
 			}
 			
-			if (gui.changeSize && gui.isLoading) {
+			if (gui.changeSize && gui.isloaded) {
 				if (this.root.getChildren().contains(myGrid)) {
 				this.root.getChildren().remove(myGrid);
 				}
 				if (!this.root.getChildren().contains(myGrid)) {
-					 myGrid = new GridPane();
-					 System.out.println(gui.slideRatio.sideLength);
-					  for(int i = 0; i < gui.slideRatio.sideLength ; i++) {
-				            ColumnConstraints column = new ColumnConstraints(200/(gui.slideRatio.sideLength));
-				            myGrid.getColumnConstraints().add(column);
-				        }
-
-				        for(int i = 0; i < gui.slideRatio.sideLength  ; i++) {
-				            RowConstraints row = new RowConstraints(200/(gui.slideRatio.sideLength));
-				            myGrid.getRowConstraints().add(row);
-				        }
-				        
-				        myGrid.setStyle("-fx-grid-lines-visible: true");
-				        myGrid.setPadding(new Insets(40,40,40,70));
+						//draw a new grid pane
+						int side = gui.slideRatio.sideLength;
+						
+						drawNewGrid (side);
+						// Redraw the pane every time we change the size
+					    //cellArray.setSize(side);
+				        int [] propState = {40,40,20};
+						Color[] colors = {Color.RED,Color.ORANGE,Color.GREEN};
+				        cellArray = new Grid(gui.slideRatio.sideLength,propState,"Fire",colors);
+						
+						for (int i= 0; i<gui.slideRatio.sideLength;i++) {
+							for (int j = 0; j<gui.slideRatio.sideLength; j++) {
+								myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+							}
+						}
 				this.root.getChildren().add(myGrid);
 				gui.changeSize = false;
 				
@@ -136,6 +236,39 @@ import javafx.scene.Group;
 				
 			}
 
+		}
+
+		public void drawNewGrid(int side) {
+			myGrid = new GridPane();
+			 
+			  for(int i = 0; i < side ; i++) {
+			        ColumnConstraints column = new ColumnConstraints(200/(side));
+			        myGrid.getColumnConstraints().add(column);
+			    }
+
+			    for(int i = 0; i < side  ; i++) {
+			        RowConstraints row = new RowConstraints(200/(side));
+			        myGrid.getRowConstraints().add(row);
+			    }
+			    
+			    myGrid.setStyle("-fx-grid-lines-visible: true");
+			    myGrid.setPadding(new Insets(40,40,40,70));
+			    
+		}
+
+		// method update CellArray every time
+		public void updateCellArray() {
+			for (int i= 0; i<cellArray.getSize();i++) {
+				for (int j = 0; j<cellArray.getSize(); j++) {
+					sim.updateCell(cellArray.getArr()[i][j]);
+				}
+			}
+			System.out.println("one");
+			for (int i= 0; i<cellArray.getSize();i++) {
+				for (int j = 0; j<cellArray.getSize(); j++) {
+					cellArray.getArr()[i][j].updateState();
+				}
+			}
 		}
 
 

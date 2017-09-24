@@ -8,7 +8,7 @@ import javafx.scene.shape.Shape;
 
 public class Cell {
 	
-	protected ArrayList<Cell> myNeighbours;
+	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
 	protected int xPos;
 	protected int yPos;
 	protected int currentState;
@@ -50,6 +50,11 @@ public class Cell {
 	public int getY() {
 		return yPos;
 	}
+	
+	public Shape getShape() {
+		return myShape;
+	}
+	
 	
 	public void updateState() {
 		currentState = nextState;

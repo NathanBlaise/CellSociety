@@ -8,7 +8,7 @@ public class FireSimulation extends Simulation{
 	private final int EMPTY = 0;
 	private final int TREE = 1;
 	private final int BURNING = 2;
-	private double spreadChance = 0.5;
+	private double spreadChance = 0.3;
 	
 	@Override
 	public void updateCell(Cell cell) {
@@ -16,18 +16,23 @@ public class FireSimulation extends Simulation{
 		else if(cell.getCurrentState() == TREE) {
 			checkSpread(cell);
 		}
+		
+		
 	}
 	
 	private void checkSpread(Cell cell) {
 		List<Cell> neighbors = cell.getNeighbours();
-		
-		if(Math.random() > spreadChance) return;
-		
+		//System.out.println(neighbors.size());
+		if(Math.random() > spreadChance) {
+			cell.setNextState(TREE);
+			return;
+		}
 		for(Cell neighbor:neighbors) {
 			if(neighbor.getCurrentState() == BURNING) {
 				cell.setNextState(BURNING);
 				break;
 			}
+			else cell.setNextState(TREE);
 		}
 	}
 

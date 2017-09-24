@@ -55,18 +55,20 @@ public class GUI {
 	protected boolean changeSize = false;
 	// create a combo box to select a certain type of simulation
 	private ComboBox<String> simulationLoader;
-	private String simToLoad;
+	protected String simToLoad;
 	private HashMap<String, Double> values = new HashMap<String, Double>();
 	public SliderBar slideSpeed;
 	public SliderBar slideRatio;
 	public SliderBar slideSize;
+	//help to change the size of gridPane
+	protected boolean isloaded;
 	
 	public GUI() {
 		init();
 	}
 	
 	protected void init() {
-		ObservableList<String> list = FXCollections.observableArrayList("Fire Simulation","Segregation Simulation","Game of Life","WatorWorld");
+		ObservableList<String> list = FXCollections.observableArrayList("Fire Simulation","Segregation Simulation","Game of Life","WatorWorld","In the name of LOVE");
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");
@@ -74,6 +76,8 @@ public class GUI {
 			this.isLoading = true;
 			simToLoad = simulationLoader.getValue();
 			System.out.println(simToLoad);
+			
+			
 			});
 		
 		resetButton = new Button("RESET");
