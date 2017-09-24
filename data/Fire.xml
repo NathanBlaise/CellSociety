@@ -4,7 +4,7 @@
 		<Type>Fire</Type>
 		<Title>Fire Simulation</Title>
 		<Author>Ben Welton</Author>
-	</Attributes>
+		<spreadChance>0.5</spreadChance></Attributes>
 
 	<Cells>
 		<Cell>

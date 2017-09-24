@@ -4,7 +4,9 @@
 		<Type>PredatorPrey</Type>
 		<Title>PredatorPrey Simulation</Title>
 		<Author>Ben Welton</Author>
-	</Attributes>
+		<sharkBreedingDays>4</sharkBreedingDays>
+		<fishBreedingDays>4</fishBreedingDays>
+		<sharkStarveDays>4</sharkStarveDays></Attributes>
 
 	<Cells>
 		<Cell>

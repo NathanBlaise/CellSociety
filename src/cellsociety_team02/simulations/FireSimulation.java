@@ -16,6 +16,9 @@ public class FireSimulation extends Simulation{
 		super();
 		super.layoutFile = this.layoutFile;
 		super.loadAttributes();
+		if(super.queryAttributes("spreadChance") != null) {
+			spreadChance = Double.parseDouble(queryAttributes("spreadChance"));
+		}
 	}
 	
 	@Override
@@ -24,8 +27,6 @@ public class FireSimulation extends Simulation{
 		else if(cell.getCurrentState() == TREE) {
 			checkSpread(cell);
 		}
-		
-		
 	}
 	
 	private void checkSpread(Cell cell) {
@@ -39,6 +40,11 @@ public class FireSimulation extends Simulation{
 				break;
 			}
 		}
+	}
+	
+	//for later gui interactivity
+	public void changeSpreadChance(int newChance) {
+		spreadChance = newChance;
 	}
 
 }
