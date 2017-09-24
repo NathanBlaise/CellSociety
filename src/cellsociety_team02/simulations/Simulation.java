@@ -72,4 +72,8 @@ public abstract class Simulation {
 		//empty
 	}
 	
+	public void initValues(Object object) {
+		
+	}
+	
 }

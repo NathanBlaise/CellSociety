@@ -151,9 +151,9 @@ package cellsociety_team02.gui;
 						drawNewGrid (side);
 						// Redraw the pane every time we change the size
 					    //cellArray.setSize(side);
-				        int [] propState = {10,70,20};
-						Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
-				        cellArray = new Grid(gui.slideRatio.sideLength,propState,"Fire",colors);
+				        int [] propState = sim.cellFrequencies();
+						Color[] colors = sim.cellColors();
+				        cellArray = new Grid(gui.slideRatio.sideLength,propState,"Wator World",colors);
 						
 						for (int i= 0; i<gui.slideRatio.sideLength;i++) {
 							for (int j = 0; j<gui.slideRatio.sideLength; j++) {
@@ -190,6 +190,7 @@ package cellsociety_team02.gui;
 				drawNewGrid(sim.simulationSize());
 				this.root.getChildren().add(myGrid);
 				addCellsToGrid("Predator-Prey");
+				sim.initValues(cellArray);
 			}
 			if (gui.simToLoad.equals("Game of Life")) {
 				sim = new LifeSimulation();
@@ -205,6 +206,10 @@ package cellsociety_team02.gui;
 			for (int i= 0; i<sim.simulationSize();i++) {
 				for (int j = 0; j<sim.simulationSize(); j++) {
 					myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+					
+					if(type == "Segregation" && cellArray.getArr()[i][j].getCurrentState() == 0) {
+						sim.addEmptyCell(cellArray.getArr()[i][j]);
+					}
 				}
 			}
 		}
