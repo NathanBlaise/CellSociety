@@ -19,9 +19,9 @@ package cellsociety_team02.gui;
 	import javafx.stage.Stage;
 	import javafx.util.Duration;
 	import cellsociety_team02.gui.GUI;
-import cellsociety_team02.simulations.*;
-import cellsociety_team02.cells.Cell;
-import cellsociety_team02.grid.*;
+	import cellsociety_team02.simulations.*;
+	import cellsociety_team02.cells.Cell;
+	import cellsociety_team02.grid.*;
 
 	public class ScreenDisplay{
 		public static final String TITLE = "Example JavaFX";
@@ -115,56 +115,8 @@ import cellsociety_team02.grid.*;
 			if (gui.isLoading) {
 				this.root.getChildren().remove(myGrid);
 				if (!this.root.getChildren().contains(myGrid)) {
-				System.out.println(1);
-				int side = 5;
-				
-				drawNewGrid(side);
-				this.root.getChildren().add(myGrid);
-				myGrid.setStyle("-fx-grid-lines-visible: true");
-				myGrid.setPadding(new Insets(40,40,40,70));
-				
-				if (gui.simToLoad.equals("Fire Simulation")) {
-					sim = new FireSimulation();
-					int [] propState = {10,70,20};
-					Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
-			
-					// initialize a cellList
-					cellArray = new Grid(side,propState,"Fire",colors);
-					
-					for (int i= 0; i<5;i++) {
-						for (int j = 0; j<5; j++) {
-							myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
-						}
-					}
+					drawGridType();
 				}
-				
-				if (gui.simToLoad.equals("In the name of LOVE")) {
-				
-			
-			
-					// initialize a cellList
-					
-					
-					for (int i= 0; i<5;i++) {
-						for (int j = 0; j<5; j++) {
-							Rectangle Shape = new Rectangle(40, 40, Color.PINK);
-							
-							if (i == 2 && j != 0 && j!=4) {
-								myGrid.add(Shape, i, j);
-							}
-							
-						}
-					}
-				}
-				
-				
-				
-				
-				
-				}
-				
-				
-				
 				gui.isLoading = false;
 				gui.isloaded = true;
 				
@@ -180,28 +132,7 @@ import cellsociety_team02.grid.*;
 					
 					this.root.getChildren().remove(myGrid);
 					if (!this.root.getChildren().contains(myGrid)) {
-					System.out.println(1);
-					int side = 5;
-					
-					drawNewGrid(side);
-					this.root.getChildren().add(myGrid);
-					myGrid.setStyle("-fx-grid-lines-visible: true");
-					myGrid.setPadding(new Insets(40,40,40,70));
-					
-					if (gui.simToLoad.equals("Fire Simulation")) {
-						sim = new FireSimulation();
-						int [] propState = {10,70,20};
-						Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
-				
-						// initialize a cellList
-						cellArray = new Grid(side,propState,"Fire",colors);
-						
-						for (int i= 0; i<5;i++) {
-							for (int j = 0; j<5; j++) {
-								myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
-							}
-						}
-					}
+						drawGridType();
 					}
 					
 					
@@ -220,8 +151,8 @@ import cellsociety_team02.grid.*;
 						drawNewGrid (side);
 						// Redraw the pane every time we change the size
 					    //cellArray.setSize(side);
-				        int [] propState = {40,40,20};
-						Color[] colors = {Color.RED,Color.ORANGE,Color.GREEN};
+				        int [] propState = {10,70,20};
+						Color[] colors = {Color.ORANGE,Color.GREEN,Color.RED};
 				        cellArray = new Grid(gui.slideRatio.sideLength,propState,"Fire",colors);
 						
 						for (int i= 0; i<gui.slideRatio.sideLength;i++) {
@@ -236,6 +167,46 @@ import cellsociety_team02.grid.*;
 				
 			}
 
+		}
+
+		private void drawGridType() {
+			if (gui.simToLoad.equals("Fire")) {
+				System.out.println(2);
+				sim = new FireSimulation();
+				
+				drawNewGrid(sim.simulationSize());
+				this.root.getChildren().add(myGrid);
+				addCellsToGrid("Fire");
+			}
+			if (gui.simToLoad.equals("Segregation")) {
+				sim = new SegregationSimulation();
+				drawNewGrid(sim.simulationSize());
+				this.root.getChildren().add(myGrid);
+				addCellsToGrid("Segregation");
+				
+			}
+			if (gui.simToLoad.equals("Predator-Prey")) {
+				sim = new PredatorPreySimulation();
+				drawNewGrid(sim.simulationSize());
+				this.root.getChildren().add(myGrid);
+				addCellsToGrid("Predator-Prey");
+			}
+			if (gui.simToLoad.equals("Game of Life")) {
+				sim = new LifeSimulation();
+				drawNewGrid(sim.simulationSize());
+				this.root.getChildren().add(myGrid);
+				addCellsToGrid("Game of Life");
+			}
+		}
+
+		private void addCellsToGrid(String type) {
+			cellArray = new Grid(sim.simulationSize(),sim.cellFrequencies(),type,sim.cellColors());
+			
+			for (int i= 0; i<sim.simulationSize();i++) {
+				for (int j = 0; j<sim.simulationSize(); j++) {
+					myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+				}
+			}
 		}
 
 		public void drawNewGrid(int side) {

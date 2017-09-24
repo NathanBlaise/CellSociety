@@ -24,10 +24,14 @@ public class LifeSimulation extends Simulation {
 	
 	private void calculateState(Cell cell) {
 		int total = getNumNeighbours(cell);
+		if (cell.getX() == 2 && cell.getY() == 2 ) System.out.println(total);
+		
 		if(cell.getCurrentState() == ALIVE) {
 			if(total == 2) cell.setNextState(ALIVE);
 		}
 		if(total == 3) cell.setNextState(ALIVE);
+		
+		else cell.setNextState(DEAD);
 	}
 
 	private int getNumNeighbours(Cell cell) {

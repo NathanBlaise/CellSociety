@@ -68,7 +68,7 @@ public class GUI {
 	}
 	
 	protected void init() {
-		ObservableList<String> list = FXCollections.observableArrayList("Fire Simulation","Segregation Simulation","Game of Life","WatorWorld","In the name of LOVE");
+		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey");
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");

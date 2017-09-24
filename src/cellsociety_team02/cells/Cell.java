@@ -32,6 +32,7 @@ public class Cell {
 	}
 	
 	public ArrayList<Cell> getNeighbours(){
+		myNeighbours.clear();
 		int[] xCoord = {xPos, xPos+1, xPos-1};
 		int[] yCoord = {yPos, yPos+1, yPos-1};
 		for(int x: xCoord) {
@@ -41,6 +42,7 @@ public class Cell {
 				}
 			}
 		}
+		myNeighbours.remove(myGridArray[xPos][yPos]);
 		return myNeighbours;
 	}
 	
@@ -51,11 +53,6 @@ public class Cell {
 	public int getY() {
 		return yPos;
 	}
-	
-	public Shape getShape() {
-		return myShape;
-	}
-	
 	
 	public void updateState() {
 		if(stateChanged) {
@@ -76,6 +73,10 @@ public class Cell {
 	
 	public int getCurrentState() {
 		return currentState;
+	}
+	
+	public Shape getShape() {
+		return myShape;
 	}
 
 }
