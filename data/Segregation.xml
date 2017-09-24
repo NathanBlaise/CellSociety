@@ -4,7 +4,7 @@
 		<Type>Segregation</Type>
 		<Title>Segregation Simulation</Title>
 		<Author>Ben Welton</Author>
-	</Attributes>
+		<percentOfNeighbors>0.5</percentOfNeighbors></Attributes>
 
 	<Cells>
 		<Cell>

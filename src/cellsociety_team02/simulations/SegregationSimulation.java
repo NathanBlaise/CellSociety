@@ -8,20 +8,22 @@ import cellsociety_team02.cells.Cell;
 
 public class SegregationSimulation extends Simulation{
 	
-	private final double PERCENTAGE_AGENT = 0.3;
 	private final int EMPTY = 0;
 	private final int POPULATION_1 = 1;
 	private final int POPULATION_2 = 2;
 	
-	
+	private double percentOfNeighbors = 0.5;
 	private Queue<Cell> emptyCells;
 	private String layoutFile = "data/Segregation.xml";
 	
 	public SegregationSimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
-		emptyCells = new LinkedList<>();
 		super.loadAttributes();
+		emptyCells = new LinkedList<>();
+		if(queryAttributes("percentOfNeighbors") != null) {
+			percentOfNeighbors = Double.parseDouble(queryAttributes("percentOfNeighbors"));
+		}
 	}
 	
 	@Override
@@ -39,9 +41,8 @@ public class SegregationSimulation extends Simulation{
 				occupiedSpots++;
 			}
 		}
-		System.out.println((double) total/occupiedSpots + " " + total + " " + occupiedSpots);
 		if(occupiedSpots == 0) return;
-		if((double) total/occupiedSpots < PERCENTAGE_AGENT) {
+		if((double) total/occupiedSpots < percentOfNeighbors) {
 			moveToEmptyLocation(cell);
 		}
 	}
@@ -55,5 +56,10 @@ public class SegregationSimulation extends Simulation{
 		newLocation.setNextState(cell.getCurrentState());
 		cell.setNextState(EMPTY);
 		this.addEmptyCell(cell);
+	}
+	
+	//for later gui interactivity
+	public void changePercentOfNeighbors(int newPercent) {
+		percentOfNeighbors = newPercent;
 	}
 }

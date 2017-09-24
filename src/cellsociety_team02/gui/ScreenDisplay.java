@@ -212,6 +212,10 @@ package cellsociety_team02.gui;
 			for (int i= 0; i<size;i++) {
 				for (int j = 0; j<size; j++) {
 					myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
+					
+					if(type == "Segregation" && cellArray.getArr()[i][j].getCurrentState() == 0) {
+						sim.addEmptyCell(cellArray.getArr()[i][j]);
+					}
 				}
 			}
 		}

@@ -16,6 +16,9 @@ public class FireSimulation extends Simulation{
 		super();
 		super.layoutFile = this.layoutFile;
 		super.loadAttributes();
+		if(super.queryAttributes("spreadChance") != null) {
+			spreadChance = Double.parseDouble(queryAttributes("spreadChance"));
+		}
 	}
 	
 	@Override
@@ -24,24 +27,24 @@ public class FireSimulation extends Simulation{
 		else if(cell.getCurrentState() == TREE) {
 			checkSpread(cell);
 		}
-		
-		
 	}
 	
 	private void checkSpread(Cell cell) {
 		List<Cell> neighbors = cell.getNeighbours();
-		//System.out.println(neighbors.size());
-		if(Math.random() > spreadChance) {
-			cell.setNextState(TREE);
-			return;
-		}
+
+		if(Math.random() > spreadChance) return;
+
 		for(Cell neighbor:neighbors) {
 			if(neighbor.getCurrentState() == BURNING) {
 				cell.setNextState(BURNING);
 				break;
 			}
-			else cell.setNextState(TREE);
 		}
+	}
+	
+	//for later gui interactivity
+	public void changeSpreadChance(int newChance) {
+		spreadChance = newChance;
 	}
 
 }

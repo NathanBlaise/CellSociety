@@ -6,6 +6,7 @@ import java.util.Random;
 
 import cellsociety_team02.cells.Cell;
 import cellsociety_team02.cells.PredatorPreyCell;
+import cellsociety_team02.grid.Grid;
 
 //TODO: Add in breeding calculation to spawn new fish and sharks
 //TODO: Find a better way to handle animal death and spawning
@@ -16,15 +17,28 @@ public class PredatorPreySimulation extends Simulation {
 	private final int FISH = 1;
 	private final int SHARK = 2;
 	
-	private int sharkBreedingDays;
-	private int fishBreedingDays;
-	private int sharkStarveDays;
+	private int sharkBreedingDays = 4;
+	private int fishBreedingDays = 4;
+	private int sharkStarveDays = 4;
 	private String layoutFile = "data/PredatorPrey.xml";
 	
 	public PredatorPreySimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
 		super.loadAttributes();
+		setLifeValues();
+	}
+	
+	public void setLifeValues() {
+		if(queryAttributes("sharkBreedingDays") != null) {
+			sharkBreedingDays = Integer.parseInt(queryAttributes("sharkBreedingDays"));
+		}
+		if(queryAttributes("fishBreedingDays") != null) {
+			fishBreedingDays = Integer.parseInt(queryAttributes("fishBreedingDays"));
+		}
+		if(queryAttributes("sharkStarveDays") != null) {
+			sharkStarveDays = Integer.parseInt(queryAttributes("sharkStarveDays"));
+		}
 	}
 	
 	@Override
@@ -46,12 +60,12 @@ public class PredatorPreySimulation extends Simulation {
 		if(emptySpots.size() <= 0 && fishSpots.size() <= 0) return;
 		else if(fishSpots.size() <= 0) newLocation = findNewCell(emptySpots);
 		else newLocation = findNewCell(fishSpots);
-		updateOldCell(cell);
+		cell.setNextState(KELP);
 		
 		if(newLocation.getNextState() == FISH) fishIsEaten(newLocation);
 		else if(newLocation.getNextState() == KELP){
 			sharkSurvives(newLocation, cell);
-			sharkIsStarving(newLocation);
+			sharkIsStarving(newLocation, cell);
 		}
 		
 	}
@@ -63,9 +77,8 @@ public class PredatorPreySimulation extends Simulation {
 		
 		if(emptySpots.size() <= 0) return;
 		else newLocation = findNewCell(emptySpots);
-		updateOldCell(cell);
+		if(cell.getNextState() != SHARK) cell.setNextState(KELP);
 		
-		//check if fish moves or dies
 		if(newLocation.getNextState() != SHARK) fishSurvives(newLocation, cell);
 		else if(newLocation.getNextState() == SHARK) fishIsEaten(newLocation);
 	}
@@ -85,10 +98,6 @@ public class PredatorPreySimulation extends Simulation {
 		return (PredatorPreyCell) cells.get(rand.nextInt(cells.size()));
 	}
 	
-	private void updateOldCell(PredatorPreyCell cell) {
-		if(cell.getNextState() != cell.getCurrentState()) cell.setNextState(KELP);
-	}
-	
 	private void fishIsEaten(PredatorPreyCell shark) {
 		shark.setDaysUntilDeath(sharkStarveDays);
 	}
@@ -102,8 +111,10 @@ public class PredatorPreySimulation extends Simulation {
 			}
 			else {
 				oldLocation.setNextState(FISH);
+				oldLocation.updateState();
 				oldLocation.setDaysUntilBreeding(fishBreedingDays);
 			}
+			newLocation.setDaysUntilBreeding(fishBreedingDays);
 		}
 	}
 	
@@ -111,21 +122,32 @@ public class PredatorPreySimulation extends Simulation {
 		newLocation.setNextState(SHARK);
 		newLocation.setDaysUntilBreeding(oldLocation.getDaysUntilBreeding() - 1);
 		if(newLocation.getDaysUntilBreeding() <= 0) {
-			if(oldLocation.getNextState() == FISH) {
-				fishIsEaten(oldLocation);
-				oldLocation.setDaysUntilBreeding(sharkBreedingDays);
-			}
-			else {
-				oldLocation.setNextState(SHARK);
-				oldLocation.setDaysUntilBreeding(sharkBreedingDays);
-				oldLocation.setDaysUntilDeath(sharkStarveDays);
-			}
+			oldLocation.setNextState(SHARK);
+			oldLocation.updateState();
+			oldLocation.setDaysUntilBreeding(sharkBreedingDays);
+			oldLocation.setDaysUntilDeath(sharkStarveDays);
+			newLocation.setDaysUntilBreeding(sharkBreedingDays);
 		}
 	}
 	
-	private void sharkIsStarving(PredatorPreyCell shark) {
-		shark.setDaysUntilDeath(shark.getDaysUntilDeath() - 1);
+	private void sharkIsStarving(PredatorPreyCell shark, PredatorPreyCell oldLocation) {
+		shark.setDaysUntilDeath(oldLocation.getDaysUntilDeath() - 1);
 		if(shark.getDaysUntilDeath() <= 0) shark.setNextState(KELP);
+	}
+	
+	public void initValues(Object object) {
+		Grid grid = (Grid) object;
+		for(int i = 0; i<grid.getArr().length; i++) {
+			for(int j= 0; j<grid.getArr().length; j++) {
+				PredatorPreyCell cell = (PredatorPreyCell) grid.getArr()[i][j];
+				if(cell.getCurrentState() == FISH) {
+					cell.setDaysUntilBreeding(fishBreedingDays);
+				}else if(cell.getCurrentState() == SHARK) {
+					cell.setDaysUntilBreeding(sharkBreedingDays);
+					cell.setDaysUntilDeath(sharkStarveDays);
+				}
+			}
+		}
 	}
 	
 	//these methods will only be used when we implement different guis for different simulations

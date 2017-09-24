@@ -68,8 +68,16 @@ public abstract class Simulation {
 		cellType = type;
 	}
 	
-	public void addEmptyCell(Cell cell) {
-		//empty
+	public String queryAttributes(String key) {
+		if(simulationAttributes.containsKey(key)) {
+			return simulationAttributes.get(key);
+		}else {
+			return null;
+		}
 	}
+	
+	public void addEmptyCell(Cell cell) {}
+	
+	public void initValues(Object object) {}
 	
 }
