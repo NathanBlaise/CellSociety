@@ -18,7 +18,7 @@ public class PredatorPreySimulation extends Simulation {
 	private final int SHARK = 2;
 	
 	private int sharkBreedingDays = 4;
-	private int fishBreedingDays = 2;
+	private int fishBreedingDays = 4;
 	private int sharkStarveDays = 4;
 	private String layoutFile = "data/PredatorPrey.xml";
 	
@@ -26,6 +26,19 @@ public class PredatorPreySimulation extends Simulation {
 		super();
 		super.layoutFile = this.layoutFile;
 		super.loadAttributes();
+		setLifeValues();
+	}
+	
+	public void setLifeValues() {
+		if(queryAttributes("sharkBreedingDays") != null) {
+			sharkBreedingDays = Integer.parseInt(queryAttributes("sharkBreedingDays"));
+		}
+		if(queryAttributes("fishBreedingDays") != null) {
+			fishBreedingDays = Integer.parseInt(queryAttributes("fishBreedingDays"));
+		}
+		if(queryAttributes("sharkStarveDays") != null) {
+			sharkStarveDays = Integer.parseInt(queryAttributes("sharkStarveDays"));
+		}
 	}
 	
 	@Override
