@@ -52,8 +52,12 @@ public abstract class Simulation {
 		return gridSize;
 	}
 	
-	public List<Integer> cellFrequencies(){
-		return cellAttributes;
+	public int[] cellFrequencies(){
+		int[] freq = new int[cellAttributes.size()];
+		for(int i = 0; i<cellAttributes.size();i++) {
+			freq[i] = cellAttributes.get(i);
+		}
+		return freq;
 	}
 	
 	public Color[] cellColors(){
@@ -62,6 +66,10 @@ public abstract class Simulation {
 	
 	public void changeCellType(Cell type) {
 		cellType = type;
+	}
+	
+	public void addEmptyCell(Cell cell) {
+		//empty
 	}
 	
 }

@@ -17,8 +17,9 @@ public class Cell {
 	protected Color[] myColors;
 	protected int myGridSize;
 	protected Cell[][] myGridArray;
-	protected Random rand;
+	protected Random rand = new Random();
 	protected boolean movedCell;
+	protected boolean stateChanged = false;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
@@ -57,12 +58,16 @@ public class Cell {
 	
 	
 	public void updateState() {
-		currentState = nextState;
-		myShape.setFill(myColors[currentState]);
+		if(stateChanged) {
+			currentState = nextState;
+			myShape.setFill(myColors[currentState]);
+			stateChanged = false;
+		}
 	}
 	
 	public void setNextState(int state) {
 		nextState = state;
+		stateChanged = true;
 	}
 	
 	public int getNextState() {
@@ -73,16 +78,4 @@ public class Cell {
 		return currentState;
 	}
 
-	public void moveToRandomPlace() {
-		movedCell = false;
-		while(!movedCell) {
-			int i = rand.nextInt(myGridSize);
-			int j = rand.nextInt(myGridSize);
-			if(myGridArray[i][j].getCurrentState() == 0 && myGridArray[i][j].getNextState() == 0) {
-				myGridArray[i][j].setNextState(currentState);
-				currentState = 0;
-				movedCell = true;
-			}
-		}
-	}
 }
