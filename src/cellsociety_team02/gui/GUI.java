@@ -73,23 +73,24 @@ public class GUI {
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");
+		resetButton = new Button("RESET");
+		stepButton = new Button("STEP");
+		pauseButton = new Button("PLAY");
+		
 		goButton.setOnAction((event) -> {
 			this.isLoading = true;
 			simToLoad = simulationLoader.getValue();
 			System.out.println(simToLoad);
-			
-			
 			});
 		
-		resetButton = new Button("RESET");
 		resetButton.setOnAction((event) -> {
-		this.isReset = true;
+			this.isReset = true;
 		});
-		stepButton = new Button("STEP");
+		
 		stepButton.setOnAction((event) -> {
-		this.isStep = true;
+			this.isStep = true;
 		});
-		pauseButton = new Button("PLAY");
+		
 		pauseButton.setOnAction((event) -> {
 			this.isPause = !this.isPause;
 			
@@ -101,7 +102,6 @@ public class GUI {
 				buttons.getChildren().remove(stepButton);
 			}
 		});
-		
 		
 		buttons = new HBox();
 		buttons.getChildren().add(resetButton);

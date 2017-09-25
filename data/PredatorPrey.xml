@@ -1,7 +1,7 @@
 <Simulation>
 
 	<Attributes>
-		<Type>PredatorPrey</Type>
+		<Type>Predator-Prey</Type>
 		<Title>PredatorPrey Simulation</Title>
 		<Author>Ben Welton</Author>
 		<sharkBreedingDays>4</sharkBreedingDays>
