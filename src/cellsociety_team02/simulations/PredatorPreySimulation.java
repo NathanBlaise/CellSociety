@@ -8,7 +8,6 @@ import cellsociety_team02.cells.Cell;
 import cellsociety_team02.cells.PredatorPreyCell;
 import cellsociety_team02.grid.Grid;
 
-//TODO: Add in breeding calculation to spawn new fish and sharks
 //TODO: Find a better way to handle animal death and spawning
 //TODO: Check if implementation works
 public class PredatorPreySimulation extends Simulation {
@@ -17,9 +16,9 @@ public class PredatorPreySimulation extends Simulation {
 	private final int FISH = 1;
 	private final int SHARK = 2;
 	
-	private int sharkBreedingDays = 4;
-	private int fishBreedingDays = 4;
-	private int sharkStarveDays = 4;
+	private int sharkBreedingDays = 1;
+	private int fishBreedingDays = 1;
+	private int sharkStarveDays = 1;
 	private String layoutFile = "data/PredatorPrey.xml";
 	
 	public PredatorPreySimulation() {
@@ -57,7 +56,7 @@ public class PredatorPreySimulation extends Simulation {
 		List<Cell> emptySpots = availableCells(neighbors, KELP, SHARK);
 		PredatorPreyCell newLocation;
 		
-		if(emptySpots.size() <= 0 && fishSpots.size() <= 0) return;
+		if(emptySpots.size() <= 0 && fishSpots.size() <= 0) newLocation = cell;
 		else if(fishSpots.size() <= 0) newLocation = findNewCell(emptySpots);
 		else newLocation = findNewCell(fishSpots);
 		cell.setNextState(KELP);
@@ -75,9 +74,11 @@ public class PredatorPreySimulation extends Simulation {
 		List<Cell> emptySpots = availableCells(neighbors, KELP, FISH);
 		PredatorPreyCell newLocation;
 		
-		if(emptySpots.size() <= 0) return;
-		else newLocation = findNewCell(emptySpots);
-		if(cell.getNextState() != SHARK) cell.setNextState(KELP);
+		if(emptySpots.size() <= 0) newLocation = cell;
+		else {
+			newLocation = findNewCell(emptySpots);
+			if(cell.getNextState() != SHARK) cell.setNextState(KELP);
+		}
 		
 		if(newLocation.getNextState() != SHARK) fishSurvives(newLocation, cell);
 		else if(newLocation.getNextState() == SHARK) fishIsEaten(newLocation);
@@ -100,6 +101,7 @@ public class PredatorPreySimulation extends Simulation {
 	
 	private void fishIsEaten(PredatorPreyCell shark) {
 		shark.setDaysUntilDeath(sharkStarveDays);
+		shark.setNextState(SHARK);
 	}
 	
 	private void fishSurvives(PredatorPreyCell newLocation, PredatorPreyCell oldLocation) {

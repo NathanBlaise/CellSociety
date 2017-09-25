@@ -1,27 +1,13 @@
 
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import cellsociety_team02.gui.GUI;
 import cellsociety_team02.gui.ScreenDisplay;
 
 public class Main extends Application {
-	public static final String TITLE = "Example JavaFX";
+	public static final String TITLE = "Cell Society";
 	public static final int SIZE = 400;
 	public static final int WIDTH = 600;
 	public static final Paint BACKGROUND = Color.WHITE;
@@ -42,10 +28,7 @@ public class Main extends Application {
 		s.setTitle(TITLE);
 		s.show();
 		// attach "game loop" to timeline to play it
-		
-		
-		
-		myScene.animation.play();
+		myScene.startGameLoop();
 	}
 
 
