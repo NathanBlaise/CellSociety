@@ -143,11 +143,14 @@ public class ScreenDisplay{
 	}
 
 	private void drawGridType() {
+		if(gui.simToLoad == null) return; //add text display here to user
+		
 		if (gui.simToLoad.equals("Fire")) sim = new FireSimulation();
 		else if (gui.simToLoad.equals("Segregation")) sim = new SegregationSimulation();
 		else if (gui.simToLoad.equals("Predator-Prey")) sim = new PredatorPreySimulation();
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
 		gridSize = sim.simulationSize();
+		gui.slideSize.setVal(gridSize);
 		resetGrid();
 	}
 
