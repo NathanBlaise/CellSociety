@@ -1,12 +1,6 @@
 package cellsociety_team02.gui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import javafx.scene.control.ComboBox;
 
 import javafx.beans.value.ObservableValue;
@@ -14,18 +8,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 /**
  * @author supertony
@@ -47,21 +36,16 @@ public class GUI {
 
 	
 	// boolean values for each button
-	protected boolean isReset = false;
-	protected boolean isPause = true;
 	protected boolean isBack = false;
-	protected boolean isStep = false;
-	protected boolean isLoading = false;
 	protected boolean changeSize = false;
 	// create a combo box to select a certain type of simulation
-	private ComboBox<String> simulationLoader;
+	protected ComboBox<String> simulationLoader;
 	protected String simToLoad;
 	protected HashMap<String, Double> values = new HashMap<String, Double>();
 	public SliderBar slideSpeed;
 	public SliderBar slideRatio;
 	public SliderBar slideSize;
 	//help to change the size of gridPane
-	protected boolean isloaded;
 	protected boolean changeSpeed = false;
 	
 	public GUI() {
@@ -76,32 +60,6 @@ public class GUI {
 		resetButton = new Button("RESET");
 		stepButton = new Button("STEP");
 		pauseButton = new Button("PLAY");
-		
-		goButton.setOnAction((event) -> {
-			this.isLoading = true;
-			simToLoad = simulationLoader.getValue();
-			System.out.println(simToLoad);
-			});
-		
-		resetButton.setOnAction((event) -> {
-			this.isReset = true;
-		});
-		
-		stepButton.setOnAction((event) -> {
-			this.isStep = true;
-		});
-		
-		pauseButton.setOnAction((event) -> {
-			this.isPause = !this.isPause;
-			
-			if (this.isPause) {
-				pauseButton.setText("PLAY");
-				buttons.getChildren().add(stepButton);
-			} else {
-				pauseButton.setText("PAUSE");
-				buttons.getChildren().remove(stepButton);
-			}
-		});
 		
 		buttons = new HBox();
 		buttons.getChildren().add(resetButton);
@@ -131,7 +89,7 @@ public class GUI {
 		
 		// add SlideBars
 		SliderBox = new VBox();
-		slideSpeed = new SliderBar("Speed", 0.0,0.0,20.0 );
+		slideSpeed = new SliderBar("Speed", 0.0,1.0,20.0 );
 		slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
 		slideSize = new SliderBar("Size",0.0,5.0,10.0);
 		SliderBox.getChildren().add(slideRatio);

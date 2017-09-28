@@ -1,7 +1,7 @@
 package cellsociety_team02.cells;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -9,17 +9,15 @@ import javafx.scene.shape.Shape;
 public class Cell {
 	
 	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
-	protected int xPos;
-	protected int yPos;
-	protected int currentState;
-	protected int nextState;
-	protected Shape myShape;
-	protected Color[] myColors;
-	protected int myGridSize;
-	protected Cell[][] myGridArray;
-	protected Random rand = new Random();
-	protected boolean movedCell;
-	protected boolean stateChanged = false;
+	private int xPos;
+	private int yPos;
+	private int currentState;
+	private int nextState;
+	private Shape myShape;
+	private Color[] myColors;
+	private int myGridSize;
+	private Cell[][] myGridArray;
+	private boolean stateChanged = false;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
@@ -31,7 +29,7 @@ public class Cell {
 		myGridArray = gridArray;
 	}
 	
-	public ArrayList<Cell> getNeighbours(){
+	public List<Cell> getNeighbours(){
 		myNeighbours.clear();
 		int[] xCoord = {xPos, xPos+1, xPos-1};
 		int[] yCoord = {yPos, yPos+1, yPos-1};
@@ -43,6 +41,15 @@ public class Cell {
 			}
 		}
 		myNeighbours.remove(myGridArray[xPos][yPos]);
+		return myNeighbours;
+	}
+	
+	public List<Cell> getAdjacentNeighbours(){
+		 myNeighbours.clear();
+		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
+		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
+		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South
+		if(xPos>0) myNeighbours.add(myGridArray[xPos-1][yPos]); //North
 		return myNeighbours;
 	}
 	

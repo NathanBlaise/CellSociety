@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 public class XMLHandler {
 	private Document configDoc;
 	
+	//TODO Error handling
+	
 	protected XMLHandler(Simulation simulation) {
 		File layoutFile = simulation.loadInitConfig();
 		configDoc = createParsedDocument(layoutFile);
