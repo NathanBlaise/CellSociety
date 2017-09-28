@@ -9,7 +9,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import cellsociety_team02.gui.GUI;
@@ -17,10 +16,6 @@ import cellsociety_team02.simulations.*;
 import cellsociety_team02.grid.*;
 
 public class ScreenDisplay{
-	private static final String TITLE = "Cell Society";
-	private static final int SIZE = 400;
-	private static final Paint BACKGROUND = Color.WHITE;
-	
 	public double FRAMES_PER_SECOND = 1;
 	public double MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public double SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
@@ -33,6 +28,7 @@ public class ScreenDisplay{
 	private KeyFrame frame;
 	private Grid cellArray;
 	private boolean isStarting = true;
+	private boolean isPaused = true;
 	private int gridSize = 5;
 	private Simulation sim;
 	
@@ -56,90 +52,68 @@ public class ScreenDisplay{
 			root.getChildren().addAll(gui.paneBox);
 			root.getChildren().addAll(gui.SliderBox);
 		}
+		
+		initResetButton();
+		initStepButton();
+		initGoButton();
+		initPauseButton();
+	}
+
+	private void initPauseButton() {
+		gui.pauseButton.setOnAction((event) -> {
+			isPaused = !isPaused;
+			
+			if (isPaused) {
+				animation.pause();
+				gui.pauseButton.setText("PLAY");
+				gui.buttons.getChildren().add(gui.stepButton);
+			} else {
+				animation.play();
+				gui.pauseButton.setText("PAUSE");
+				gui.buttons.getChildren().remove(gui.stepButton);
+			}
+		});
+	}
+
+	private void initGoButton() {
+		gui.goButton.setOnAction((event) -> {
+			gui.simToLoad = gui.simulationLoader.getValue();
+			this.root.getChildren().remove(myGrid);
+			drawGridType();
+		});
+	}
+
+	private void initStepButton() {
+		gui.stepButton.setOnAction((event) -> {
+			updateCellArray();
+		});
+	}
+
+	private void initResetButton() {
+		gui.resetButton.setOnAction((event) -> {
+			if(this.root.getChildren().contains(myGrid)) {
+				this.root.getChildren().remove(myGrid);
+			}
+			resetGrid();
+		});
 	}
 	
 	public Scene getScene() {
 		return Scene;
 	}
 
-	public void setScene(Scene scene) {
-		Scene = scene;
-	}
-
-	public Group getRoot() {
-		return root;
-	}
-
-	public void setRoot(Group root) {
-		this.root = root;
-	}
-	
-	public void startGameLoop() {
-		animation.play();
-	}
-
 	public void step (double elapsedTime) {
-		//change speed
+		updateCellArray();
 		if (gui.changeSpeed) {
-			FRAMES_PER_SECOND = 1+ gui.slideSpeed.speed;
-			MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-			SECOND_DELAY = 100.0/ FRAMES_PER_SECOND;
-			frame  = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-					e -> this.step(SECOND_DELAY));
-			
-		    animation.getKeyFrames().add(frame);
-		     
-			System.out.println(FRAMES_PER_SECOND);
-			
+			animation.setRate(gui.slideSpeed.speed);
 			gui.changeSpeed = false;
 		}
 		
-		//for play button
-		if (!gui.isPause) {
-			updateCellArray();
-		}
-		
-		// After pressing the button "STEP"
-		if (gui.isStep) {
-			updateCellArray();
-			gui.isStep = !gui.isStep;
-		}
-		
-		// After pressing the button "GO"
-		if (gui.isLoading) {
-			this.root.getChildren().remove(myGrid);
-			drawGridType();
-			gui.isLoading = false;
-			gui.isloaded = true;
-		}
-		
-		
-		if (gui.isReset) {
-			if (this.root.getChildren().contains(myGrid)) {
-				this.root.getChildren().remove(myGrid);
-			
-				gui.isReset = false;
-				gui.isloaded = false;
-
-				resetGrid();
-			}
-		}
-		
-		if (gui.changeSize && gui.isloaded) {
-			if (this.root.getChildren().contains(myGrid)) {
-				this.root.getChildren().remove(myGrid);
-			}
-			if (!this.root.getChildren().contains(myGrid)) {
-				//draw a new grid pane
+		if (gui.changeSize) {
 				gridSize = gui.slideRatio.sideLength;
-				drawNewGrid();
-			    addCellsToGrid(gui.simToLoad);
-			    this.root.getChildren().add(myGrid);
+				resetGrid();
 			    gui.changeSize = false;
-			}
-			
-		}
-
+		}	
 	}
 
 	private void drawGridType() {
@@ -155,6 +129,7 @@ public class ScreenDisplay{
 	}
 
 	private void resetGrid() {
+		this.root.getChildren().remove(myGrid);
 		drawNewGrid();
 		this.root.getChildren().add(myGrid);
 		addCellsToGrid(sim.queryAttributes("Type"));
@@ -195,7 +170,6 @@ public class ScreenDisplay{
 	    myGrid.setPadding(new Insets(40,40,40,70)); 
 	}
 
-	// method update CellArray every time
 	public void updateCellArray() {
 		int size = cellArray.getSize();
 		for (int i= 0; i<size;i++) {
@@ -210,7 +184,6 @@ public class ScreenDisplay{
 			}
 		}
 	}
-
 
 	// What to do each time a key is pressed
 	public void handleKeyInput (KeyCode code) {

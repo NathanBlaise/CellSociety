@@ -22,13 +22,10 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start (Stage s) {
-		
 		ScreenDisplay myScene = new ScreenDisplay(WIDTH,SIZE,BACKGROUND);
 		s.setScene(myScene.getScene());
 		s.setTitle(TITLE);
 		s.show();
-		// attach "game loop" to timeline to play it
-		myScene.startGameLoop();
 	}
 
 
