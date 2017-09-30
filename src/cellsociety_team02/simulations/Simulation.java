@@ -13,6 +13,7 @@ public abstract class Simulation {
 	
 	private XMLHandler parser;
 	private Map<String, String> simulationAttributes;
+	private Map<String, String> variableAttributes;
 	private Map<String, String> gridAttributes;
 	private List<Integer> cellAttributes;
 	private List<Color> colorAttributes;
@@ -28,6 +29,7 @@ public abstract class Simulation {
 	
 	private void initAttributes() {
 		simulationAttributes = new HashMap<>();
+		variableAttributes = new HashMap<>();
 		gridAttributes = new HashMap<>();
 		cellAttributes = new ArrayList<>();
 		colorAttributes = new ArrayList<>();
@@ -36,6 +38,7 @@ public abstract class Simulation {
 	private void loadAttributes(String defaultFile, String layoutFile) {
 		parser.tryToLoadDoc(defaultFile, layoutFile);
 		parser.addValueSet(simulationAttributes, "Attributes");
+		parser.addValueSet(variableAttributes, "Variables");
 		parser.addValueSet(gridAttributes, "Grid");
 		parser.addCellSet(cellAttributes, colorAttributes);
 	}
@@ -63,11 +66,11 @@ public abstract class Simulation {
 	}
 	
 	public String queryAttributes(String key) {
-		if(simulationAttributes.containsKey(key)) {
-			return simulationAttributes.get(key);
-		}else {
-			return null;
-		}
+		return simulationAttributes.containsKey(key) ? simulationAttributes.get(key) : null;
+	}
+	
+	public String queryVariables(String key) {
+		return variableAttributes.containsKey(key) ? variableAttributes.get(key) : null;
 	}
 	
 	public abstract void updateCell(Cell cell);

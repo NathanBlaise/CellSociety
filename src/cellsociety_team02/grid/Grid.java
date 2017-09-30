@@ -20,10 +20,7 @@ public class Grid {
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				assignPropState(propState);
-			
-				//TODO subclasses?
-				if(simType.equals("Predator-Prey")) myArray[i][k] = new PredatorPreyCell(i,k,state,colors,200/mySize,mySize,myArray);
-				else myArray[i][k] = new Cell(i,k,state,colors,200/mySize,mySize,myArray);
+				myArray[i][k] = new Cell(i,k,state,colors,200/mySize,mySize,myArray);
 			}
 		}
 	}
