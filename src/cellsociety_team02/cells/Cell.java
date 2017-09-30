@@ -21,6 +21,7 @@ public class Cell {
 	private Color[] myColors;
 	private int myGridSize;
 	private Cell[][] myGridArray;
+	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
@@ -60,6 +61,34 @@ public class Cell {
 	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
 		Random rand = new Random();
 		return neighbours.get(rand.nextInt(neighbours.size()));
+	}
+	
+	public boolean isOccupied() {
+		return(occupants.size() > 0);
+	}
+	
+	public List<CellOccupant> getOccupants(){
+		return occupants;
+	}
+	
+	public void addOccupants(CellOccupant newOccupant, int number) {
+		if(occupants.size() == 0) cellNowOccupied(newOccupant);
+		for(int i = 0; i<number; i++) {
+			occupants.add(newOccupant);
+		}
+	}
+	
+	public void removeOccupant(CellOccupant occupant) {
+		occupants.remove(occupant);
+		if(occupants.size() <= 0) cellIsEmpty();
+	}
+	
+	private void cellIsEmpty() {
+		//remove the drawing
+	}
+	
+	private void cellNowOccupied(CellOccupant newOccupant) {
+		//add the drawing
 	}
 	
 	public int getX() {
