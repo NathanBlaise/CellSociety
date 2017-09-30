@@ -85,5 +85,12 @@ public class Cell {
 	public Shape getShape() {
 		return myShape;
 	}
+	
+	// add an getmyColors() method
+	public Color[] getMyColors() {
+		return myColors;
+	}
+	
+
 
 }
