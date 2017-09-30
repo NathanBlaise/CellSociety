@@ -46,8 +46,6 @@ public abstract class Simulation {
 		loadAttributes(defaultFile, layoutFile);
 	}
 	
-	public abstract void updateCell(Cell cell);
-	
 	public int simulationSize(){
 		return Integer.parseInt(gridAttributes.getOrDefault("Size", DEFAULT_GRID_SIZE));
 	}
@@ -72,8 +70,10 @@ public abstract class Simulation {
 		}
 	}
 	
-	public void addEmptyCell(Cell cell) {}
+	public abstract void updateCell(Cell cell);
 	
-	public void initValues(Object object) {}
+	public void primeCell(Cell cell) {};
 	
+	public void clearValues() {};
+
 }

@@ -19,6 +19,9 @@ import javafx.scene.paint.Color;
 public class XMLHandler {
 	private Document configDoc;
 	
+	//TODO possibly on front end, but make sure that it doesn't try to read non-xml or empty file
+	//TODO add in specific cell location
+	
 	protected void tryToLoadDoc(String defaultFile, String layoutFile) {
 		File layout = new File(layoutFile);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); //www.tutorialspoint.com

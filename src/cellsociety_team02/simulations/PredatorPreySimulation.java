@@ -6,7 +6,6 @@ import java.util.Random;
 
 import cellsociety_team02.cells.Cell;
 import cellsociety_team02.cells.PredatorPreyCell;
-import cellsociety_team02.grid.Grid;
 
 //TODO: Find a better way to handle animal death and spawning
 //TODO: Check if implementation works
@@ -38,6 +37,18 @@ public class PredatorPreySimulation extends Simulation {
 		}
 		if(queryAttributes("sharkStarveDays") != null) {
 			sharkStarveDays = Integer.parseInt(queryAttributes("sharkStarveDays"));
+		}
+	}
+	
+
+	@Override
+	public void primeCell(Cell cell) {
+		PredatorPreyCell predCell = (PredatorPreyCell) cell;
+		if(cell.getCurrentState() == FISH) {
+			predCell.setDaysUntilBreeding(fishBreedingDays);
+		}else if(cell.getCurrentState() == SHARK) {
+			predCell.setDaysUntilBreeding(sharkBreedingDays);
+			predCell.setDaysUntilDeath(sharkStarveDays);
 		}
 	}
 	
@@ -138,21 +149,6 @@ public class PredatorPreySimulation extends Simulation {
 		if(shark.getDaysUntilDeath() <= 0) shark.setNextState(KELP);
 	}
 	
-	public void initValues(Object object) {
-		Grid grid = (Grid) object;
-		for(int i = 0; i<grid.getArr().length; i++) {
-			for(int j= 0; j<grid.getArr().length; j++) {
-				PredatorPreyCell cell = (PredatorPreyCell) grid.getArr()[i][j];
-				if(cell.getCurrentState() == FISH) {
-					cell.setDaysUntilBreeding(fishBreedingDays);
-				}else if(cell.getCurrentState() == SHARK) {
-					cell.setDaysUntilBreeding(sharkBreedingDays);
-					cell.setDaysUntilDeath(sharkStarveDays);
-				}
-			}
-		}
-	}
-	
 	//these methods will only be used when we implement different guis for different simulations
 	public void changeDaysUntilStarvation(int daysUntil) {
 		sharkStarveDays = daysUntil;
@@ -165,5 +161,4 @@ public class PredatorPreySimulation extends Simulation {
 	public void changeFishBreedTime(int daysUntil) {
 		fishBreedingDays = daysUntil;
 	}
-
 }

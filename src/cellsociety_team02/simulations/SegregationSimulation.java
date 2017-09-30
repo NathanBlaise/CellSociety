@@ -28,6 +28,16 @@ public class SegregationSimulation extends Simulation{
 	}
 	
 	@Override
+	public void primeCell(Cell cell) {
+		if(cell.getCurrentState() == EMPTY) emptyCells.add(cell);
+	}
+	
+	@Override
+	public void clearValues() {
+		emptyCells = new LinkedList<>();
+	}
+	
+	@Override
 	public void updateCell(Cell cell) {
 		if(cell.getCurrentState() == EMPTY) return;
 		
@@ -49,19 +59,19 @@ public class SegregationSimulation extends Simulation{
 		}
 	}
 	
-	public void addEmptyCell(Cell cell) {
-		emptyCells.add(cell);
-	}
-	
 	private void moveToEmptyLocation(Cell cell) {
 		Cell newLocation = emptyCells.poll();
 		newLocation.setNextState(cell.getCurrentState());
 		cell.setNextState(EMPTY);
-		this.addEmptyCell(cell);
+		emptyCells.add(cell);
 	}
+	
+	
 	
 	//for later gui interactivity
 	public void changePercentOfNeighbors(int newPercent) {
 		percentOfNeighbors = newPercent;
 	}
+
+
 }
