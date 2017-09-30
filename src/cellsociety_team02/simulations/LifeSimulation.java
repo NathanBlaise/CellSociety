@@ -13,7 +13,8 @@ public class LifeSimulation extends Simulation {
 	public LifeSimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
-		super.loadAttributes();
+		super.defaultFile = this.layoutFile;
+		super.changeInitConfig(layoutFile);
 	}
 	
 	@Override
@@ -24,11 +25,10 @@ public class LifeSimulation extends Simulation {
 	
 	private void calculateState(Cell cell) {
 		int total = getNumNeighbours(cell);
-		
 		if(cell.getCurrentState() == ALIVE && total == 2) cell.setNextState(ALIVE);
 		if(total == 3) cell.setNextState(ALIVE);	
 	}
-
+	
 	private int getNumNeighbours(Cell cell) {
 		List<Cell> neighbours = cell.getNeighbours();
 		int total = 0;

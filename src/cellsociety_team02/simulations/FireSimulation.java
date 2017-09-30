@@ -15,7 +15,8 @@ public class FireSimulation extends Simulation{
 	public FireSimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
-		super.loadAttributes();
+		super.defaultFile = this.layoutFile;
+		super.changeInitConfig(layoutFile);
 		if(super.queryAttributes("spreadChance") != null) {
 			spreadChance = Double.parseDouble(queryAttributes("spreadChance"));
 		}

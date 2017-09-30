@@ -19,39 +19,42 @@ import javafx.scene.paint.Color;
 public class XMLHandler {
 	private Document configDoc;
 	
-	//TODO Error handling
+	//TODO possibly on front end, but make sure that it doesn't try to read non-xml or empty file
+	//TODO add in specific cell location
 	
-	protected XMLHandler(Simulation simulation) {
-		File layoutFile = simulation.loadInitConfig();
-		configDoc = createParsedDocument(layoutFile);
-	}
-	
-	protected Document createParsedDocument(File layoutFile) {
+	protected void tryToLoadDoc(String defaultFile, String layoutFile) {
+		File layout = new File(layoutFile);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); //www.tutorialspoint.com
         try {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(layoutFile);
+			Document doc = dBuilder.parse(layout);
 	        doc.getDocumentElement().normalize();
-	        return doc;
+	        configDoc = doc;
 		} catch (ParserConfigurationException | SAXException | IOException e) {
+			if(!defaultFile.equals(layoutFile)) {
+				tryToLoadDoc(defaultFile, defaultFile);
+				System.out.println("There was a problem parsing. Default configuration was used instead\n");
+			}
 			e.printStackTrace();
-			return null;
 		}
-        
 	}
 	
-	protected void addAttributeSet(Map<String, String> simulationAttributes) {
-		NodeList allAttributes = configDoc.getElementsByTagName("Attributes");
+	protected void addValueSet(Map<String, String> simulationValues, String valName) {
+		NodeList allAttributes = configDoc.getElementsByTagName(valName);
 		
-		if(allAttributes.getLength() > 1) {
-			System.out.println("Error. There should not be more than one attribute section");
+		if(allAttributes.getLength() == 0) {
+			System.out.println("The " + valName +  " section was not found\n");
 			return;
+		}
+		if(allAttributes.getLength() > 1) {
+			System.out.println("There should not be more than one " + valName + " section.\n");
+			System.out.println("Only the first block will be used.\n");
 		}
 		
 		Element attributes = (Element) allAttributes.item(0);
 		NodeList vals = attributes.getElementsByTagName("*");
 		for(int i = 0; i<vals.getLength(); i++) {
-			simulationAttributes.put(vals.item(i).getNodeName(), vals.item(i).getTextContent());
+			simulationValues.put(vals.item(i).getNodeName(), vals.item(i).getTextContent());
 		}
 	}
 	
@@ -64,13 +67,6 @@ public class XMLHandler {
 			cellSet.add(Integer.parseInt(proportionVal));
 			colorSet.add(Color.web(color));
 		}
-	}
-	
-	protected int addGridParameters() {
-		NodeList grids = configDoc.getElementsByTagName("Grid");
-		Element grid = (Element) grids.item(0);
-		String size = grid.getElementsByTagName("Size").item(0).getTextContent();
-		return Integer.parseInt(size);
 	}
 
 }
