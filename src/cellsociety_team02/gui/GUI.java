@@ -53,7 +53,7 @@ public class GUI {
 	}
 	
 	protected void init() {
-		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey");
+		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS");
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");
@@ -91,7 +91,7 @@ public class GUI {
 		SliderBox = new VBox();
 		slideSpeed = new SliderBar("Speed", 0.0,1.0,20.0 );
 		slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
-		slideSize = new SliderBar("Size",0.0,5.0,10.0);
+		slideSize = new SliderBar("Size",0.0,5.0,50.0);
 		SliderBox.getChildren().add(slideRatio);
 		SliderBox.getChildren().add(slideSize);
 		SliderBox.getChildren().add(slideSpeed);

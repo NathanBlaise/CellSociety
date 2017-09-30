@@ -2,7 +2,6 @@ package cellsociety_team02.simulations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cellsociety_team02.cells.Cell;
 
@@ -67,8 +66,8 @@ public class PredatorPreySimulation extends Simulation {
 		Cell newLocation;
 		
 		if(emptySpots.size() <= 0 && fishSpots.size() <= 0) newLocation = cell;
-		else if(fishSpots.size() <= 0) newLocation = findNewCell(emptySpots);
-		else newLocation = findNewCell(fishSpots);
+		else if(fishSpots.size() <= 0) newLocation = cell.chooseRandomNeighbour(emptySpots);
+		else newLocation = cell.chooseRandomNeighbour(fishSpots);
 		cell.setNextState(KELP);
 		
 		if(newLocation.getNextState() == FISH) fishIsEaten(newLocation);
@@ -86,7 +85,7 @@ public class PredatorPreySimulation extends Simulation {
 		
 		if(emptySpots.size() <= 0) newLocation = cell;
 		else {
-			newLocation = findNewCell(emptySpots);
+			newLocation = cell.chooseRandomNeighbour(emptySpots);
 			if(cell.getNextState() != SHARK) cell.setNextState(KELP);
 		}
 		
@@ -102,11 +101,6 @@ public class PredatorPreySimulation extends Simulation {
 			}
 		}
 		return emptySpots;
-	}
-	
-	private Cell findNewCell(List<Cell> cells) {
-		Random rand = new Random();
-		return cells.get(rand.nextInt(cells.size()));
 	}
 	
 	private void fishIsEaten(Cell shark) {

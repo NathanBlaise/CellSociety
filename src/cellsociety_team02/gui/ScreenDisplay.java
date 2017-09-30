@@ -121,6 +121,7 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Segregation")) sim = new SegregationSimulation();
 		else if (gui.simToLoad.equals("Predator-Prey")) sim = new PredatorPreySimulation();
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
+		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		gridSize = sim.simulationSize();
 		gui.slideSize.setVal(gridSize);
 		resetGrid();
@@ -131,11 +132,11 @@ public class ScreenDisplay{
 		drawNewGrid();
 		this.root.getChildren().add(myGrid);
 		sim.clearValues();
-		addCellsToGrid(sim.queryAttributes("Type"));
+		addCellsToGrid();
 	}
 
-	private void addCellsToGrid(String type) {
-		cellArray = new Grid(gridSize,sim.cellFrequencies(),type,sim.cellColors());
+	private void addCellsToGrid() {
+		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
 		
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
