@@ -12,32 +12,48 @@ public class Grid {
 	private Random rand = new Random();
 	private int state;
 			
-	public Grid(int size, int[] propState, String simType, Color[] colors) {
+	public Grid(int size, int[] propState, Color[] colors) {
 		mySize = size;
 		myArray = new Cell[size][size];
+
+		int[] propDistribution = generateStateDistr(propState);
 		
 		//Populate grid with appropriate cells
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
-				assignPropState(propState);
-			
-				//TODO subclasses?
-				if(simType.equals("Predator-Prey")) myArray[i][k] = new PredatorPreyCell(i,k,state,colors,200/mySize,mySize,myArray);
-				else myArray[i][k] = new Cell(i,k,state,colors,200/mySize,mySize,myArray);
+				assignPropState(propDistribution);
+				myArray[i][k] = new Cell(i,k,state,colors,200/mySize,mySize,myArray);
 			}
 		}
 	}
 
-	private void assignPropState(int[] propState) {
-		//TODO what if four states
-		int randState = rand.nextInt(100);
-		if(randState < propState[0]) state = 0;
-		else if(randState > propState[0] && randState < (propState[1] + propState[0])) state = 1;
-		else if(randState > ((propState[1] + propState[0]))) state = 2;
+	private void assignPropState(int[] propDistr) {
+		state = propDistr[rand.nextInt(propDistr.length)];
 	}
 	
-	private void assignSpecificState() {
-		//TODO
+	private int[] generateStateDistr(int[] propState) {
+		correctPercentages(propState);
+		int[] distr = new int[100];
+		int count = 0;
+		for(int i=0; i<propState.length; i++) {
+			for(int j=0; j<propState[i]; j++) {
+				distr[count++] = i;
+			}
+		}
+		return distr;
+	}
+		
+	private void correctPercentages(int[] propState) {
+		int totalPercent = 0;
+		
+		for(int prop:propState) {
+			totalPercent += prop;
+		}
+		if(totalPercent == 100) return;
+		
+		for(int i = 0; i<propState.length; i++) {
+			propState[i] = (int) (((double) propState[i]/totalPercent) * 100);
+		}
 	}
 	
 	public int getSize() {

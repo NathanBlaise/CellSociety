@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import cellsociety_team02.gui.GUI;
 import cellsociety_team02.simulations.*;
+import cellsociety_team02.cells.Cell;
 import cellsociety_team02.grid.*;
 
 public class ScreenDisplay{
@@ -91,9 +92,6 @@ public class ScreenDisplay{
 
 	private void initResetButton() {
 		gui.resetButton.setOnAction((event) -> {
-			if(this.root.getChildren().contains(myGrid)) {
-				this.root.getChildren().remove(myGrid);
-			}
 			resetGrid();
 		});
 	}
@@ -123,6 +121,7 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Segregation")) sim = new SegregationSimulation();
 		else if (gui.simToLoad.equals("Predator-Prey")) sim = new PredatorPreySimulation();
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
+		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		gridSize = sim.simulationSize();
 		gui.slideSize.setVal(gridSize);
 		resetGrid();
@@ -132,23 +131,18 @@ public class ScreenDisplay{
 		this.root.getChildren().remove(myGrid);
 		drawNewGrid();
 		this.root.getChildren().add(myGrid);
-		addCellsToGrid(sim.queryAttributes("Type"));
-		
-		if(gui.simToLoad.equals("Predator-Prey")) {
-			sim.initValues(cellArray);
-		}
+		sim.clearValues();
+		addCellsToGrid();
 	}
 
-	private void addCellsToGrid(String type) {
-		cellArray = new Grid(gridSize,sim.cellFrequencies(),type,sim.cellColors());
+	private void addCellsToGrid() {
+		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
 		
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
-				myGrid.add(cellArray.getArr()[i][j].getShape(), i,j);
-				
-				if(type.equals("Segregation") && cellArray.getArr()[i][j].getCurrentState() == 0) {
-					sim.addEmptyCell(cellArray.getArr()[i][j]);
-				}
+				Cell cell = cellArray.getArr()[i][j];
+				myGrid.add(cell.getShape(), i,j);
+				sim.primeCell(cell);
 			}
 		}
 	}
@@ -177,7 +171,6 @@ public class ScreenDisplay{
 				sim.updateCell(cellArray.getArr()[i][j]);
 			}
 		}
-		System.out.println("one");
 		for (int i= 0; i<size;i++) {
 			for (int j = 0; j<size; j++) {
 				cellArray.getArr()[i][j].updateState();

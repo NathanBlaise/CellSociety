@@ -1,6 +1,5 @@
 package cellsociety_team02.simulations;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,46 +9,48 @@ import cellsociety_team02.cells.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class Simulation {
-	private Cell cellType;
+	private final String DEFAULT_GRID_SIZE = "5";
+	
+	private XMLHandler parser;
 	private Map<String, String> simulationAttributes;
+	private Map<String, String> variableAttributes;
+	private Map<String, String> gridAttributes;
 	private List<Integer> cellAttributes;
 	private List<Color> colorAttributes;
-	private int gridSize;
 	
 	protected String layoutFile;
+	protected String defaultFile;
 	
 	
 	public Simulation(){
+		parser = new XMLHandler();
 		initAttributes();
 	}
 	
 	private void initAttributes() {
 		simulationAttributes = new HashMap<>();
+		variableAttributes = new HashMap<>();
+		gridAttributes = new HashMap<>();
 		cellAttributes = new ArrayList<>();
 		colorAttributes = new ArrayList<>();
 	}
 	
-	protected void loadAttributes() {
-		XMLHandler parser = new XMLHandler(this);
-		parser.addAttributeSet(simulationAttributes);
+	private void loadAttributes(String defaultFile, String layoutFile) {
+		parser.tryToLoadDoc(defaultFile, layoutFile);
+		parser.addValueSet(simulationAttributes, "Attributes");
+		parser.addValueSet(variableAttributes, "Variables");
+		parser.addValueSet(gridAttributes, "Grid");
 		parser.addCellSet(cellAttributes, colorAttributes);
-		gridSize = parser.addGridParameters();
 	}
 	
-	protected File loadInitConfig() {
-		return new File(layoutFile);
-	}
-	
-	public void changeInitConfig(String file) {
-		layoutFile = file;
+	public void changeInitConfig(String newLayout) {
+		layoutFile = newLayout;
 		initAttributes();
-		loadAttributes();
+		loadAttributes(defaultFile, layoutFile);
 	}
-	
-	public abstract void updateCell(Cell cell);
 	
 	public int simulationSize(){
-		return gridSize;
+		return Integer.parseInt(gridAttributes.getOrDefault("Size", DEFAULT_GRID_SIZE));
 	}
 	
 	public int[] cellFrequencies(){
@@ -64,20 +65,18 @@ public abstract class Simulation {
 		return colorAttributes.toArray(new Color[colorAttributes.size()]);
 	}
 	
-	public void changeCellType(Cell type) {
-		cellType = type;
-	}
-	
 	public String queryAttributes(String key) {
-		if(simulationAttributes.containsKey(key)) {
-			return simulationAttributes.get(key);
-		}else {
-			return null;
-		}
+		return simulationAttributes.containsKey(key) ? simulationAttributes.get(key) : null;
 	}
 	
-	public void addEmptyCell(Cell cell) {}
+	public String queryVariables(String key) {
+		return variableAttributes.containsKey(key) ? variableAttributes.get(key) : null;
+	}
 	
-	public void initValues(Object object) {}
+	public abstract void updateCell(Cell cell);
 	
+	public void primeCell(Cell cell) {};
+	
+	public void clearValues() {};
+
 }

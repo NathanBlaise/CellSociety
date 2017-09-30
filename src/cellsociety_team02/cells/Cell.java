@@ -2,6 +2,8 @@ package cellsociety_team02.cells;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -13,6 +15,8 @@ public class Cell {
 	private int yPos;
 	private int currentState;
 	private int nextState;
+	private int survivalVal;
+	private int replicationVal;
 	private Shape myShape;
 	private Color[] myColors;
 	private int myGridSize;
@@ -53,6 +57,11 @@ public class Cell {
 		return myNeighbours;
 	}
 	
+	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
+		Random rand = new Random();
+		return neighbours.get(rand.nextInt(neighbours.size()));
+	}
+	
 	public int getX() {
 		return xPos;
 	}
@@ -84,6 +93,22 @@ public class Cell {
 	
 	public Shape getShape() {
 		return myShape;
+	}
+	
+	public int survivalTime() {
+		return survivalVal;
+	}
+	
+	public int replicationTime() {
+		return replicationVal;
+	}
+	
+	public void setSurvivalTime(int newDaysUntil) {
+		survivalVal = newDaysUntil;
+	}
+	
+	public void setReplicationTime(int newDaysUntil) {
+		replicationVal = newDaysUntil;
 	}
 
 }
