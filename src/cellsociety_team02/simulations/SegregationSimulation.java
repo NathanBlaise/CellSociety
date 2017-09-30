@@ -19,7 +19,8 @@ public class SegregationSimulation extends Simulation{
 	public SegregationSimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
-		super.loadAttributes();
+		super.defaultFile = this.layoutFile;
+		super.changeInitConfig(layoutFile);
 		emptyCells = new LinkedList<>();
 		if(queryAttributes("percentOfNeighbors") != null) {
 			percentOfNeighbors = Double.parseDouble(queryAttributes("percentOfNeighbors"));
@@ -33,6 +34,7 @@ public class SegregationSimulation extends Simulation{
 		List<Cell> neighbours = cell.getNeighbours();
 		int total = 0;
 		int occupiedSpots = 0;
+		
 		for(Cell neighbour:neighbours) {
 			if(neighbour.getCurrentState() == cell.getCurrentState()) {
 				total++;
@@ -51,7 +53,7 @@ public class SegregationSimulation extends Simulation{
 		emptyCells.add(cell);
 	}
 	
-	public void moveToEmptyLocation(Cell cell) {
+	private void moveToEmptyLocation(Cell cell) {
 		Cell newLocation = emptyCells.poll();
 		newLocation.setNextState(cell.getCurrentState());
 		cell.setNextState(EMPTY);

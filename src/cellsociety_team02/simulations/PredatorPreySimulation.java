@@ -24,7 +24,8 @@ public class PredatorPreySimulation extends Simulation {
 	public PredatorPreySimulation() {
 		super();
 		super.layoutFile = this.layoutFile;
-		super.loadAttributes();
+		super.defaultFile = this.layoutFile;
+		super.changeInitConfig(layoutFile);
 		setLifeValues();
 	}
 	
