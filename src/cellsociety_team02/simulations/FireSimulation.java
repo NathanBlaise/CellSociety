@@ -1,7 +1,5 @@
 package cellsociety_team02.simulations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cellsociety_team02.cells.*;
@@ -34,7 +32,7 @@ public class FireSimulation extends Simulation{
 	}
 	
 	private void checkSpread(Cell cell) {
-		List<Cell> neighbours = cell.getNeighbours();
+		List<Cell> neighbours = cell.getAdjacentNeighbours();
 
 		if(Math.random() > variableVals.get(spreadChanceIndex)) return;
 

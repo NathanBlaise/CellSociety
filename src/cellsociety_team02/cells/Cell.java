@@ -14,6 +14,7 @@ import javafx.scene.shape.Shape;
 public class Cell extends StackPane {
 	
 	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
+	protected ArrayList<Cell> myAdjacentNeighbours = new ArrayList<Cell>();
 	private int xPos;
 	private int yPos;
 	private int currentState;
@@ -59,12 +60,12 @@ public class Cell extends StackPane {
 	}
 	
 	public List<Cell> getAdjacentNeighbours(){
-		 myNeighbours.clear();
-		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
-		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
-		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South
-		if(xPos>0) myNeighbours.add(myGridArray[xPos-1][yPos]); //North
-		return myNeighbours;
+		 myAdjacentNeighbours.clear();
+		if(yPos<myGridSize - 1) myAdjacentNeighbours.add(myGridArray[xPos][yPos+1]); //East
+		if(yPos>0) myAdjacentNeighbours.add(myGridArray[xPos][yPos-1]); //West
+		if(xPos<myGridSize - 1) myAdjacentNeighbours.add(myGridArray[xPos+1][yPos]); //South
+		if(xPos>0) myAdjacentNeighbours.add(myGridArray[xPos-1][yPos]); //North
+		return myAdjacentNeighbours;
 	}
 
 

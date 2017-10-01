@@ -70,7 +70,7 @@ public class PredatorPreySimulation extends Simulation {
 	}
 
 	private void updateFishLocation(Cell cell) {
-		List<Cell> neighbors = cell.getNeighbours();
+		List<Cell> neighbors = cell.getAdjacentNeighbours();
 		List<Cell> emptySpots = availableCells(neighbors, KELP, FISH);
 		Cell newLocation;
 		

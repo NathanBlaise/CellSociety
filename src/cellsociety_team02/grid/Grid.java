@@ -10,7 +10,6 @@ public class Grid {
 	
 	protected int mySize;
 	protected Cell[][] myArray;
-	protected ArrayList<Cell> cellNeighbours = new ArrayList<Cell>();
 	private Random rand = new Random();
 	protected int state;
 	
@@ -43,7 +42,7 @@ public class Grid {
 	}
 	
 	protected void storeNeighbours(Cell cell){
-		cellNeighbours.clear();
+		ArrayList<Cell> cellNeighbours = new ArrayList<Cell>();
 		int[] xCoord = {cell.getX(), cell.getX()+1, cell.getX()-1};
 		int[] yCoord = {cell.getY(), cell.getY()+1, cell.getY()-1};
 		for(int x: xCoord) {

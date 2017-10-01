@@ -1,5 +1,7 @@
 package cellsociety_team02.grid;
 
+import java.util.ArrayList;
+
 import cellsociety_team02.cells.Cell;
 import javafx.scene.paint.Color;
 
@@ -11,7 +13,7 @@ public class ToroidalGrid extends Grid{
 	
 	@Override
 	protected void storeNeighbours(Cell cell){
-		cellNeighbours.clear();
+		ArrayList<Cell> cellNeighbours = new ArrayList<Cell>();
 		int[] xCoord = {cell.getX(), cell.getX()+1, cell.getX()-1};
 		int[] yCoord = {cell.getY(), cell.getY()+1, cell.getY()-1};
 		for(int x: xCoord) {
