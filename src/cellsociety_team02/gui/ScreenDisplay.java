@@ -235,9 +235,9 @@ public class ScreenDisplay{
 					alert.setTitle("Confirmation Dialog to Change Color");
 					alert.setHeaderText("Swaggy T helps you to change color!");
 					alert.setContentText("This is a " + type + " cell"+ "\n" + "Choose the color you want to change\n" );
-					//Image image = new Image (getClass().getClassLoader().getResourceAsStream("dukeDqd.JPG"));
-					//ImageView imageView = new ImageView(image);
-					//alert.setGraphic(imageView);
+					Image image = new Image (getClass().getClassLoader().getResourceAsStream("dukeDqd.JPG"));
+					ImageView imageView = new ImageView(image);
+					alert.setGraphic(imageView);
 					
 					ButtonType buttonTypeOne = new ButtonType("One");
 					ButtonType buttonTypeTwo = new ButtonType("Two");

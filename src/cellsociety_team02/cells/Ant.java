@@ -6,6 +6,7 @@ public class Ant extends CellOccupant {
 	private final int ANT_VIEW_SCOPE = 3;
 	private final int DESIRED_OCCUPANCY = 10;
 	private final String ANT_IMAGE = "ant.png";
+	
 	private boolean foodItem = false;
 	
 	public Ant(Cell cell) {

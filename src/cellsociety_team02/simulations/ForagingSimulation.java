@@ -1,6 +1,7 @@
 package cellsociety_team02.simulations;
 
 import java.util.List;
+import java.util.Random;
 
 import cellsociety_team02.cells.Ant;
 import cellsociety_team02.cells.Cell;
@@ -11,6 +12,7 @@ public class ForagingSimulation extends Simulation{
 	private final int FOOD = 1;
 	private final int NEST = 2;
 	
+	private Random rand = new Random();
 	private int newAntsBorn = 2;
 	private int maxPheromones = 100;
 	private String layoutFile = "data/Foraging.xml";
@@ -25,13 +27,12 @@ public class ForagingSimulation extends Simulation{
 	@Override
 	public void primeCell(Cell cell) {
 		//TODO non hard programmed nest and food location, pull this from xml
-		if(cell.getX() == 2 && cell.getY() == 2) {
+		if(cell.getX() == 0 && cell.getY() == 0) {
 			cell.setNextState(FOOD);
 			cell.updateState();
 		}else if(cell.getX() == 4 && cell.getY() == 4) {
 			cell.setNextState(NEST);
 			cell.updateState();
-			cell.addOccupants(new Ant(cell), 2);
 		}else
 			cell.setNextState(EMPTY);
 			cell.updateState();
@@ -43,7 +44,8 @@ public class ForagingSimulation extends Simulation{
 			for(CellOccupant ant:cell.getOccupants()) {
 				updateAnt((Ant) ant, cell);
 			}	
-		}else if(cell.getCurrentState() == NEST) {
+		}
+		if(cell.getCurrentState() == NEST) {
 			cell.addOccupants(new Ant(cell), newAntsBorn);
 		}
 	}
@@ -60,15 +62,14 @@ public class ForagingSimulation extends Simulation{
 	private void returnToNest(Ant ant, Cell cell) {
 		if(cell.getCurrentState() == FOOD) {
 			Cell newOrientation = mostHomePheromones(cell.getNeighbours());
-			ant.updateOrientation(newOrientation);
+			ant.changeOrientation(newOrientation);
 		}
 		Cell newLocation = mostHomePheromones(ant.getViewableNeighbours());
 		if(newLocation == null) {
 			newLocation = mostHomePheromones(ant.getNonViewableNeighbours());
 		}
 		if(newLocation != null) {
-			dropHomePheromones(cell);
-			ant.updateOrientation(newLocation);
+			dropFoodPheromones(cell);
 			ant.move(newLocation);
 			if(newLocation.getCurrentState() == NEST) {
 				ant.foodDropped();
@@ -79,15 +80,14 @@ public class ForagingSimulation extends Simulation{
 	private void findFood(Ant ant, Cell cell) {
 		if(cell.getCurrentState() == NEST) {
 			Cell newOrientation = mostFoodPheromones(cell.getNeighbours());
-			ant.updateOrientation(newOrientation);
+			ant.changeOrientation(newOrientation);
 		}
 		Cell newLocation = mostFoodPheromones(ant.getViewableNeighbours());
 		if(newLocation == null) {
 			newLocation = mostFoodPheromones(ant.getNonViewableNeighbours());
 		}
 		if(newLocation != null) {
-			dropFoodPheromones(cell);
-			ant.updateOrientation(newLocation);
+			dropHomePheromones(cell);
 			ant.move(newLocation);
 			if(newLocation.getCurrentState() == FOOD) {
 				ant.foundFood();
@@ -97,6 +97,8 @@ public class ForagingSimulation extends Simulation{
 	
 	
 	private Cell mostHomePheromones(List<Cell> neighbours) {
+		if(neighbours.size() <= 0) return null;
+		
 		int max = 0;
 		Cell newLocation = null;
 		for(Cell neighbour:neighbours) {
@@ -105,10 +107,12 @@ public class ForagingSimulation extends Simulation{
 				max = neighbour.survivalTime();
 			}
 		}
-		return newLocation;
+		return (newLocation != null) ? newLocation : neighbours.get(rand.nextInt(neighbours.size()));
 	}
 	
 	private Cell mostFoodPheromones(List<Cell> neighbours) {
+		if(neighbours.size() <= 0) return null;
+		
 		int max = 0;
 		Cell newLocation = null;
 		for(Cell neighbour:neighbours) {
@@ -117,7 +121,8 @@ public class ForagingSimulation extends Simulation{
 				max = neighbour.replicationTime();
 			}
 		}
-		return newLocation;
+		if(newLocation == null) newLocation = neighbours.get(rand.nextInt(neighbours.size()));
+		return (newLocation != null) ? newLocation : neighbours.get(rand.nextInt(neighbours.size()));
 	}
 	
 	private int maxHomePheromonesVal(Cell newLocation) {

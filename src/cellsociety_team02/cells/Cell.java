@@ -21,6 +21,7 @@ public class Cell extends StackPane {
 	private int survivalVal;
 	private int replicationVal;
 	private Shape cellBackground;
+	private ImageView cellOverlay;
 	private Color[] myColors;
 	private int myGridSize;
 	private Cell[][] myGridArray;
@@ -55,6 +56,15 @@ public class Cell extends StackPane {
 		return myNeighbours;
 	}
 	
+	public Cell getNeighbour(int x, int y) {
+		for(Cell cell:this.getNeighbours()) {
+			if(cell.getX() == x && cell.getY() == y) {
+				return cell;
+			}
+		}
+		return null;
+	}
+	
 	public List<Cell> getAdjacentNeighbours(){
 		 myNeighbours.clear();
 		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
@@ -78,7 +88,7 @@ public class Cell extends StackPane {
 	}
 	
 	public List<CellOccupant> getOccupants(){
-		return occupants;
+		return new ArrayList<CellOccupant>(occupants);
 	}
 	
 	public void addOccupants(CellOccupant newOccupant, int number) {
@@ -95,17 +105,19 @@ public class Cell extends StackPane {
 	}
 	
 	private void cellIsEmpty() {
-		this.getChildren().remove(this.getChildren().size()-1);
+		if(this.getChildren().contains(cellOverlay)) {
+			this.getChildren().remove(cellOverlay);
+		}
 	}
 	
 	private void cellNowOccupied(CellOccupant newOccupant) {
 		maxOccupancy = newOccupant.getDesiredOccupancy();
 
 		Image image = newOccupant.drawImage();
-		ImageView occupantImage = new ImageView(image);
-		occupantImage.setFitHeight(cellBackground.getBoundsInParent().getHeight()/1.5);
-		occupantImage.setFitWidth(cellBackground.getBoundsInParent().getWidth()/1.5);
-		this.getChildren().add(occupantImage);
+		cellOverlay = new ImageView(image);
+		cellOverlay.setFitHeight(cellBackground.getBoundsInParent().getHeight()/1.5);
+		cellOverlay.setFitWidth(cellBackground.getBoundsInParent().getWidth()/1.5);
+		this.getChildren().add(cellOverlay);
 	}
 	
 	public int getX() {
