@@ -59,7 +59,6 @@ public class ScreenDisplay{
 	    animation.getKeyFrames().add(frame);
 	     
 		Scene = new Scene(root, width, height, background);
-		Scene.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
 		drawNewGrid();
 		gui = new GUI();
 		
@@ -230,62 +229,6 @@ public class ScreenDisplay{
 
 	// What to do each time a key is pressed
 	public void handleMouseInput (double x, double y) {
-		boolean isPopedOut = false;
-		int size = cellArray.getSize();
-		for (int i= 0; i<size;i++) {
-			for (int j = 0; j<size; j++) {
-				
-				double testX = x - cellArray.getArr()[i][j].getLayoutX();
-				double testY = y - cellArray.getArr()[i][j].getLayoutY();
-				
-				if (testX < 0) {
-					testX *= -1;
-				}
-				if (testY < 0){
-					testY *= -1;
-				}
-
-				if (cellArray.getArr()[i][j].contains(testX, testY) && (!isPopedOut)) {
-					Cell selected = cellArray.getArr()[i][j];
-					isPopedOut = true;
-					String type = gui.simToLoad;
-					//Color color = cellArray.getArr()[i][j].getMyColors()[cellArray.getArr()[i][j].getCurrentState()];
-					// pop up an alert box
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("Confirmation Dialog to Change Color");
-					alert.setHeaderText("Swaggy T helps you to change color!");
-					alert.setContentText("This is a " + type + " cell"+ "\n" + "Choose the color you want to change\n" );
-//					Image image = new Image (getClass().getClassLoader().getResourceAsStream("dukeDqd.JPG"));
-//					ImageView imageView = new ImageView(image);
-//					alert.setGraphic(imageView);
-					
-					ButtonType buttonTypeOne = new ButtonType("One");
-					ButtonType buttonTypeTwo = new ButtonType("Two");
-					ButtonType buttonTypeThree = new ButtonType("Three");
-					ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-					alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == buttonTypeOne){
-					    // ... user chose "One"
-						selected.setNextState(0);
-						selected.updateState();
-						
-					} else if (result.get() == buttonTypeTwo) {
-					    // ... user chose "Two"
-						selected.setNextState(1);
-						selected.updateState();
-						
-					} else if (result.get() == buttonTypeThree) {
-					    // ... user chose "Three"
-						selected.setNextState(2);
-						selected.updateState();
-					} else {
-					    // ... user chose CANCEL or closed the dialog
-					}
-				}
-			}
-		}
+		
 	}
 }
