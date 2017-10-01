@@ -130,6 +130,10 @@ public class Cell extends StackPane {
 		}
 	}
 	
+	public boolean stateHasChanged() {
+		return stateChanged;
+	}
+	
 	public void setNextState(int state) {
 		nextState = state;
 		stateChanged = true;

@@ -104,7 +104,8 @@ public class ScreenDisplay{
 
 	private void initStepButton() {
 		gui.stepButton.setOnAction((event) -> {
-			updateCellArray();
+			cellArray.updateCellArray(sim);
+			round += 1;
 		});
 	}
 
@@ -123,7 +124,9 @@ public class ScreenDisplay{
 			gui.xyChart.updateLineChart(round, sim.cellFrequencies()[i],gui.xyChart.seriesList.get(i));
 		}
 		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
-		updateCellArray();
+		cellArray.updateCellArray(sim);
+		round += 1;
+		
 		if(cellArray.getSize()>gridSize) {
 			
 		}
@@ -220,21 +223,6 @@ public class ScreenDisplay{
 	    myGrid.setPadding(new Insets(60,60,60,50)); 
 	}
 
-	public void updateCellArray() {
-		round += 1;
-		int size = cellArray.getSize();
-		for (int i= 0; i<size;i++) {
-			for (int j = 0; j<size; j++) {
-				sim.updateCell(cellArray.getArr()[i][j]);
-			}
-		}
-		for (int i= 0; i<size;i++) {
-			for (int j = 0; j<size; j++) {
-				cellArray.getArr()[i][j].updateState();
-			}
-		}
-	}
-
 	// What to do each time a key is pressed
 	public void handleKeyInput (KeyCode code) {
 		
@@ -256,9 +244,8 @@ public class ScreenDisplay{
 				if (testY < 0){
 					testY *= -1;
 				}
-				
-				//System.out.println("testX: "+testX + ""+ "testY: "+testY);
-				if (cellArray.getArr()[i][j].getShape().contains(testX, testY) && (!isPopedOut)) {
+
+				if (cellArray.getArr()[i][j].contains(testX, testY) && (!isPopedOut)) {
 					Cell selected = cellArray.getArr()[i][j];
 					isPopedOut = true;
 					String type = gui.simToLoad;
