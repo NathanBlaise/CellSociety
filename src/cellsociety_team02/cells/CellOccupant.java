@@ -8,15 +8,12 @@ import javafx.scene.image.Image;
 public abstract class CellOccupant {
 	private List<Cell> viewableNeighbours;
 	private List<Cell> nonViewableNeighbours;
-	protected int viewScope;
 	protected int desiredOccupancy;
 	private Cell currentCell;
 	
 	public CellOccupant(Cell cell) {
-		this.viewScope = viewScope;
 		this.currentCell = cell;
 		initLists();
-		changeOrientation(cell.getNeighbours().get(0));
 	}
 	
 	private void initLists() {
@@ -33,7 +30,7 @@ public abstract class CellOccupant {
 	}
 	
 	public void move(Cell newLocation) {
-		if(currentCell.atOccupancy()) return;
+		if(newLocation.atOccupancy()) return;
 		currentCell.removeOccupant(this);
 		newLocation.addOccupants(this, 1);
 		

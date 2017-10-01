@@ -26,7 +26,6 @@ public class ForagingSimulation extends Simulation{
 	
 	@Override
 	public void primeCell(Cell cell) {
-		//TODO non hard programmed nest and food location, pull this from xml
 		if(cell.getX() == 0 && cell.getY() == 0) {
 			cell.setNextState(FOOD);
 			cell.updateState();
@@ -121,7 +120,6 @@ public class ForagingSimulation extends Simulation{
 				max = neighbour.replicationTime();
 			}
 		}
-		if(newLocation == null) newLocation = neighbours.get(rand.nextInt(neighbours.size()));
 		return (newLocation != null) ? newLocation : neighbours.get(rand.nextInt(neighbours.size()));
 	}
 	

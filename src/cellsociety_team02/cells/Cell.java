@@ -105,9 +105,7 @@ public class Cell extends StackPane {
 	}
 	
 	private void cellIsEmpty() {
-		if(this.getChildren().contains(cellOverlay)) {
-			this.getChildren().remove(cellOverlay);
-		}
+		this.getChildren().remove(cellOverlay);
 	}
 	
 	private void cellNowOccupied(CellOccupant newOccupant) {
