@@ -4,7 +4,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -21,6 +23,7 @@ import javafx.util.Duration;
 import cellsociety_team02.gui.GUI;
 import cellsociety_team02.simulations.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import cellsociety_team02.cells.Cell;
@@ -41,7 +44,9 @@ public class ScreenDisplay{
 	private boolean isPaused = true;
 	private int gridSize = 5;
 	private Simulation sim;
-	private Grid cellArray;	
+	private Grid cellArray;
+	private int round = 0;
+	
 	/**
 	 * Constructor: Screen Display class
 	 */
@@ -61,6 +66,9 @@ public class ScreenDisplay{
 		if (isStarting) {
 			root.getChildren().addAll(gui.paneBox);
 			root.getChildren().addAll(gui.SliderBox);
+			root.getChildren().addAll(gui.xyChart);
+			root.getChildren().addAll(gui.varSliderBox);
+			root.getChildren().add(gui.SlidTittle);
 		}
 		
 		initResetButton();
@@ -111,7 +119,10 @@ public class ScreenDisplay{
 	}
 
 	public void step (double elapsedTime) {
-	
+		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
+			gui.xyChart.updateLineChart(round, sim.cellFrequencies()[i],gui.xyChart.seriesList.get(i));
+		}
+		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
 		updateCellArray();
 		if(cellArray.getSize()>gridSize) {
 			
@@ -124,7 +135,7 @@ public class ScreenDisplay{
 		
 		if (gui.changeSize) {
 				
-				gridSize = gui.slideRatio.sideLength;
+				gridSize = gui.slideSize.sideLength;
 				resetGrid();
 			    gui.changeSize = false;
 		}	
@@ -140,17 +151,29 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		else if (gui.simToLoad.equals("Foraging")) sim = new ForagingSimulation();
 		gridSize = sim.simulationSize();
-		
+		gui.xyChart.setTitle(gui.simToLoad+ " Simulation");
 		// want to change size before initializing the grid
 		if (gui.changeSize) {
-			System.out.println("yes");
-			gridSize = gui.slideRatio.sideLength;
+			gridSize = gui.slideSize.sideLength;
 		    gui.changeSize = false;
 	}	
 		
 		gui.slideSize.setVal(gridSize);
 		resetGrid();
+		
+		for (int i = 0; i < sim.cellColors().length;i++) {
+			XYChart.Series line = new XYChart.Series();
+			gui.xyChart.getData().add(line);
+			line.setName(Integer.toString(i));
+			
+			gui.xyChart.seriesList.add(line);
+			line.getData().add(new XYChart.Data(0, sim.cellFrequencies()[i]));
+			
+		}
+		
 	}
+	
+	
 
 	private void resetGrid() {
 		this.root.getChildren().remove(myGrid);
@@ -158,6 +181,8 @@ public class ScreenDisplay{
 		this.root.getChildren().add(myGrid);
 		sim.clearValues();
 		addCellsToGrid();
+		gui.xyChart.getData().clear();
+		gui.xyChart.seriesList.clear();
 	}
 
 	private void addCellsToGrid() {
@@ -177,20 +202,26 @@ public class ScreenDisplay{
 		myGrid = new GridPane();
 		 
 		for(int i = 0; i < gridSize ; i++) {
-			ColumnConstraints column = new ColumnConstraints(200/(gridSize));
+			ColumnConstraints column = new ColumnConstraints(360/(gridSize));
 			myGrid.getColumnConstraints().add(column);
 		}
 
 	    for(int i = 0; i < gridSize  ; i++) {
-	        RowConstraints row = new RowConstraints(200/(gridSize));
+	        RowConstraints row = new RowConstraints(360/(gridSize));
 	        myGrid.getRowConstraints().add(row);
 	    }
 	    
 	    myGrid.setStyle("-fx-grid-lines-visible: true");
-	    myGrid.setPadding(new Insets(40,40,40,70)); 
+	    //Insets(double top, double right, double bottom, double left)
+	    //Make the border invisible
+	    if (sim instanceof RPSSimulation) {
+	    	myGrid.setStyle("-fx-grid-lines-visible: false");
+	    }
+	    myGrid.setPadding(new Insets(60,60,60,50)); 
 	}
 
 	public void updateCellArray() {
+		round += 1;
 		int size = cellArray.getSize();
 		for (int i= 0; i<size;i++) {
 			for (int j = 0; j<size; j++) {
@@ -226,8 +257,8 @@ public class ScreenDisplay{
 					testY *= -1;
 				}
 				
-				System.out.println("testX: "+testX + ""+ "testY: "+testY);
-				if (cellArray.getArr()[i][j].contains(testX, testY) && (!isPopedOut)) {
+				//System.out.println("testX: "+testX + ""+ "testY: "+testY);
+				if (cellArray.getArr()[i][j].getShape().contains(testX, testY) && (!isPopedOut)) {
 					Cell selected = cellArray.getArr()[i][j];
 					isPopedOut = true;
 					String type = gui.simToLoad;
