@@ -1,7 +1,5 @@
 package cellsociety_team02.simulations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cellsociety_team02.cells.*;
