@@ -4,7 +4,12 @@
 		<Type>Foraging</Type>
 		<Title>Foraging Simulation</Title>
 		<Author>Ben Welton</Author>
-		<spreadChance>0.5</spreadChance></Attributes>
+	</Attributes>
+	
+	<Variables>
+		<Variable name="newAntsBorn" value="2" maximum="10"></Variable>
+		<Variable name="maxPheromones" value="10" maximum="100"></Variable>
+	</Variables>
 
 	<Cells>
 		<Cell>
@@ -30,7 +35,8 @@
 	</Cells>
 
 	<Grid>
-		<Size>5</Size>
+		<Size>10</Size>
+		<Type>Normal</Type>
 	</Grid>
 
 </Simulation> 

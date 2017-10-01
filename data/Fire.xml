@@ -4,7 +4,11 @@
 		<Type>Fire</Type>
 		<Title>Fire Simulation</Title>
 		<Author>Ben Welton</Author>
-		<spreadChance>0.5</spreadChance></Attributes>
+	</Attributes>
+		
+	<Variables>
+		<Variable name="spreadChance" value="0.5" maximum="1.0"></Variable>
+	</Variables>
 
 	<Cells>
 		<Cell>
@@ -31,6 +35,7 @@
 
 	<Grid>
 		<Size>5</Size>
+		<Type>Normal</Type>
 	</Grid>
 
 </Simulation> 

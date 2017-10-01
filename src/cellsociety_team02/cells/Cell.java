@@ -18,8 +18,8 @@ public class Cell extends StackPane {
 	private int yPos;
 	private int currentState;
 	private int nextState;
-	private int survivalVal;
-	private int replicationVal;
+	private double survivalVal;
+	private double replicationVal;
 	private Shape cellBackground;
 	private ImageView cellOverlay;
 	private Color[] myColors;
@@ -153,19 +153,19 @@ public class Cell extends StackPane {
 	}
 	
 
-	public int survivalTime() {
+	public double survivalTime() {
 		return survivalVal;
 	}
 	
-	public int replicationTime() {
+	public double replicationTime() {
 		return replicationVal;
 	}
 	
-	public void setSurvivalTime(int newDaysUntil) {
+	public void setSurvivalTime(double newDaysUntil) {
 		survivalVal = newDaysUntil;
 	}
 	
-	public void setReplicationTime(int newDaysUntil) {
+	public void setReplicationTime(double newDaysUntil) {
 		replicationVal = newDaysUntil;
 	}
 
