@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class Cell {
+public class Cell extends StackPane {
 	
 	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
 	private int xPos;
@@ -17,27 +20,30 @@ public class Cell {
 	private int nextState;
 	private int survivalVal;
 	private int replicationVal;
-	private Shape myShape;
+	private Shape cellBackground;
 	private Color[] myColors;
 	private int myGridSize;
 	private Cell[][] myGridArray;
 	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
+	private int maxOccupancy = 10;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
 		yPos = yPosition;
 		currentState = startingState;
 		myColors = colors;
-		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
 		myGridSize = gridSize;
 		myGridArray = gridArray;
+		occupants = new ArrayList<>();
+		cellBackground = new Rectangle(sideLength, sideLength, myColors[currentState]);
+		this.getChildren().add(cellBackground);
 	}
 	
 	public List<Cell> getNeighbours(){
 		myNeighbours.clear();
-		int[] xCoord = {xPos, xPos+1, xPos-1};
-		int[] yCoord = {yPos, yPos+1, yPos-1};
+		int[] xCoord = {xPos-1, xPos, xPos+1};
+		int[] yCoord = {yPos-1, yPos, yPos+1};
 		for(int x: xCoord) {
 			for(int y: yCoord) {
 				if(x>-1 && y>-1 && x<(myGridSize) && y<(myGridSize)) {
@@ -67,6 +73,10 @@ public class Cell {
 		return(occupants.size() > 0);
 	}
 	
+	public boolean atOccupancy() {
+		return(occupants.size() >= maxOccupancy);
+	}
+	
 	public List<CellOccupant> getOccupants(){
 		return occupants;
 	}
@@ -74,21 +84,28 @@ public class Cell {
 	public void addOccupants(CellOccupant newOccupant, int number) {
 		if(occupants.size() == 0) cellNowOccupied(newOccupant);
 		for(int i = 0; i<number; i++) {
+			if(atOccupancy()) break;
 			occupants.add(newOccupant);
 		}
 	}
 	
-	public void removeOccupant(CellOccupant occupant) {
+	protected void removeOccupant(CellOccupant occupant) {
 		occupants.remove(occupant);
 		if(occupants.size() <= 0) cellIsEmpty();
 	}
 	
 	private void cellIsEmpty() {
-		//remove the drawing
+		this.getChildren().remove(this.getChildren().size()-1);
 	}
 	
 	private void cellNowOccupied(CellOccupant newOccupant) {
-		//add the drawing
+		maxOccupancy = newOccupant.getDesiredOccupancy();
+
+		Image image = newOccupant.drawImage();
+		ImageView occupantImage = new ImageView(image);
+		occupantImage.setFitHeight(cellBackground.getBoundsInParent().getHeight()/1.5);
+		occupantImage.setFitWidth(cellBackground.getBoundsInParent().getWidth()/1.5);
+		this.getChildren().add(occupantImage);
 	}
 	
 	public int getX() {
@@ -102,7 +119,7 @@ public class Cell {
 	public void updateState() {
 		if(stateChanged) {
 			currentState = nextState;
-			myShape.setFill(myColors[currentState]);
+			cellBackground.setFill(myColors[currentState]);
 			stateChanged = false;
 		}
 	}
@@ -118,10 +135,6 @@ public class Cell {
 	
 	public int getCurrentState() {
 		return currentState;
-	}
-	
-	public Shape getShape() {
-		return myShape;
 	}
 
 	// add an getmyColors() method
