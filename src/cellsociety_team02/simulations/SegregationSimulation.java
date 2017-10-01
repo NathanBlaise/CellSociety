@@ -12,21 +12,21 @@ public class SegregationSimulation extends Simulation{
 	private final int POPULATION_1 = 1;
 	private final int POPULATION_2 = 2;
 	
-	private double percentOfNeighbors = 0.5;
 	private Queue<Cell> emptyCells;
 	private String layoutFile = "data/Segregation.xml";
+	private String[] vars = {"percentOfNeighbours"};
+	private double[] vals = {0.5};
+	private double[] maxs = {1.0};
+	private int percentIndex;
 	
 	public SegregationSimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
-		super.changeInitConfig(layoutFile);
+		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		emptyCells = new LinkedList<>();
-		if(queryAttributes("percentOfNeighbors") != null) {
-			percentOfNeighbors = Double.parseDouble(queryAttributes("percentOfNeighbors"));
-		}
+		super.changeInitConfig(layoutFile);
+		percentIndex = super.variables.indexOf("percentOfNeighbours");
 	}
-	
+
 	@Override
 	public void primeCell(Cell cell) {
 		if(cell.getCurrentState() == EMPTY) emptyCells.add(cell);
@@ -54,7 +54,7 @@ public class SegregationSimulation extends Simulation{
 			}
 		}
 		if(occupiedSpots == 0) return;
-		if((double) total/occupiedSpots < percentOfNeighbors) {
+		if((double) total/occupiedSpots < variableVals.get(percentIndex)) {
 			moveToEmptyLocation(cell);
 		}
 	}
@@ -64,13 +64,6 @@ public class SegregationSimulation extends Simulation{
 		newLocation.setNextState(cell.getCurrentState());
 		cell.setNextState(EMPTY);
 		emptyCells.add(cell);
-	}
-	
-	
-	
-	//for later gui interactivity
-	public void changePercentOfNeighbors(int newPercent) {
-		percentOfNeighbors = newPercent;
 	}
 
 

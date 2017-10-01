@@ -4,9 +4,13 @@
 		<Type>Predator-Prey</Type>
 		<Title>PredatorPrey Simulation</Title>
 		<Author>Ben Welton</Author>
-		<sharkBreedingDays>4</sharkBreedingDays>
-		<fishBreedingDays>4</fishBreedingDays>
-		<sharkStarveDays>4</sharkStarveDays></Attributes>
+	</Attributes>
+
+	<Variables>
+		<Variable name="sharkBreedingDays" value="4" maximum="10"></Variable>
+		<Variable name="fishBreedingDays" value="4" maximum="10"></Variable>
+		<Variable name="sharkStarveDays" value="4" maximum="10"></Variable>
+	</Variables>
 
 	<Cells>
 		<Cell>
@@ -33,6 +37,7 @@
 
 	<Grid>
 		<Size>5</Size>
+		<Type>Normal</Type>
 	</Grid>
 
 </Simulation> 

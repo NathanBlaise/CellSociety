@@ -4,8 +4,11 @@
 		<Type>RPS</Type>
 		<Title>Rock, Paper, Scissors Simulation</Title>
 		<Author>Ben Welton</Author>
-		<lifeLength>10</lifeLength>
 	</Attributes>
+
+	<Variables>
+		<Variable name="lifeLength" value="10" maximum="10"></Variable>
+	</Variables>
 
 	<Cells>
 		<Cell>
@@ -39,6 +42,7 @@
 
 	<Grid>
 		<Size>10</Size>
+		<Type>Normal</Type>
 	</Grid>
 
 </Simulation> 

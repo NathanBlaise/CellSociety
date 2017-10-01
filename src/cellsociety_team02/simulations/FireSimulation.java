@@ -10,17 +10,18 @@ public class FireSimulation extends Simulation{
 	private final int BURNING = 2;
 	
 	private String layoutFile = "data/Fire.xml";
-	private double spreadChance = 0.5;
+	private String[] vars = {"spreadChance"};
+	private double[] vals = {0.5};
+	private double[] maxs = {1.0};
+	private int spreadChanceIndex;
 	
 	public FireSimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
+		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		super.changeInitConfig(layoutFile);
-		if(super.queryAttributes("spreadChance") != null) {
-			spreadChance = Double.parseDouble(queryAttributes("spreadChance"));
-		}
+		spreadChanceIndex = variables.indexOf("spreadChance");
 	}
+
 	
 	@Override
 	public void updateCell(Cell cell) {
@@ -33,7 +34,7 @@ public class FireSimulation extends Simulation{
 	private void checkSpread(Cell cell) {
 		List<Cell> neighbours = cell.getAdjacentNeighbours();
 
-		if(Math.random() > spreadChance) return;
+		if(Math.random() > variableVals.get(spreadChanceIndex)) return;
 
 		for(Cell neighbour:neighbours) {
 			if(neighbour.getCurrentState() == BURNING) {
@@ -41,11 +42,6 @@ public class FireSimulation extends Simulation{
 				break;
 			}
 		}
-	}
-	
-	//for later gui interactivity
-	public void changeSpreadChance(int newChance) {
-		spreadChance = newChance;
 	}
 
 }
