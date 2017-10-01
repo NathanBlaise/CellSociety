@@ -19,43 +19,23 @@ public class Cell {
 	private int replicationVal;
 	private Shape myShape;
 	private Color[] myColors;
-	private int myGridSize;
-	private Cell[][] myGridArray;
 	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
 	
-	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
+	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength) {
 		xPos = xPosition;
 		yPos = yPosition;
 		currentState = startingState;
 		myColors = colors;
 		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
-		myGridSize = gridSize;
-		myGridArray = gridArray;
 	}
 	
 	public List<Cell> getNeighbours(){
-		myNeighbours.clear();
-		int[] xCoord = {xPos, xPos+1, xPos-1};
-		int[] yCoord = {yPos, yPos+1, yPos-1};
-		for(int x: xCoord) {
-			for(int y: yCoord) {
-				if(x>-1 && y>-1 && x<(myGridSize) && y<(myGridSize)) {
-					myNeighbours.add(myGridArray[x][y]);
-				}
-			}
-		}
-		myNeighbours.remove(myGridArray[xPos][yPos]);
 		return myNeighbours;
 	}
 	
-	public List<Cell> getAdjacentNeighbours(){
-		 myNeighbours.clear();
-		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
-		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
-		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South
-		if(xPos>0) myNeighbours.add(myGridArray[xPos-1][yPos]); //North
-		return myNeighbours;
+	public void setMyNeighbours(ArrayList<Cell> neighbours) {
+		myNeighbours = neighbours;
 	}
 	
 	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
