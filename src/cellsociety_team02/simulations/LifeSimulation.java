@@ -12,8 +12,7 @@ public class LifeSimulation extends Simulation {
 	
 	public LifeSimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
+		super.setDefaultVariables(layoutFile, null, null, null);
 		super.changeInitConfig(layoutFile);
 	}
 	

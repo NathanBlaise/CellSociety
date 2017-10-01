@@ -13,39 +13,30 @@ public class PredatorPreySimulation extends Simulation {
 	private final int FISH = 1;
 	private final int SHARK = 2;
 	
-	private int sharkBreedingDays = 1;
-	private int fishBreedingDays = 1;
-	private int sharkStarveDays = 1;
+	private int sharkBreedingDaysIndex;
+	private int fishBreedingDaysIndex;
+	private int sharkStarveDaysIndex;
 	private String layoutFile = "data/PredatorPrey.xml";
+	private String[] vars = {"variableVals.get(sharkBreedingDaysIndex)", "variableVals.get(fishBreedingDaysIndex)", "variableVals.get(sharkStarveDaysIndex)"};
+	private double[] vals = {4,4,4};
+	private double[] maxs = {10,10,10};
 	
 	public PredatorPreySimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
+		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		super.changeInitConfig(layoutFile);
-		setLifeValues();
+		sharkBreedingDaysIndex = variables.indexOf("variableVals.get(sharkBreedingDaysIndex)");
+		fishBreedingDaysIndex = variables.indexOf("variableVals.get(fishBreedingDaysIndex)");
+		sharkStarveDaysIndex = variables.indexOf("variableVals.get(sharkStarveDaysIndex)");
 	}
-	
-	public void setLifeValues() {
-		if(queryAttributes("sharkBreedingDays") != null) {
-			sharkBreedingDays = Integer.parseInt(queryAttributes("sharkBreedingDays"));
-		}
-		if(queryAttributes("fishBreedingDays") != null) {
-			fishBreedingDays = Integer.parseInt(queryAttributes("fishBreedingDays"));
-		}
-		if(queryAttributes("sharkStarveDays") != null) {
-			sharkStarveDays = Integer.parseInt(queryAttributes("sharkStarveDays"));
-		}
-	}
-	
 
 	@Override
 	public void primeCell(Cell cell) {
 		if(cell.getCurrentState() == FISH) {
-			cell.setReplicationTime(fishBreedingDays);
+			cell.setReplicationTime(variableVals.get(fishBreedingDaysIndex));
 		}else if(cell.getCurrentState() == SHARK) {
-			cell.setReplicationTime(sharkBreedingDays);
-			cell.setSurvivalTime(sharkStarveDays);
+			cell.setReplicationTime(variableVals.get(sharkBreedingDaysIndex));
+			cell.setSurvivalTime(variableVals.get(sharkStarveDaysIndex));
 		}
 	}
 	
@@ -104,7 +95,7 @@ public class PredatorPreySimulation extends Simulation {
 	}
 	
 	private void fishIsEaten(Cell shark) {
-		shark.setSurvivalTime(sharkStarveDays);
+		shark.setSurvivalTime(variableVals.get(sharkStarveDaysIndex));
 		shark.setNextState(SHARK);
 	}
 	
@@ -118,9 +109,9 @@ public class PredatorPreySimulation extends Simulation {
 			else {
 				oldLocation.setNextState(FISH);
 				oldLocation.updateState();
-				oldLocation.setReplicationTime(fishBreedingDays);
+				oldLocation.setReplicationTime(variableVals.get(fishBreedingDaysIndex));
 			}
-			newLocation.setReplicationTime(fishBreedingDays);
+			newLocation.setReplicationTime(variableVals.get(fishBreedingDaysIndex));
 		}
 	}
 	
@@ -130,27 +121,14 @@ public class PredatorPreySimulation extends Simulation {
 		if(newLocation.replicationTime() <= 0) {
 			oldLocation.setNextState(SHARK);
 			oldLocation.updateState();
-			oldLocation.setReplicationTime(sharkBreedingDays);
-			oldLocation.setSurvivalTime(sharkStarveDays);
-			newLocation.setReplicationTime(sharkBreedingDays);
+			oldLocation.setReplicationTime(variableVals.get(sharkBreedingDaysIndex));
+			oldLocation.setSurvivalTime(variableVals.get(sharkStarveDaysIndex));
+			newLocation.setReplicationTime(variableVals.get(sharkBreedingDaysIndex));
 		}
 	}
 	
 	private void sharkIsStarving(Cell shark, Cell oldLocation) {
 		shark.setSurvivalTime(oldLocation.survivalTime() - 1);
 		if(shark.survivalTime() <= 0) shark.setNextState(KELP);
-	}
-	
-	//these methods will only be used when we implement different guis for different simulations
-	public void changeDaysUntilStarvation(int daysUntil) {
-		sharkStarveDays = daysUntil;
-	}
-	
-	public void changeSharkBreedTime(int daysUntil) {
-		sharkBreedingDays = daysUntil;
-	}
-	
-	public void changeFishBreedTime(int daysUntil) {
-		fishBreedingDays = daysUntil;
 	}
 }

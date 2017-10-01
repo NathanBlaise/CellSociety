@@ -4,23 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class Cell {
+public class Cell extends StackPane {
 	
 	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
 	private int xPos;
 	private int yPos;
 	private int currentState;
 	private int nextState;
-	private int survivalVal;
-	private int replicationVal;
-	private Shape myShape;
+	private double survivalVal;
+	private double replicationVal;
+	private Shape cellBackground;
+	private ImageView cellOverlay;
 	private Color[] myColors;
 	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
+	private int maxOccupancy = 10;
 	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength) {
 		xPos = xPosition;
@@ -47,28 +52,39 @@ public class Cell {
 		return(occupants.size() > 0);
 	}
 	
+	public boolean atOccupancy() {
+		return(occupants.size() >= maxOccupancy);
+	}
+	
 	public List<CellOccupant> getOccupants(){
-		return occupants;
+		return new ArrayList<CellOccupant>(occupants);
 	}
 	
 	public void addOccupants(CellOccupant newOccupant, int number) {
 		if(occupants.size() == 0) cellNowOccupied(newOccupant);
 		for(int i = 0; i<number; i++) {
+			if(atOccupancy()) break;
 			occupants.add(newOccupant);
 		}
 	}
 	
-	public void removeOccupant(CellOccupant occupant) {
+	protected void removeOccupant(CellOccupant occupant) {
 		occupants.remove(occupant);
 		if(occupants.size() <= 0) cellIsEmpty();
 	}
 	
 	private void cellIsEmpty() {
-		//remove the drawing
+		this.getChildren().remove(cellOverlay);
 	}
 	
 	private void cellNowOccupied(CellOccupant newOccupant) {
-		//add the drawing
+		maxOccupancy = newOccupant.getDesiredOccupancy();
+
+		Image image = newOccupant.drawImage();
+		cellOverlay = new ImageView(image);
+		cellOverlay.setFitHeight(cellBackground.getBoundsInParent().getHeight()/1.5);
+		cellOverlay.setFitWidth(cellBackground.getBoundsInParent().getWidth()/1.5);
+		this.getChildren().add(cellOverlay);
 	}
 	
 	public int getX() {
@@ -82,7 +98,7 @@ public class Cell {
 	public void updateState() {
 		if(stateChanged) {
 			currentState = nextState;
-			myShape.setFill(myColors[currentState]);
+			cellBackground.setFill(myColors[currentState]);
 			stateChanged = false;
 		}
 	}
@@ -99,10 +115,6 @@ public class Cell {
 	public int getCurrentState() {
 		return currentState;
 	}
-	
-	public Shape getShape() {
-		return myShape;
-	}
 
 	// add an getmyColors() method
 	public Color[] getMyColors() {
@@ -110,19 +122,19 @@ public class Cell {
 	}
 	
 
-	public int survivalTime() {
+	public double survivalTime() {
 		return survivalVal;
 	}
 	
-	public int replicationTime() {
+	public double replicationTime() {
 		return replicationVal;
 	}
 	
-	public void setSurvivalTime(int newDaysUntil) {
+	public void setSurvivalTime(double newDaysUntil) {
 		survivalVal = newDaysUntil;
 	}
 	
-	public void setReplicationTime(int newDaysUntil) {
+	public void setReplicationTime(double newDaysUntil) {
 		replicationVal = newDaysUntil;
 	}
 

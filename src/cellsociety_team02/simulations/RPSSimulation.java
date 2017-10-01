@@ -7,20 +7,23 @@ public class RPSSimulation extends Simulation {
 	private final int ROCK = 1;
 	private final int PAPER = 2;
 	private final int SCISSORS = 3;
-	private final int DEFAULT_LIFE_LENGTH = 10;
 	
 	private String layoutFile = "data/RPS.xml";
+	private String[] vars = {"lifeLength"};
+	private double[] vals = {10};
+	private double[] maxs = {10};
+	private int lifeLengthIndex;
 	
 	public RPSSimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
+		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		super.changeInitConfig(layoutFile);
+		lifeLengthIndex = variables.indexOf("lifeLength");
 	}
 	
 	@Override
 	public void primeCell(Cell cell) {
-		cell.setSurvivalTime(DEFAULT_LIFE_LENGTH);
+		cell.setSurvivalTime(variableVals.get(lifeLengthIndex));
 	}
 	
 	@Override
