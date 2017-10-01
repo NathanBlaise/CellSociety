@@ -8,6 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -16,6 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 /**
  * @author supertony
  *
@@ -26,6 +32,7 @@ public class GUI {
 	protected Font font = Font.getDefault();
 	protected VBox paneBox;
 	protected VBox SliderBox;
+	protected Text SlidTittle = new Text();
 	
 	// Create a HBox for Buttons
 	protected Button resetButton;
@@ -34,6 +41,11 @@ public class GUI {
 	protected Button goButton;
 	protected HBox buttons;
 
+	//Create a line chart
+	protected final NumberAxis xAxis = new NumberAxis();
+    protected final NumberAxis yAxis = new NumberAxis();
+    protected lineChart xyChart = new lineChart(xAxis,yAxis);
+            
 	
 	// boolean values for each button
 	protected boolean isBack = false;
@@ -42,11 +54,13 @@ public class GUI {
 	protected ComboBox<String> simulationLoader;
 	protected String simToLoad;
 	protected HashMap<String, Double> values = new HashMap<String, Double>();
-	public SliderBar slideSpeed;
+	public SpeedSliderBar slideSpeed;
 	public SliderBar slideRatio;
-	public SliderBar slideSize;
+	public SizeSliderBar slideSize;
 	//help to change the size of gridPane
 	protected boolean changeSpeed = false;
+	
+	protected simVarSliderBox varSliderBox = new simVarSliderBox(null,this);
 	
 	public GUI() {
 		init();
@@ -79,27 +93,56 @@ public class GUI {
 		
 		//Insets(double top, double right, double bottom, double left)
 		
-		paneBox.setPadding(new Insets(30,30,30,70));
+		paneBox.setPadding(new Insets(30,30,30,50));
 		paneBox.getChildren().add(LoaderBox);
 		paneBox.getChildren().add(buttons);
 		paneBox.setStyle("-fx-background-color: #336699;");
 		paneBox.setLayoutX(0);
-		paneBox.setLayoutY(276);
-		paneBox.setPrefWidth(600);
+		paneBox.setLayoutY(476);
+		paneBox.setPrefWidth(1000);
 		
 		// add SlideBars
 		SliderBox = new VBox();
-		slideSpeed = new SliderBar("Speed", 0.0,1.0,20.0 );
-		slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
-		slideSize = new SliderBar("Size",0.0,5.0,50.0);
-		SliderBox.getChildren().add(slideRatio);
+		slideSpeed = new SpeedSliderBar("Speed", 0.0,1.0,20.0 );
+		//slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
+		slideSize = new SizeSliderBar("Size",0.0,5.0,50.0);
+		slideSpeed.getValueFromTextField(this);
+		//slideRatio.getValueFromTextField(this);
+		slideSize.getValueFromTextField(this);
+		slideSpeed.setUpValueField(this);
+		//slideRatio.setUpValueField(this);
+		slideSize.setUpValueField(this);
+		
+		
+		
+		SlidTittle.setText("General Setting:");
+		SlidTittle.setLayoutX(513);
+		SlidTittle.setLayoutY(55);
+		SlidTittle.setFont(Font.font("verdana", FontWeight.LIGHT, FontPosture.REGULAR, 15));
+		SlidTittle.setUnderline(true);  
+		//SliderBox.getChildren().add(slideRatio);
 		SliderBox.getChildren().add(slideSize);
 		SliderBox.getChildren().add(slideSpeed);
-		SliderBox.setSpacing(20);
-		SliderBox.setLayoutY(30);
-		SliderBox.setLayoutX(400);
-		SliderBox.setPrefWidth(180);
+		SliderBox.setSpacing(0);
+		SliderBox.setLayoutY(85);
+		SliderBox.setLayoutX(515);
+		//SliderBox.setPrefWidth(250);
 		SliderBox.setPrefHeight(200);
+		
+		
+		//Initialize the line chart  
+	  
+       xyChart.setLayoutX(505);
+       xyChart.setLayoutY(220);
+       xyChart.setPrefWidth(450);
+       xyChart.setPrefHeight(225);
+       
+       
+       // Initialize the simVarSilderBox
+       varSliderBox.setLayoutX(750);
+       varSliderBox.setLayoutY(30);
+       varSliderBox.setPrefWidth(250);
+	   varSliderBox.setPrefHeight(200);
 	}
 
 	
@@ -119,104 +162,6 @@ public class GUI {
 		paneBox.setLayoutY(yPos);
 		paneBox.setPrefWidth(width);
 	}
-	
-	
-	protected class SliderBar extends VBox {
-		private String name;
-		private Label nameLabel;
-		private Slider slider;
-		private TextField valueField;
-		int sideLength;
-		int speed;
-		
-		protected SliderBar(String n, Double x, Double y, Double z) {
-			name = n;
-			slider = new Slider();
-			slider.setValue(x);
-			slider.setMin(y);
-			slider.setMax(z);
-			slider.setShowTickMarks(true);
-			slider.setShowTickLabels(true);
-			slider.setMajorTickUnit((slider.getMax() - slider.getMin()));
-			nameLabel = new Label(name + ":");
-			nameLabel.setFont(font);
-			valueField = new TextField(String.format("%.2f", slider.getValue()));
-			
-			if (name == "Size") {
-				String side = Integer.toString(((int)(slider.getValue()))) ;
-				valueField = new TextField(side+"×"+side);
-			}
-			valueField.setPrefColumnCount(valueField.getText().length());
-			valueField.setAlignment(Pos.CENTER);
-			valueField.textProperty()
-					.addListener((ObservableValue<? extends String> ob, String oldVal, String newVal) -> {
-						valueField.setPrefColumnCount(valueField.getText().length());
-					});
-			valueField.setOnAction(e -> {
-				try {
-					String current = this.valueField.getCharacters().toString();
-					double val = Double.parseDouble(current);
-					if (val >= getMin() && val <= getMax()) {
-						setVal(val);
-						
-						values.put(name, val);
-		
-					} else {
-						
-						valueField.setText(String.format("%.2f", this.slider.getValue()));
-					}
-				} catch (NumberFormatException d) {
-					valueField.setText(String.format("%.2f", this.slider.getValue()));
-				}
-			});
-			HBox lowerBox = new HBox();
-			lowerBox.getChildren().addAll(slider, valueField);
-			lowerBox.setSpacing(8);
-			
-			//lowerBox.setStyle("-fx-background-color: #336699;");
-			this.getChildren().addAll(nameLabel, lowerBox);
-			slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldVal, Number newVal) -> {
-				values.put(name, (Double) newVal);
-				valueField.setText(String.format("%.2f", newVal));
-				if (name == "Size") {
-					String side = Integer.toString(((int)(slider.getValue()))) ;
-					valueField.setText(side+"×"+side);
-
-					
-					slideRatio.sideLength = ((int)(slider.getValue()));
-				    
-				        changeSize = true; 
-				}
-				if (name == "Speed") {
-				changeSpeed = true;
-				String speedText = Integer.toString(((int)(slider.getValue()))) ;
-				valueField.setText(speedText);
-
-				
-				slideSpeed.speed = ((int)(slider.getValue()));
-				}
-				
-				
-				
-				
-			});
-		}
-
-		public void setVal(double val) {
-			this.slider.setValue(val);
-		}
-
-		public double getMax() {
-			return this.slider.getMax();
-		}
-
-		public double getMin() {
-			return this.slider.getMin();
-		}
-	}
-
-	
-
 
 	
 }
