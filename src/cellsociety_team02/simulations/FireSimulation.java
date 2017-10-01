@@ -34,7 +34,7 @@ public class FireSimulation extends Simulation{
 	}
 	
 	private void checkSpread(Cell cell) {
-		List<Cell> neighbours = cell.getAdjacentNeighbours();
+		List<Cell> neighbours = cell.getNeighbours();
 
 		if(Math.random() > variableVals.get(spreadChanceIndex)) return;
 

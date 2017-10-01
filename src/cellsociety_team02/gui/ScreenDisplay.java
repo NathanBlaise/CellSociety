@@ -41,8 +41,7 @@ public class ScreenDisplay{
 	private boolean isPaused = true;
 	private int gridSize = 5;
 	private Simulation sim;
-	private Grid cellArray;
-	
+	private Grid cellArray;	
 	/**
 	 * Constructor: Screen Display class
 	 */
@@ -114,6 +113,9 @@ public class ScreenDisplay{
 	public void step (double elapsedTime) {
 	
 		updateCellArray();
+		if(cellArray.getSize()>gridSize) {
+			
+		}
 
 		if (gui.changeSpeed) {
 			animation.setRate(gui.slideSpeed.speed);
@@ -159,6 +161,7 @@ public class ScreenDisplay{
 	}
 
 	private void addCellsToGrid() {
+		//Add if's for different types of Grid
 		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
 		
 		for (int i= 0; i<gridSize;i++) {

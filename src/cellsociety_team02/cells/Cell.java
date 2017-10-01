@@ -23,55 +23,24 @@ public class Cell extends StackPane {
 	private Shape cellBackground;
 	private ImageView cellOverlay;
 	private Color[] myColors;
-	private int myGridSize;
-	private Cell[][] myGridArray;
 	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
 	private int maxOccupancy = 10;
 	
-	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
+	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength) {
 		xPos = xPosition;
 		yPos = yPosition;
 		currentState = startingState;
 		myColors = colors;
-		myGridSize = gridSize;
-		myGridArray = gridArray;
-		occupants = new ArrayList<>();
-		cellBackground = new Rectangle(sideLength, sideLength, myColors[currentState]);
-		this.getChildren().add(cellBackground);
+		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
 	}
 	
 	public List<Cell> getNeighbours(){
-		myNeighbours.clear();
-		int[] xCoord = {xPos-1, xPos, xPos+1};
-		int[] yCoord = {yPos-1, yPos, yPos+1};
-		for(int x: xCoord) {
-			for(int y: yCoord) {
-				if(x>-1 && y>-1 && x<(myGridSize) && y<(myGridSize)) {
-					myNeighbours.add(myGridArray[x][y]);
-				}
-			}
-		}
-		myNeighbours.remove(myGridArray[xPos][yPos]);
 		return myNeighbours;
 	}
 	
-	public Cell getNeighbour(int x, int y) {
-		for(Cell cell:this.getNeighbours()) {
-			if(cell.getX() == x && cell.getY() == y) {
-				return cell;
-			}
-		}
-		return null;
-	}
-	
-	public List<Cell> getAdjacentNeighbours(){
-		 myNeighbours.clear();
-		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
-		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
-		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South
-		if(xPos>0) myNeighbours.add(myGridArray[xPos-1][yPos]); //North
-		return myNeighbours;
+	public void setMyNeighbours(ArrayList<Cell> neighbours) {
+		myNeighbours = neighbours;
 	}
 	
 	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
