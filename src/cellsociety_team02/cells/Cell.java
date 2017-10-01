@@ -26,13 +26,19 @@ public class Cell extends StackPane {
 	private List<CellOccupant> occupants;
 	private boolean stateChanged = false;
 	private int maxOccupancy = 10;
+	private int myGridSize;
+	private Cell[][] myGridArray;
 	
-	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength) {
+	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
 		yPos = yPosition;
 		currentState = startingState;
 		myColors = colors;
-		myShape = new Rectangle(sideLength, sideLength, myColors[currentState]);
+		myGridSize = gridSize;
+		myGridArray = gridArray;
+		occupants = new ArrayList<>();
+		cellBackground = new Rectangle(sideLength, sideLength, myColors[currentState]);
+		this.getChildren().add(cellBackground);
 	}
 	
 	public List<Cell> getNeighbours(){
@@ -42,6 +48,26 @@ public class Cell extends StackPane {
 	public void setMyNeighbours(ArrayList<Cell> neighbours) {
 		myNeighbours = neighbours;
 	}
+	
+	public Cell getNeighbour(int x, int y) {
+		for(Cell cell:this.getNeighbours()) {
+			if(cell.getX() == x && cell.getY() == y) {
+				return cell;
+			}
+		}
+		return null;
+	}
+	
+	public List<Cell> getAdjacentNeighbours(){
+		 myNeighbours.clear();
+		if(yPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos][yPos+1]); //East
+		if(yPos>0) myNeighbours.add(myGridArray[xPos][yPos-1]); //West
+		if(xPos<myGridSize - 1) myNeighbours.add(myGridArray[xPos+1][yPos]); //South
+		if(xPos>0) myNeighbours.add(myGridArray[xPos-1][yPos]); //North
+		return myNeighbours;
+	}
+
+
 	
 	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
 		Random rand = new Random();

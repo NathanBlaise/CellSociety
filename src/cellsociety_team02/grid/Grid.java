@@ -37,7 +37,7 @@ public class Grid {
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				assignPropState(propDistribution);
-				myArray[i][k] = new Cell(i,k,state,colors,200/mySize);
+				myArray[i][k] = new Cell(i,k,state,colors,200/mySize, mySize, myArray);
 			}
 		}
 	}

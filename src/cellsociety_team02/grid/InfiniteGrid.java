@@ -24,12 +24,12 @@ public class InfiniteGrid extends Grid{
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				if(i==0 || i == size-1 || k == 0 || k == size-1) {
-					myArray[i][k] = new Cell(i,k,0,colors,200/(mySize-1));
+					myArray[i][k] = new Cell(i,k,0,colors,200/(mySize-1),mySize,myArray);
 					outsideCells.add(myArray[i][k]);
 					return;
 				}
 				assignPropState(propDistribution);
-				myArray[i][k] = new Cell(i,k,state,colors,200/(mySize-1));
+				myArray[i][k] = new Cell(i,k,state,colors,200/(mySize-1),mySize,myArray);
 			}
 		}
 	}
