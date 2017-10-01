@@ -1,0 +1,36 @@
+<Simulation>
+
+	<Attributes>
+		<Type>Foraging</Type>
+		<Title>Foraging Simulation</Title>
+		<Author>Ben Welton</Author>
+		<spreadChance>0.5</spreadChance></Attributes>
+
+	<Cells>
+		<Cell>
+			<Name>EMPTY</Name>
+			<Value>0</Value>
+			<Proportion>10</Proportion>
+			<Color>#FDFEFE</Color>
+		</Cell>
+
+		<Cell>
+			<Name>FOOD</Name>
+			<Value>1</Value>
+			<Proportion>70</Proportion>
+			<Color>#F7DC6F</Color>
+		</Cell>
+
+		<Cell>
+			<Name>NEST</Name>
+			<Value>2</Value>
+			<Proportion>20</Proportion>
+			<Color>#2874A6</Color>
+		</Cell>
+	</Cells>
+
+	<Grid>
+		<Size>5</Size>
+	</Grid>
+
+</Simulation> 

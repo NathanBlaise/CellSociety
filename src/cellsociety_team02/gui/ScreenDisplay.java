@@ -136,6 +136,7 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Predator-Prey")) sim = new PredatorPreySimulation();
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
 		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
+		else if (gui.simToLoad.equals("Foraging")) sim = new ForagingSimulation();
 		gridSize = sim.simulationSize();
 		
 		// want to change size before initializing the grid
@@ -163,7 +164,7 @@ public class ScreenDisplay{
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
 				Cell cell = cellArray.getArr()[i][j];
-				myGrid.add(cell.getShape(), i,j);
+				myGrid.add(cell, i,j);
 				sim.primeCell(cell);
 			}
 		}
@@ -171,8 +172,6 @@ public class ScreenDisplay{
 
 	public void drawNewGrid() {
 		myGrid = new GridPane();
-		
-		
 		 
 		for(int i = 0; i < gridSize ; i++) {
 			ColumnConstraints column = new ColumnConstraints(200/(gridSize));
@@ -213,10 +212,9 @@ public class ScreenDisplay{
 		int size = cellArray.getSize();
 		for (int i= 0; i<size;i++) {
 			for (int j = 0; j<size; j++) {
-				System.out.println(cellArray.getArr()[i][j].getShape().getLayoutX());
 				
-				double testX = x - cellArray.getArr()[i][j].getShape().getLayoutX();
-				double testY = y - cellArray.getArr()[i][j].getShape().getLayoutY();
+				double testX = x - cellArray.getArr()[i][j].getLayoutX();
+				double testY = y - cellArray.getArr()[i][j].getLayoutY();
 				
 				if (testX < 0) {
 					testX *= -1;
@@ -226,7 +224,7 @@ public class ScreenDisplay{
 				}
 				
 				System.out.println("testX: "+testX + ""+ "testY: "+testY);
-				if (cellArray.getArr()[i][j].getShape().contains(testX, testY) && (!isPopedOut)) {
+				if (cellArray.getArr()[i][j].contains(testX, testY) && (!isPopedOut)) {
 					Cell selected = cellArray.getArr()[i][j];
 					isPopedOut = true;
 					String type = gui.simToLoad;
@@ -236,9 +234,9 @@ public class ScreenDisplay{
 					alert.setTitle("Confirmation Dialog to Change Color");
 					alert.setHeaderText("Swaggy T helps you to change color!");
 					alert.setContentText("This is a " + type + " cell"+ "\n" + "Choose the color you want to change\n" );
-					Image image = new Image (getClass().getClassLoader().getResourceAsStream("dukeDqd.JPG"));
-					ImageView imageView = new ImageView(image);
-					alert.setGraphic(imageView);
+//					Image image = new Image (getClass().getClassLoader().getResourceAsStream("dukeDqd.JPG"));
+//					ImageView imageView = new ImageView(image);
+//					alert.setGraphic(imageView);
 					
 					ButtonType buttonTypeOne = new ButtonType("One");
 					ButtonType buttonTypeTwo = new ButtonType("Two");
