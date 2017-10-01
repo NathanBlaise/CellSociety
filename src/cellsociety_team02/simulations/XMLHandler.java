@@ -58,6 +58,20 @@ public class XMLHandler {
 		}
 	}
 	
+	protected void addVariableSet(List<String> vars, List<Double> vals, List<Double> maxs) {
+		NodeList variables = configDoc.getElementsByTagName("Variable");
+		for(int i = 0; i<variables.getLength(); i++) {
+			Element variable = (Element) variables.item(i);
+			String varName = variable.getAttribute("name");
+			String varVal = variable.getAttribute("value");
+			String varMax = variable.getAttribute("maximum");
+			if(varVal.isEmpty() || varName.isEmpty()) continue;
+			vars.add(varName);
+			vals.add(Double.parseDouble(varVal));
+			maxs.add(Double.parseDouble(varMax));
+		}
+	}
+	
 	protected void addCellSet(List<Integer> cellSet, List<Color> colorSet) {
 		NodeList cells = configDoc.getElementsByTagName("Cell");
 		for(int i = 0; i< cells.getLength(); i++) {

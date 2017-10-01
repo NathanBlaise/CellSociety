@@ -13,15 +13,19 @@ public class ForagingSimulation extends Simulation{
 	private final int NEST = 2;
 	
 	private Random rand = new Random();
-	private int newAntsBorn = 2;
-	private int maxPheromones = 100;
+	private int antsBornIndex;
+	private int maxPheromonesIndex;
 	private String layoutFile = "data/Foraging.xml";
+	private String[] vars = {"newAntsBorn", "maxPheromones"};
+	private double[] vals = {2, 10};
+	private double[] maxs = {5, 100};
 	
 	public ForagingSimulation() {
 		super();
-		super.layoutFile = this.layoutFile;
-		super.defaultFile = this.layoutFile;
+		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		super.changeInitConfig(layoutFile);
+		antsBornIndex = variables.indexOf("newAntsBorn");
+		maxPheromonesIndex = variables.indexOf("maxPheromones");
 	}
 	
 	@Override
@@ -45,7 +49,7 @@ public class ForagingSimulation extends Simulation{
 			}	
 		}
 		if(cell.getCurrentState() == NEST) {
-			cell.addOccupants(new Ant(cell), newAntsBorn);
+			cell.addOccupants(new Ant(cell), (int) variableVals.get(antsBornIndex).doubleValue());
 		}
 	}
 	
@@ -98,7 +102,7 @@ public class ForagingSimulation extends Simulation{
 	private Cell mostHomePheromones(List<Cell> neighbours) {
 		if(neighbours.size() <= 0) return null;
 		
-		int max = 0;
+		double max = 0;
 		Cell newLocation = null;
 		for(Cell neighbour:neighbours) {
 			if(neighbour.survivalTime() > max) {
@@ -112,7 +116,7 @@ public class ForagingSimulation extends Simulation{
 	private Cell mostFoodPheromones(List<Cell> neighbours) {
 		if(neighbours.size() <= 0) return null;
 		
-		int max = 0;
+		double max = 0;
 		Cell newLocation = null;
 		for(Cell neighbour:neighbours) {
 			if(neighbour.replicationTime() > max) {
@@ -124,15 +128,15 @@ public class ForagingSimulation extends Simulation{
 	}
 	
 	private int maxHomePheromonesVal(Cell newLocation) {
-		int max = 0;
+		double max = 0;
 		for(Cell neighbour:newLocation.getNeighbours()) {
 			max = Math.max(max, neighbour.survivalTime());
 		}
-		return max;
+		return (int) max;
 	}
 	
-	private int maxFoodPheromonesVal(Cell newLocation) {
-		int max = 0;
+	private double maxFoodPheromonesVal(Cell newLocation) {
+		double max = 0;
 		for(Cell neighbour:newLocation.getNeighbours()) {
 			max = Math.max(max, neighbour.replicationTime());
 		}
@@ -141,18 +145,18 @@ public class ForagingSimulation extends Simulation{
 	
 	private void dropHomePheromones(Cell current) {
 		if(current.getCurrentState() == NEST) {
-			current.setSurvivalTime(maxPheromones);
+			current.setSurvivalTime(variableVals.get(maxPheromonesIndex));
 		}else {
-			int desiredVal = maxHomePheromonesVal(current) - 2 - current.survivalTime();
+			double desiredVal = maxHomePheromonesVal(current) - 2 - current.survivalTime();
 			if(desiredVal>0) current.setSurvivalTime(current.survivalTime() + desiredVal);
 		}
 	}
 	
 	private void dropFoodPheromones(Cell current) {
 		if(current.getCurrentState() == FOOD) {
-			current.setReplicationTime(maxPheromones);
+			current.setReplicationTime(variableVals.get(maxPheromonesIndex));
 		}else {
-			int desiredVal = maxFoodPheromonesVal(current) - 2 - current.replicationTime();
+			double desiredVal = maxFoodPheromonesVal(current) - 2 - current.replicationTime();
 			if(desiredVal>0) current.setReplicationTime(current.replicationTime() + desiredVal);
 		}
 	}

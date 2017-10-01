@@ -4,7 +4,12 @@
 		<Type>Segregation</Type>
 		<Title>Segregation Simulation</Title>
 		<Author>Ben Welton</Author>
-		<percentOfNeighbors>0.5</percentOfNeighbors></Attributes>
+	</Attributes>
+	
+	<Variables>
+		<Variable name="percentOfNeighbours" value="0.5" maximum="1.0"></Variable>
+		
+	</Variables>
 
 	<Cells>
 		<Cell>
@@ -30,7 +35,8 @@
 	</Cells>
 
 	<Grid>
-		<Size>5</Size>
+		<Size>10</Size>
+		<Type>Normal</Type>
 	</Grid>
 
 </Simulation> 
