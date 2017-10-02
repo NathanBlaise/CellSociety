@@ -46,6 +46,7 @@ public class ScreenDisplay{
 	private Simulation sim;
 	private Grid cellArray;
 	private int round = 0;
+
 	
 	/**
 	 * Constructor: Screen Display class
@@ -65,7 +66,6 @@ public class ScreenDisplay{
 			root.getChildren().addAll(gui.paneBox);
 			root.getChildren().addAll(gui.SliderBox);
 			root.getChildren().addAll(gui.xyChart);
-			root.getChildren().addAll(gui.varSliderBox);
 			root.getChildren().add(gui.SlidTittle);
 		}
 		
@@ -151,6 +151,23 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
 		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		else if (gui.simToLoad.equals("Foraging")) sim = new ForagingSimulation();
+		
+		
+		if(root.getChildren().contains(gui.varSliderBox)) {
+			root.getChildren().remove(gui.varSliderBox);
+		}
+		gui.varSliderBox = new simVarSliderBox(sim,gui);
+		root.getChildren().addAll(gui.varSliderBox);
+		gui.varSliderBox.setLayoutX(750);
+	    gui.varSliderBox.setLayoutY(30);
+	    gui.varSliderBox.setPrefWidth(250);
+	    gui.varSliderBox.setPrefHeight(200);
+		
+		
+		// Initialize the simVarSilderBox
+	      
+	
+		System.out.println("one");
 		gridSize = sim.simulationSize();
 		gui.xyChart.setTitle(gui.simToLoad+ " Simulation");
 		// want to change size before initializing the grid
