@@ -13,8 +13,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +42,12 @@ public class GUI {
 	protected Button stepButton;
 	protected Button goButton;
 	protected HBox buttons;
+	
+	protected RadioButton normalButton;
+	protected RadioButton toroidalButton;
+	protected RadioButton infiniteButton;
+	protected HBox radioButtons;
+	protected ToggleGroup radioGroup;
 
 	//Create a line chart
 	protected final NumberAxis xAxis = new NumberAxis();
@@ -75,10 +83,26 @@ public class GUI {
 		stepButton = new Button("STEP");
 		pauseButton = new Button("PLAY");
 		
-		buttons = new HBox();
+		buttons = new HBox(10);
 		buttons.getChildren().add(resetButton);
 		buttons.getChildren().add(pauseButton);
 		buttons.getChildren().add(stepButton);
+		
+		// Add Radio Buttons
+		normalButton = new RadioButton("Normal");
+		normalButton.setSelected(true);
+		toroidalButton = new RadioButton("Toroidal");
+		infiniteButton = new RadioButton("Infinite");
+		
+		radioGroup = new ToggleGroup();
+		radioButtons = new HBox(30);
+		radioButtons.getChildren().add(normalButton);
+		normalButton.setToggleGroup(radioGroup);
+		radioButtons.getChildren().add(toroidalButton);
+		toroidalButton.setToggleGroup(radioGroup);
+		radioButtons.getChildren().add(infiniteButton);
+		infiniteButton.setToggleGroup(radioGroup);
+		
 
 		//initialize simulation loader
 		HBox LoaderBox = new HBox();
@@ -95,11 +119,15 @@ public class GUI {
 		
 		paneBox.setPadding(new Insets(30,30,30,50));
 		paneBox.getChildren().add(LoaderBox);
-		paneBox.getChildren().add(buttons);
+		paneBox.getChildren().add(radioButtons);
 		paneBox.setStyle("-fx-background-color: #336699;");
 		paneBox.setLayoutX(0);
 		paneBox.setLayoutY(476);
 		paneBox.setPrefWidth(1000);
+		
+		buttons.setPadding(new Insets(30,30,30,50));
+		buttons.setLayoutX(300);
+		buttons.setLayoutY(476);
 		
 		// add SlideBars
 		SliderBox = new VBox();

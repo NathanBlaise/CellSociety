@@ -5,8 +5,8 @@ import java.util.List;
 import cellsociety_team02.cells.*;
 
 public class FireSimulation extends Simulation{
-	private final int EMPTY = 0;
-	private final int TREE = 1;
+	private final int TREE = 0;
+	private final int EMPTY = 1;
 	private final int BURNING = 2;
 	
 	private String layoutFile = "data/Fire.xml";

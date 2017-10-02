@@ -21,27 +21,36 @@ public class InfiniteGrid extends Grid{
 	
 	@Override
 	protected void populateGrid(int size, Color[] colors, int[] propDistribution) {
-		outsideCells = new Stack<Cell>();
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				if(i==0 || i == size-1 || k == 0 || k == size-1) {
-					myArray[i][k] = new Cell(i,k,0,colors,200/(mySize-1),mySize,myArray);
-					outsideCells.add(myArray[i][k]);
-					return;
+					myArray[i][k] = new Cell(i,k,0,colors,360/(mySize-2),mySize,myArray);
 				}
-				assignPropState(propDistribution);
-				myArray[i][k] = new Cell(i,k,state,colors,200/(mySize-1),mySize,myArray);
+				else{ 
+					assignPropState(propDistribution);
+					myArray[i][k] = new Cell(i,k,state,colors,360/(mySize-2),mySize,myArray);
+				}
 			}
 		}
 	}
 	
+	
+	
 	public Grid expandGridArray() {
+		outsideCells = new Stack<Cell>();
+		for(int i=0; i<mySize; i++) {
+			for(int k=0; k<mySize; k++) {
+				if(i==0 || i == mySize-1 || k == 0 || k == mySize-1) {
+					outsideCells.add(myArray[i][k]);
+				}
+			}
+		}
 		while(!outsideCells.isEmpty()) {
 			if(outsideCells.pop().getCurrentState() != 0) { //Current State or NextState?
 				Grid updatedGrid = new InfiniteGrid(mySize-1,myPropState,myColors,null);
 				for(int i=0; i<mySize; i++) {
 					for(int k=0; k<mySize; k++) {
-						updatedGrid.myArray[i+1][k+1] = myArray[i][k];
+						updatedGrid.myArray[i+1][k+1].updateInfiniteVitals(myArray[i][k].getCurrentState(), myColors);
 					}
 				}
 				return updatedGrid;

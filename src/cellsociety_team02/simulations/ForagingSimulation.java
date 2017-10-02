@@ -30,7 +30,7 @@ public class ForagingSimulation extends Simulation{
 	
 	@Override
 	public void primeCell(Cell cell) {
-		if(cell.getX() == 0 && cell.getY() == 0) {
+		if(cell.getX() == 1 && cell.getY() == 1) {
 			cell.setNextState(FOOD);
 			cell.updateState();
 		}else if(cell.getX() == 4 && cell.getY() == 4) {

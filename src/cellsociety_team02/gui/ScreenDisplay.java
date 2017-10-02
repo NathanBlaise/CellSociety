@@ -34,6 +34,7 @@ public class ScreenDisplay{
 	private int gridSize = 5;
 	private Simulation sim;
 	private Grid cellArray;
+	private Grid newArray;
 	private int round = 0;
 
 	
@@ -53,6 +54,7 @@ public class ScreenDisplay{
 		
 		if (isStarting) {
 			root.getChildren().addAll(gui.paneBox);
+			root.getChildren().addAll(gui.buttons);
 			root.getChildren().addAll(gui.SliderBox);
 			root.getChildren().addAll(gui.xyChart);
 			root.getChildren().add(gui.SlidTittle);
@@ -158,13 +160,21 @@ public class ScreenDisplay{
 		if (gui.changeSize) {
 			gridSize = gui.slideSize.sideLength;
 		    gui.changeSize = false;
-	}	
+		}	
 		
 		gui.slideSize.setVal(gridSize);
 		resetGrid();
 		
 		
 	}
+	
+	public void updateSeries() {
+		round += 1;
+		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
+			gui.xyChart.updateLineChart(round, cellArray.getCellProportions()[i],gui.xyChart.seriesList.get(i));
+		}
+	}
+
 
 	public void addSeriesToChart() {
 		for (int i = 0; i < sim.cellColors().length;i++) {
@@ -178,7 +188,13 @@ public class ScreenDisplay{
 		}
 	}
 	
-	
+	private void drawExpandedGrid() {
+		this.root.getChildren().remove(myGrid);
+		gridSize += 2;
+		drawNewGrid();
+		this.root.getChildren().add(myGrid);
+		updateInfiniteCellsToGrid();
+	}
 
 	private void resetGrid() {
 		gui.xyChart.getData().clear();
@@ -193,23 +209,27 @@ public class ScreenDisplay{
 		
 	}
 	
-	
-	public void updateSeries() {
-		round += 1;
-		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
-			gui.xyChart.updateLineChart(round, cellArray.getCellProportions()[i],gui.xyChart.seriesList.get(i));
+	private void updateInfiniteCellsToGrid() {
+		for (int i= 0; i<cellArray.getArr().length;i++) {
+			for (int j = 0; j<cellArray.getArr().length; j++) {
+				Cell cell = cellArray.getArr()[i][j];
+				if(i!=0 && i!=(gridSize+1) && j!=0 && j!=(gridSize+1)) {
+					myGrid.add(cell, i-1,j-1);
+					sim.primeCell(cell);
+				}
+			}
 		}
 	}
-	
-	
-	
+
 	private void addCellsToGrid() {
-		//Add if's for different types of Grid
-		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(), sim.specificCellLayout());
-		
+		if(gui.normalButton.isSelected()) cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
+		else if(gui.toroidalButton.isSelected()) cellArray = new ToroidalGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
+		else if(gui.infiniteButton.isSelected()) cellArray = new InfiniteGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
-				Cell cell = cellArray.getArr()[i][j];
+				Cell cell = new Cell();
+				if(gui.infiniteButton.isSelected()) cell = cellArray.getArr()[i+1][j+1];
+				else cell = cellArray.getArr()[i][j];
 				myGrid.add(cell, i,j);
 				sim.primeCell(cell);
 			}
