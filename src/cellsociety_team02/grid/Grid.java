@@ -25,7 +25,7 @@ public class Grid {
 		myArray = new Cell[size][size];
 		cellAmounts = new int[colors.length];
 		
-		if(cellLayout.isEmpty() || cellLayout.equals(null) || cellLayout.size() != size) {
+		if(cellLayout==null || cellLayout.isEmpty() || cellLayout.size() != size) {
 			int[] propDistribution = generateStateDistr(propState);
 			populateGrid(size, colors, propDistribution);
 		}else {

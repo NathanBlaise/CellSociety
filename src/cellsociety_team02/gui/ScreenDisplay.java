@@ -128,6 +128,15 @@ public class ScreenDisplay{
 		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
 		cellArray.updateCellArray(sim);
 		updateSeries();
+		
+		if(gui.infiniteButton.isSelected()) {
+			newArray = ((InfiniteGrid) cellArray).expandGridArray();
+			if(newArray.getSize()!=0) {
+				cellArray = (InfiniteGrid) newArray;
+				drawExpandedGrid();
+			}
+		}
+
 	}
 
 	private void drawGridType() {
