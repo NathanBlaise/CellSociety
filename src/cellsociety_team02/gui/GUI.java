@@ -3,19 +3,12 @@ package cellsociety_team02.gui;
 import java.util.HashMap;
 import javafx.scene.control.ComboBox;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -29,21 +22,27 @@ import javafx.scene.text.Text;
  *
  */
 public class GUI {
-
+	
+	//Initializes the GridPane we use to display our grid
 	protected GridPane pane;
+	//Default font used
 	protected Font font = Font.getDefault();
+	//Pane Box and Slider Box VBoxes intialized
 	protected VBox paneBox;
 	protected VBox SliderBox;
+	//Slider Title
 	protected Text SlidTittle = new Text();
 	
-	// Create a HBox for Buttons
+	// Initialize buttons and create HBox for them
 	protected Button resetButton;
 	protected Button pauseButton;
 	protected Button stepButton;
 	protected Button goButton;
 	protected Button saveButton;
 	protected HBox buttons;
+	private final int BUTTON_HEIGHT = 476;
 	
+	//Initialize radiobuttons, create HBox for them and instantiate toggle group
 	protected RadioButton normalButton;
 	protected RadioButton toroidalButton;
 	protected RadioButton infiniteButton;
@@ -59,16 +58,21 @@ public class GUI {
 	// boolean values for each button
 	protected boolean isBack = false;
 	protected boolean changeSize = false;
+	
 	// create a combo box to select a certain type of simulation
 	protected ComboBox<String> simulationLoader;
 	protected String simToLoad;
 	protected HashMap<String, Double> values = new HashMap<String, Double>();
-	public SpeedSliderBar slideSpeed;
-	public SliderBar slideRatio;
-	public SizeSliderBar slideSize;
+	
+	//Specific slider bar variables instantiated
+	protected SpeedSliderBar slideSpeed;
+	protected SliderBar slideRatio;
+	protected SizeSliderBar slideSize;
+	
 	//help to change the size of gridPane
 	protected boolean changeSpeed = false;
 	
+	//Instance of class used to hold the specific variable sliders
 	protected simVarSliderBox varSliderBox = new simVarSliderBox(null,this);
 	
 	public GUI() {
@@ -76,9 +80,11 @@ public class GUI {
 	}
 	
 	protected void init() {
+		//List of drop down menu items
 		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS", "Foraging", "Saved State");
 		paneBox = new VBox(30);
 		
+		//Add buttons
 		goButton = new Button("GO");
 		resetButton = new Button("RESET");
 		stepButton = new Button("STEP");
@@ -97,6 +103,7 @@ public class GUI {
 		toroidalButton = new RadioButton("Toroidal");
 		infiniteButton = new RadioButton("Infinite");
 		
+		//Also add buttons to toggle group, allowing one selection at a time
 		radioGroup = new ToggleGroup();
 		radioButtons = new HBox(30);
 		radioButtons.getChildren().add(normalButton);
@@ -119,18 +126,19 @@ public class GUI {
 		// add all elements in the VBox
 		
 		//Insets(double top, double right, double bottom, double left)
-		
+		//Pane Box set and adding children to it
 		paneBox.setPadding(new Insets(30,30,30,50));
 		paneBox.getChildren().add(LoaderBox);
 		paneBox.getChildren().add(radioButtons);
 		paneBox.setStyle("-fx-background-color: #336699;");
 		paneBox.setLayoutX(0);
-		paneBox.setLayoutY(476);
+		paneBox.setLayoutY(BUTTON_HEIGHT);
 		paneBox.setPrefWidth(1000);
 		
+		//Setting buttons to the right of Pane Box
 		buttons.setPadding(new Insets(30,30,30,50));
 		buttons.setLayoutX(300);
-		buttons.setLayoutY(476);
+		buttons.setLayoutY(BUTTON_HEIGHT);
 		
 		// add SlideBars
 		SliderBox = new VBox();
@@ -142,7 +150,7 @@ public class GUI {
 		slideSize.setUpValueField(this);
 		
 		
-		
+		//Modify Slider Specifics
 		SlidTittle.setText("General Setting:");
 		SlidTittle.setLayoutX(513);
 		SlidTittle.setLayoutY(55);
@@ -166,24 +174,4 @@ public class GUI {
        
       
 	}
-
-	
-	
-	/**
-	 * @param: adjust spacing of buttons hbox
-	 * @param: adjust padding of buttons hbox
-	 */
-	public void setupButtonLayout (double spacing, double padding) {
-		this.buttons.setSpacing(spacing);
-		this.buttons.setPadding(new Insets(padding));
-
-	}
-	
-	public void setButtonPos(double xPos, double yPos, double width) {
-		paneBox.setLayoutX(xPos);
-		paneBox.setLayoutY(yPos);
-		paneBox.setPrefWidth(width);
-	}
-
-	
 }
