@@ -30,6 +30,7 @@ public class ScreenDisplay{
 	private Timeline animation = new Timeline();
 	private KeyFrame frame;
 	private String savedFile = null;
+	private Simulation savedSimulation = null;
 	private boolean isStarting = true;
 	private boolean isPaused = true;
 	private int gridSize = 5;
@@ -76,7 +77,8 @@ public class ScreenDisplay{
 		gui.saveButton.setOnAction((event) -> {
 			if(sim != null && cellArray != null) {
 				XMLBuilder saver = new XMLBuilder(cellArray, sim);
-				//savedFile = saver.getFile();
+				savedFile = saver.getFile();
+				savedSimulation = sim;
 			}
 		});
 	}
@@ -160,6 +162,10 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
 		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		else if (gui.simToLoad.equals("Foraging")) sim = new ForagingSimulation();
+		else if (gui.simToLoad.equals("Saved State") && savedFile != null) {
+			sim = savedSimulation;
+			sim.changeInitConfig(savedFile);
+		}
 		
 		if(root.getChildren().contains(gui.varSliderBox)) {
 			root.getChildren().remove(gui.varSliderBox);

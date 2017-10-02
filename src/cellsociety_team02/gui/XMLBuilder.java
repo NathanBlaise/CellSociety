@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 
 import cellsociety_team02.grid.Grid;
 import cellsociety_team02.simulations.Simulation;
+import javafx.scene.paint.Color;
 
 public class XMLBuilder {
 	private Grid myGrid;
@@ -65,7 +66,10 @@ public class XMLBuilder {
 	}
 
 	private void setupAttributes(Element attributes) {
-		//would be configured to write in author, title, and name to display in app
+		Element type = configDoc.createElement("Type");
+		type.appendChild(configDoc.createTextNode(sim.queryAttributes("Type")));
+		attributes.appendChild(type);
+		//possibly add additional stuff here to credit authors and name if desired
 	}
 	
 	private Element setupVariables(Element variables) {
@@ -80,7 +84,12 @@ public class XMLBuilder {
 	}
 	
 	private void setupCells(Element cells) {
-		//cells would be configured as above and below to read in values from the sim
+		for(int i = 0; i<sim.cellColors().length; i++) {
+			Element cell = configDoc.createElement("Cell");
+			cell.setAttribute("color", colorToString(sim.cellColors()[i]));
+			cell.setAttribute("proportion", Integer.toString(sim.cellFrequencies()[i]));
+			cells.appendChild(cell);
+		}
 		setupLayout(cells);
 	}
 	
@@ -104,7 +113,7 @@ public class XMLBuilder {
 		Element type = configDoc.createElement("Type");
 		Element visible = configDoc.createElement("Visibile");
 		
-		size.appendChild(configDoc.createTextNode(Integer.toString(sim.simulationSize())));
+		size.appendChild(configDoc.createTextNode(Integer.toString(myGrid.getSize())));
 		type.appendChild(configDoc.createTextNode(sim.gridType()));
 		visible.appendChild(configDoc.createTextNode(sim.gridVisibility()));
 		
@@ -134,5 +143,14 @@ public class XMLBuilder {
 	
 	protected String getFile() {
 		return new String(file);
+	}
+	
+	//credit to https://stackoverflow.com/questions/17925318/how-to-get-hex-web-string-from-javafx-colorpicker-color
+	//for this entire method
+	private String colorToString(Color color) {
+	        return String.format( "#%02X%02X%02X",
+	            (int)( color.getRed() * 255 ),
+	            (int)( color.getGreen() * 255 ),
+	            (int)( color.getBlue() * 255 ) );
 	}
 }

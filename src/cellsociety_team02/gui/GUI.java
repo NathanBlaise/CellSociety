@@ -76,7 +76,7 @@ public class GUI {
 	}
 	
 	protected void init() {
-		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS", "Foraging");
+		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS", "Foraging", "Saved State");
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");

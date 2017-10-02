@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Simulation>
-<Attributes/>
+<Attributes>
+<Type>RPS</Type>
+</Attributes>
 <Variables>
 <lifeLength maximum="10.0" name="lifeLength" value="10.0"/>
 </Variables>
 <Cells>
+<Cell color="#FDFEFE" proportion="10"/>
+<Cell color="#E74C3C" proportion="30"/>
+<Cell color="#3498DB" proportion="30"/>
+<Cell color="#239B56" proportion="30"/>
 <Layout>
-<Row>3321313323332</Row>
-<Row>2313233123322</Row>
-<Row>3333131223113</Row>
-<Row>3131133123131</Row>
-<Row>1331321223133</Row>
-<Row>1232233313321</Row>
-<Row>3333231112132</Row>
-<Row>3332233311232</Row>
-<Row>2232122122233</Row>
-<Row>1321221223131</Row>
-<Row>3132112333221</Row>
-<Row>1232211232221</Row>
-<Row>3133222223131</Row>
+<Row>1231121133</Row>
+<Row>1111323313</Row>
+<Row>1111232122</Row>
+<Row>3111211222</Row>
+<Row>3113232112</Row>
+<Row>3311323112</Row>
+<Row>2211221132</Row>
+<Row>2222223123</Row>
+<Row>2222222232</Row>
+<Row>3213111112</Row>
 </Layout>
 </Cells>
 <Grid>
