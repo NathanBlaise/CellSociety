@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -73,10 +74,20 @@ public class XMLHandler {
 		NodeList cells = configDoc.getElementsByTagName("Cell");
 		for(int i = 0; i< cells.getLength(); i++) {
 			Element cell = (Element) cells.item(i);
-			String proportionVal = cell.getElementsByTagName("Proportion").item(0).getTextContent();
-			String color = cell.getElementsByTagName("Color").item(0).getTextContent();
-			cellSet.add(Integer.parseInt(proportionVal));
-			colorSet.add(Color.web(color));
+			if(cell.hasAttribute("proportion")) {
+				String proportionVal = cell.getAttribute("proportion");
+				cellSet.add(Integer.parseInt(proportionVal));
+			}else {
+				cellSet.add(0);
+			}
+			
+			if(cell.hasAttribute("color")) {
+				String color = cell.getAttribute("color");
+				colorSet.add(Color.web(color));
+			}else {
+				Random rand = new Random(); //https://stackoverflow.com/questions/4246351/creating-random-colour-in-java
+				colorSet.add(Color.rgb(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+			}
 		}
 	}
 

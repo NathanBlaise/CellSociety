@@ -17,7 +17,7 @@ public class PredatorPreySimulation extends Simulation {
 	private int fishBreedingDaysIndex;
 	private int sharkStarveDaysIndex;
 	private String layoutFile = "data/PredatorPrey.xml";
-	private String[] vars = {"variableVals.get(sharkBreedingDaysIndex)", "variableVals.get(fishBreedingDaysIndex)", "variableVals.get(sharkStarveDaysIndex)"};
+	private String[] vars = {"sharkBreedingDays", "fishBreedingDays", "sharkStarveDays"};
 	private double[] vals = {4,4,4};
 	private double[] maxs = {10,10,10};
 	
@@ -25,9 +25,9 @@ public class PredatorPreySimulation extends Simulation {
 		super();
 		super.setDefaultVariables(layoutFile, vars, vals, maxs);
 		super.changeInitConfig(layoutFile);
-		sharkBreedingDaysIndex = variables.indexOf("variableVals.get(sharkBreedingDaysIndex)");
-		fishBreedingDaysIndex = variables.indexOf("variableVals.get(fishBreedingDaysIndex)");
-		sharkStarveDaysIndex = variables.indexOf("variableVals.get(sharkStarveDaysIndex)");
+		sharkBreedingDaysIndex = variables.indexOf("sharkBreedingDays");
+		fishBreedingDaysIndex = variables.indexOf("fishBreedingDays");
+		sharkStarveDaysIndex = variables.indexOf("sharkStarveDays");
 	}
 
 	@Override

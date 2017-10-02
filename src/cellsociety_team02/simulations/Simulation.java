@@ -186,7 +186,7 @@ public abstract class Simulation {
 	}
 	
 	/**
-	 * Gives the rule algorithim for updating the cell
+	 * Gives the rule algorithm for updating the cell
 	 * @param cell
 	 */
 	public abstract void updateCell(Cell cell);
