@@ -4,6 +4,12 @@ import java.util.List;
 
 import cellsociety_team02.cells.*;
 
+/**
+ * Simulation that models a population of trees facing a fire that spreads with a certain percent
+ * likelihood at each time step
+ * @author benwelton
+ *
+ */
 public class FireSimulation extends Simulation{
 	private final int TREE = 0;
 	private final int EMPTY = 1;

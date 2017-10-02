@@ -7,6 +7,14 @@ import cellsociety_team02.cells.Ant;
 import cellsociety_team02.cells.Cell;
 import cellsociety_team02.cells.CellOccupant;
 
+/**
+ * Not fully working, appears to be some slight bug with the occupancy or moving algorithm. In general
+ * models a path of ants back and forth between food and a nest where "crumbs" are left in
+ * the form of pheromones to travel back and forth. The current implementation tends to correctly
+ * find the path between any nest and food source but then stops spawning ants for some reason.
+ * @author benwelton
+ *
+ */
 public class ForagingSimulation extends Simulation{
 	private final int EMPTY = 0;
 	private final int FOOD = 1;

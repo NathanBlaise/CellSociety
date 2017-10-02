@@ -7,6 +7,12 @@ import cellsociety_team02.cells.Cell;
 import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
+/**
+ * Subclass of the grid, expands in all four directions by one cell if an active cell is found at the
+ * edge
+ * @author benwelton
+ *
+ */
 public class InfiniteGrid extends Grid{
 	
 	private Stack<Cell> outsideCells;

@@ -4,6 +4,11 @@ import java.util.List;
 
 import cellsociety_team02.cells.Cell;
 
+/**
+ * Game of life famous simulation. 
+ * @author benwelton
+ *
+ */
 public class LifeSimulation extends Simulation {
 	private final int DEAD = 0;
 	private final int ALIVE = 1;

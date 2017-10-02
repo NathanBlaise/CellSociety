@@ -2,6 +2,11 @@ package cellsociety_team02.cells;
 
 import javafx.scene.image.Image;
 
+/**
+ * Ant overlay for cell that holds an item and draws itself
+ * @author benwelton
+ *
+ */
 public class Ant extends CellOccupant {
 	private final int DESIRED_OCCUPANCY = 10;
 	private final String ANT_IMAGE = "ant.png";

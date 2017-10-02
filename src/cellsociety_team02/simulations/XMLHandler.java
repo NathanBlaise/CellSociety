@@ -18,6 +18,13 @@ import org.xml.sax.SAXException;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Parses the configuration file and returns all variables and properties to the simulation.
+ * Does not interact with any other classes. General notes about error handling can be found in
+ * the readme. 
+ * @author benwelton
+ *
+ */
 public class XMLHandler {
 	private Document configDoc;
 	
@@ -38,6 +45,11 @@ public class XMLHandler {
 		}
 	}
 	
+	/**
+	 * Add values from an arbitrary valName node into a corresponding map
+	 * @param simulationValues
+	 * @param valName
+	 */
 	protected void addValueSet(Map<String, String> simulationValues, String valName) {
 		NodeList allAttributes = configDoc.getElementsByTagName(valName);
 		
@@ -57,6 +69,12 @@ public class XMLHandler {
 		}
 	}
 	
+	/**
+	 * Return the lists of variables, their values, and their maximums
+	 * @param vars
+	 * @param vals
+	 * @param maxs
+	 */
 	protected void addVariableSet(List<String> vars, List<Double> vals, List<Double> maxs) {
 		NodeList variables = configDoc.getElementsByTagName("Variable");
 		for(int i = 0; i<variables.getLength(); i++) {
@@ -71,6 +89,12 @@ public class XMLHandler {
 		}
 	}
 	
+	/**
+	 * Reads a general layout of cells and returns their colors and, if specified, their
+	 * proportions in the overall layout 
+	 * @param cellSet
+	 * @param colorSet
+	 */
 	protected void addCellSet(List<Integer> cellSet, List<Color> colorSet) {
 		NodeList cells = configDoc.getElementsByTagName("Cell");
 		for(int i = 0; i< cells.getLength(); i++) {
@@ -92,6 +116,12 @@ public class XMLHandler {
 		}
 	}
 	
+	/**
+	 * Reads a specific layout of cells and returns it in the form of a two dimensional list.
+	 * Handles light error checking on square size and fit into the current grid.
+	 * @param cellLayout
+	 * @param gridSize
+	 */
 	protected void readSpecificLayout(List<List<Integer>> cellLayout, int gridSize) {
 		NodeList layouts = configDoc.getElementsByTagName("Layout");
 		if(layouts.getLength()<=0) {
