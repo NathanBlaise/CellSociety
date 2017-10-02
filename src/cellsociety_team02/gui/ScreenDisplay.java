@@ -59,7 +59,6 @@ public class ScreenDisplay{
 	    animation.getKeyFrames().add(frame);
 	     
 		Scene = new Scene(root, width, height, background);
-		drawNewGrid();
 		gui = new GUI();
 		
 		if (isStarting) {
@@ -213,12 +212,8 @@ public class ScreenDisplay{
 	        myGrid.getRowConstraints().add(row);
 	    }
 	    
-	    myGrid.setStyle("-fx-grid-lines-visible: true");
+	    myGrid.setStyle("-fx-grid-lines-visible: " + sim.gridVisibility());
 	    //Insets(double top, double right, double bottom, double left)
-	    //Make the border invisible
-	    if (sim instanceof RPSSimulation) {
-	    	myGrid.setStyle("-fx-grid-lines-visible: false");
-	    }
 	    myGrid.setPadding(new Insets(60,60,60,50)); 
 	}
 

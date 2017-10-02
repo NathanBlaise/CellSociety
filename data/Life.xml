@@ -29,6 +29,7 @@
 	<Grid>
 		<Size>10</Size>
 		<Type>Normal</Type>
+		<Visibile>false</Visibile>
 	</Grid>
 
 </Simulation> 
