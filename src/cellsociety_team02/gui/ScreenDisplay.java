@@ -4,27 +4,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import cellsociety_team02.gui.GUI;
 import cellsociety_team02.simulations.*;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 import cellsociety_team02.cells.Cell;
 import cellsociety_team02.grid.*;
@@ -205,7 +194,7 @@ public class ScreenDisplay{
 
 	private void addCellsToGrid() {
 		//Add if's for different types of Grid
-		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
+		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(), sim.specificCellLayout());
 		
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {

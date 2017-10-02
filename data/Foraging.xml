@@ -12,31 +12,26 @@
 	</Variables>
 
 	<Cells>
-		<Cell>
+		<Cell color="#FDFEFE" proportion="10">
 			<Name>EMPTY</Name>
 			<Value>0</Value>
-			<Proportion>10</Proportion>
-			<Color>#FDFEFE</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#F7DC6F" proportion="70">
 			<Name>FOOD</Name>
 			<Value>1</Value>
-			<Proportion>70</Proportion>
-			<Color>#F7DC6F</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#2874A6" proportion="20">
 			<Name>NEST</Name>
 			<Value>2</Value>
-			<Proportion>20</Proportion>
-			<Color>#2874A6</Color>
 		</Cell>
 	</Cells>
 
 	<Grid>
 		<Size>10</Size>
 		<Type>Normal</Type>
+		<Visibile>true</Visibile>
 	</Grid>
 
 </Simulation> 

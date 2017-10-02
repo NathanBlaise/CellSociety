@@ -5,6 +5,7 @@ import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Grid {
@@ -19,18 +20,33 @@ public class Grid {
 		mySize = 0;
 	}
 			
-	public Grid(int size, int[] propState, Color[] colors) {
+	public Grid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
 		mySize = size;
 		myArray = new Cell[size][size];
 		cellAmounts = new int[colors.length];
-
-		int[] propDistribution = generateStateDistr(propState);
-		populateGrid(size, colors, propDistribution);
+		
+		if(cellLayout.isEmpty() || cellLayout.equals(null)) {
+			int[] propDistribution = generateStateDistr(propState);
+			populateGrid(size, colors, propDistribution);
+		}else {
+			loadSpecificLayout(size, colors, cellLayout);
+		}
 		
 		//store neighbours
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				storeNeighbours(myArray[i][k]);
+			}
+		}
+	}
+
+	private void loadSpecificLayout(int size, Color[] colors, List<List<Integer>> cellLayout) {
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				int state = cellLayout.get(i).get(j);
+				if(state>=colors.length) state = 0;
+				myArray[i][j] = new Cell(i,j,state,colors,360/mySize, mySize, myArray);
+				cellAmounts[myArray[i][j].getCurrentState()]++;
 			}
 		}
 	}

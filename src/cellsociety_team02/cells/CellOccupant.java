@@ -30,7 +30,6 @@ public abstract class CellOccupant {
 	}
 	
 	public void move(Cell newLocation) {
-		if(newLocation.atOccupancy()) return;
 		currentCell.removeOccupant(this);
 		newLocation.addOccupants(this, 1);
 		
