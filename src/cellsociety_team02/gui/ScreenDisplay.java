@@ -115,7 +115,7 @@ public class ScreenDisplay{
 		
 
 		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
-		updateCellArray();
+		cellArray.updateCellArray(sim);
 		if(gui.infiniteButton.isSelected()) {
 			newArray = ((InfiniteGrid) cellArray).expandGridArray();
 			if(newArray.getSize()!=0) {
@@ -176,6 +176,14 @@ public class ScreenDisplay{
 		
 		
 	}
+	
+	public void updateSeries() {
+		round += 1;
+		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
+			gui.xyChart.updateLineChart(round, cellArray.getCellProportions()[i],gui.xyChart.seriesList.get(i));
+		}
+	}
+
 
 	public void addSeriesToChart() {
 		for (int i = 0; i < sim.cellColors().length;i++) {
@@ -223,9 +231,9 @@ public class ScreenDisplay{
 	}
 
 	private void addCellsToGrid() {
-		if(gui.normalButton.isSelected()) cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
-		else if(gui.toroidalButton.isSelected()) cellArray = new ToroidalGrid(gridSize, sim.cellFrequencies(), sim.cellColors());
-		else if(gui.infiniteButton.isSelected()) cellArray = new InfiniteGrid(gridSize, sim.cellFrequencies(), sim.cellColors());
+		if(gui.normalButton.isSelected()) cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
+		else if(gui.toroidalButton.isSelected()) cellArray = new ToroidalGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
+		else if(gui.infiniteButton.isSelected()) cellArray = new InfiniteGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
 				Cell cell = new Cell();
