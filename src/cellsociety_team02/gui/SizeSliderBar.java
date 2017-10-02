@@ -8,16 +8,12 @@ public class SizeSliderBar extends SliderBar{
 
 	public SizeSliderBar(String n, Double x, Double y, Double z) {
 		super(n, x, y, z);
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	@Override
 	public void setUpValueField(GUI gui) {
-		
 		String side = Integer.toString(((int)(getSlider().getValue()))) ;
-		
-		
-		//System.out.println("you are so funny");
 		valueField.setText(side+"×"+side);
 		valueField.setPrefColumnCount(valueField.getText().length());
 		valueField.setAlignment(Pos.CENTER);
@@ -67,11 +63,6 @@ public class SizeSliderBar extends SliderBar{
 			//System.out.println(sideLength);
 			
 			gui.changeSize = true; 
-			
-			
-			
-
 		});
-		
 	}
 }

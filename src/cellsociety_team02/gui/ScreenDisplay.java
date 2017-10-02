@@ -62,7 +62,15 @@ public class ScreenDisplay{
 		initStepButton();
 		initGoButton();
 		initPauseButton();
+		initSizeSlider();
 		
+	}
+	
+	private void initSizeSlider() {
+		gui.slideSize.getSlider().setOnMouseDragged((event) -> {
+			gridSize = gui.slideSize.sideLength;
+			resetGrid();
+		});
 	}
 
 	private void initPauseButton() {
@@ -126,13 +134,6 @@ public class ScreenDisplay{
 			animation.setRate(gui.slideSpeed.speed);
 			gui.changeSpeed = false;
 		}
-		
-		if (gui.changeSize) {
-				
-				gridSize = gui.slideSize.sideLength;
-				resetGrid();
-			    gui.changeSize = false;
-		}	
 	}
 
 	private void drawGridType() {

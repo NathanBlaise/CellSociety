@@ -104,13 +104,10 @@ public class GUI {
 		// add SlideBars
 		SliderBox = new VBox();
 		slideSpeed = new SpeedSliderBar("Speed", 0.0,1.0,20.0 );
-		//slideRatio = new SliderBar ("Blocks Ratio",0.0,0.0,1.0);
 		slideSize = new SizeSliderBar("Size",0.0,5.0,50.0);
 		slideSpeed.getValueFromTextField(this);
-		//slideRatio.getValueFromTextField(this);
 		slideSize.getValueFromTextField(this);
 		slideSpeed.setUpValueField(this);
-		//slideRatio.setUpValueField(this);
 		slideSize.setUpValueField(this);
 		
 		
@@ -120,7 +117,6 @@ public class GUI {
 		SlidTittle.setLayoutY(55);
 		SlidTittle.setFont(Font.font("verdana", FontWeight.LIGHT, FontPosture.REGULAR, 15));
 		SlidTittle.setUnderline(true);  
-		//SliderBox.getChildren().add(slideRatio);
 		SliderBox.getChildren().add(slideSize);
 		SliderBox.getChildren().add(slideSpeed);
 		SliderBox.setSpacing(0);
