@@ -63,16 +63,32 @@ public class ScreenDisplay{
 		initGoButton();
 		initPauseButton();
 		initSizeSlider();
+		initSpeedSlider();
 		
 	}
 	
-	private void initSizeSlider() {
-		gui.slideSize.getSlider().setOnMouseDragged((event) -> {
-			gridSize = gui.slideSize.sideLength;
+	private void initResetButton() {
+		gui.resetButton.setOnAction((event) -> {
 			resetGrid();
 		});
 	}
-
+	
+	private void initStepButton() {
+		gui.stepButton.setOnAction((event) -> {
+			cellArray.updateCellArray(sim);
+			updateSeries();
+			
+		});
+	}
+	
+	private void initGoButton() {
+		gui.goButton.setOnAction((event) -> {
+			gui.simToLoad = gui.simulationLoader.getValue();
+			this.root.getChildren().remove(myGrid);
+			drawGridType();
+		});
+	}
+	
 	private void initPauseButton() {
 		gui.pauseButton.setOnAction((event) -> {
 			isPaused = !isPaused;
@@ -88,27 +104,16 @@ public class ScreenDisplay{
 			}
 		});
 	}
-
-	private void initGoButton() {
-		gui.goButton.setOnAction((event) -> {
-			gui.simToLoad = gui.simulationLoader.getValue();
-			this.root.getChildren().remove(myGrid);
-			drawGridType();
-		});
-	}
-
-	private void initStepButton() {
-		gui.stepButton.setOnAction((event) -> {
-			cellArray.updateCellArray(sim);
-			updateSeries();
-			
-		});
-	}
-
 	
+	private void initSpeedSlider() {
+		gui.slideSpeed.getSlider().setOnMouseDragged((event) -> {
+			animation.setRate(gui.slideSpeed.speed);
+		});
+	}
 
-	private void initResetButton() {
-		gui.resetButton.setOnAction((event) -> {
+	private void initSizeSlider() {
+		gui.slideSize.getSlider().setOnMouseDragged((event) -> {
+			gridSize = gui.slideSize.sideLength;
 			resetGrid();
 		});
 	}
@@ -118,22 +123,9 @@ public class ScreenDisplay{
 	}
 
 	public void step (double elapsedTime) {
-		
-
 		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
 		cellArray.updateCellArray(sim);
 		updateSeries();
-		
-		
-		
-		if(cellArray.getSize()>gridSize) {
-			
-		}
-
-		if (gui.changeSpeed) {
-			animation.setRate(gui.slideSpeed.speed);
-			gui.changeSpeed = false;
-		}
 	}
 
 	private void drawGridType() {
@@ -160,8 +152,6 @@ public class ScreenDisplay{
 		
 		// Initialize the simVarSilderBox
 	      
-	
-		System.out.println("one");
 		gridSize = sim.simulationSize();
 		gui.xyChart.setTitle(gui.simToLoad+ " Simulation");
 		// want to change size before initializing the grid
