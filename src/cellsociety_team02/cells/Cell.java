@@ -40,6 +40,14 @@ public class Cell extends StackPane {
 		occupants = new ArrayList<>();
 		cellBackground = new Rectangle(sideLength, sideLength, myColors[currentState]);
 		this.getChildren().add(cellBackground);
+		initializeStateCycler();
+	}
+
+	private void initializeStateCycler() {
+		this.setOnMouseClicked((event) ->{
+			if(++currentState >= myColors.length) currentState = 0;
+			cellBackground.setFill(myColors[currentState]);
+		});
 	}
 	
 	public List<Cell> getNeighbours(){
@@ -128,6 +136,10 @@ public class Cell extends StackPane {
 			cellBackground.setFill(myColors[currentState]);
 			stateChanged = false;
 		}
+	}
+	
+	public boolean stateHasChanged() {
+		return stateChanged;
 	}
 	
 	public void setNextState(int state) {

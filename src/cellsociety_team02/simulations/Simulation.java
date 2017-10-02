@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 public abstract class Simulation {
 	private final String DEFAULT_GRID_SIZE = "5";
 	private final String DEFAULT_GRID_TYPE = "Normal";
+	private final String DEFAULT_GRID_VISIBILITY = "true";
 	
 	private XMLHandler parser;
 	private Map<String, String> simulationAttributes;
@@ -77,6 +78,14 @@ public abstract class Simulation {
 	 */
 	public String gridType() {
 		return gridAttributes.getOrDefault("Type", DEFAULT_GRID_TYPE);
+	}
+	
+	public String gridVisibility() {
+		String visibility = gridAttributes.getOrDefault("Visibile", DEFAULT_GRID_VISIBILITY);
+		if(visibility.toLowerCase().equals("true") || visibility.toLowerCase().equals("false")) {
+			return visibility.toLowerCase();
+		}
+		return DEFAULT_GRID_VISIBILITY;
 	}
 	
 	/**
