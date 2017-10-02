@@ -92,9 +92,12 @@ public class ScreenDisplay{
 	private void initStepButton() {
 		gui.stepButton.setOnAction((event) -> {
 			cellArray.updateCellArray(sim);
-			round += 1;
+			updateSeries();
+			
 		});
 	}
+
+	
 
 	private void initResetButton() {
 		gui.resetButton.setOnAction((event) -> {
@@ -107,12 +110,13 @@ public class ScreenDisplay{
 	}
 
 	public void step (double elapsedTime) {
-		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
-			gui.xyChart.updateLineChart(round, sim.cellFrequencies()[i],gui.xyChart.seriesList.get(i));
-		}
+		
+
 		//gui.xyChart.updateLineChart(round, sim.cellFrequencies()[0]);
 		cellArray.updateCellArray(sim);
-		round += 1;
+		updateSeries();
+		
+		
 		
 		if(cellArray.getSize()>gridSize) {
 			
@@ -168,6 +172,10 @@ public class ScreenDisplay{
 		gui.slideSize.setVal(gridSize);
 		resetGrid();
 		
+		
+	}
+
+	public void addSeriesToChart() {
 		for (int i = 0; i < sim.cellColors().length;i++) {
 			XYChart.Series line = new XYChart.Series();
 			gui.xyChart.getData().add(line);
@@ -177,21 +185,33 @@ public class ScreenDisplay{
 			line.getData().add(new XYChart.Data(0, sim.cellFrequencies()[i]));
 			
 		}
-		
 	}
 	
 	
 
 	private void resetGrid() {
+		gui.xyChart.getData().clear();
+		gui.xyChart.seriesList.clear();
+
 		this.root.getChildren().remove(myGrid);
 		drawNewGrid();
 		this.root.getChildren().add(myGrid);
 		sim.clearValues();
 		addCellsToGrid();
-		gui.xyChart.getData().clear();
-		gui.xyChart.seriesList.clear();
+		addSeriesToChart();
+		
 	}
-
+	
+	
+	public void updateSeries() {
+		round += 1;
+		for (int i = 0; i < gui.xyChart.seriesList.size();i++) {
+			gui.xyChart.updateLineChart(round, cellArray.getCellProportions()[i],gui.xyChart.seriesList.get(i));
+		}
+	}
+	
+	
+	
 	private void addCellsToGrid() {
 		//Add if's for different types of Grid
 		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(), sim.specificCellLayout());
