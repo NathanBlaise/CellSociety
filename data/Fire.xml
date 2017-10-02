@@ -11,13 +11,13 @@
 	</Variables>
 
 	<Cells>
-		<Cell color="#F7DC6F" proportion="10">
-			<Name>EMPTY</Name>
+		<Cell color="#239B56" proportion="70">
+			<Name>TREE</Name>
 			<Value>0</Value>
 		</Cell>
 
-		<Cell color="#239B56" proportion="70">
-			<Name>TREE</Name>
+		<Cell color="#F7DC6F" proportion="10">
+			<Name>EMPTY</Name>
 			<Value>1</Value>
 		</Cell>
 
