@@ -41,6 +41,7 @@ public class GUI {
 	protected Button pauseButton;
 	protected Button stepButton;
 	protected Button goButton;
+	protected Button saveButton;
 	protected HBox buttons;
 	
 	protected RadioButton normalButton;
@@ -82,8 +83,10 @@ public class GUI {
 		resetButton = new Button("RESET");
 		stepButton = new Button("STEP");
 		pauseButton = new Button("PLAY");
+		saveButton = new Button("SAVE");
 		
 		buttons = new HBox(10);
+		buttons.getChildren().add(saveButton);
 		buttons.getChildren().add(resetButton);
 		buttons.getChildren().add(pauseButton);
 		buttons.getChildren().add(stepButton);
