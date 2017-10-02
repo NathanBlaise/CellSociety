@@ -12,17 +12,17 @@
 
 	<Cells>
 		<Cell>
-			<Name>EMPTY</Name>
+			<Name>TREE</Name>
 			<Value>0</Value>
-			<Proportion>10</Proportion>
-			<Color>#F7DC6F</Color>
+			<Proportion>70</Proportion>
+			<Color>#239B56</Color>
 		</Cell>
 
 		<Cell>
-			<Name>TREE</Name>
+			<Name>Empty</Name>
 			<Value>1</Value>
-			<Proportion>70</Proportion>
-			<Color>#239B56</Color>
+			<Proportion>10</Proportion>
+			<Color>#F7DC6F</Color>
 		</Cell>
 
 		<Cell>

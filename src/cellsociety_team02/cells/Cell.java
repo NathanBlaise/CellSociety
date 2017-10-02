@@ -30,6 +30,10 @@ public class Cell extends StackPane {
 	private int myGridSize;
 	private Cell[][] myGridArray;
 	
+	public Cell() {
+		
+	}
+	
 	public Cell(int xPosition, int yPosition, int startingState, Color[] colors, int sideLength, int gridSize, Cell[][] gridArray) {
 		xPos = xPosition;
 		yPos = yPosition;
@@ -163,6 +167,11 @@ public class Cell extends StackPane {
 	
 	public void setReplicationTime(double newDaysUntil) {
 		replicationVal = newDaysUntil;
+	}
+	
+	public void updateInfiniteVitals(int state, Color[] colors) {
+		currentState = state;
+		cellBackground.setFill(colors[state]);
 	}
 
 }
