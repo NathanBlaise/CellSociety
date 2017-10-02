@@ -12,13 +12,16 @@ import javafx.scene.paint.Color;
 public abstract class Simulation {
 	private final String DEFAULT_GRID_SIZE = "5";
 	private final String DEFAULT_GRID_TYPE = "Normal";
+	private final String DEFAULT_GRID_VISIBILITY = "true";
 	
 	private XMLHandler parser;
 	private Map<String, String> simulationAttributes;
 	private Map<String, String> gridAttributes;
 	private List<Integer> cellAttributes;
 	private List<Color> colorAttributes;
+	private List<List<Integer>> cellLayout;
 	
+	//accessible by subclasses so they can store modified default values
 	protected String layoutFile;
 	protected String defaultFile;
 	protected List<String> variables;
@@ -37,6 +40,7 @@ public abstract class Simulation {
 	private void initAttributes() {
 		simulationAttributes = new HashMap<>();
 		gridAttributes = new HashMap<>();
+		cellLayout = new ArrayList<>();
 		cellAttributes = new ArrayList<>();
 		colorAttributes = new ArrayList<>();
 		variables = new ArrayList<>();
@@ -48,9 +52,12 @@ public abstract class Simulation {
 		parser.tryToLoadDoc(defaultFile, layoutFile);
 		parser.addValueSet(simulationAttributes, "Attributes");
 		parser.addValueSet(gridAttributes, "Grid");
+		
 		parser.addVariableSet(variables, variableVals, variableMaxs);
 		checkForVariableErrors();
+		
 		parser.addCellSet(cellAttributes, colorAttributes);
+		parser.readSpecificLayout(cellLayout, simulationSize());
 	}
 	
 	/**
@@ -79,6 +86,14 @@ public abstract class Simulation {
 		return gridAttributes.getOrDefault("Type", DEFAULT_GRID_TYPE);
 	}
 	
+	public String gridVisibility() {
+		String visibility = gridAttributes.getOrDefault("Visibile", DEFAULT_GRID_VISIBILITY);
+		if(visibility.toLowerCase().equals("true") || visibility.toLowerCase().equals("false")) {
+			return visibility.toLowerCase();
+		}
+		return DEFAULT_GRID_VISIBILITY;
+	}
+	
 	/**
 	 * Returns the proportional frequencies for each cell type, returns an empty array otherwise
 	 * @return
@@ -98,6 +113,14 @@ public abstract class Simulation {
 	 */
 	public Color[] cellColors(){
 		return colorAttributes.toArray(new Color[colorAttributes.size()]);
+	}
+	
+	/**
+	 * Returns a copy of the specified cell layout
+	 * @return
+	 */
+	public List<List<Integer>> specificCellLayout(){
+		return new ArrayList<>(cellLayout);
 	}
 	
 	/**
@@ -177,7 +200,7 @@ public abstract class Simulation {
 	}
 	
 	/**
-	 * Gives the rule algorithim for updating the cell
+	 * Gives the rule algorithm for updating the cell
 	 * @param cell
 	 */
 	public abstract void updateCell(Cell cell);

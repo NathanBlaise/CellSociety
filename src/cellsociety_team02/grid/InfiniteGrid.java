@@ -1,5 +1,6 @@
 package cellsociety_team02.grid;
 
+import java.util.List;
 import java.util.Stack;
 
 import cellsociety_team02.cells.Cell;
@@ -11,8 +12,8 @@ public class InfiniteGrid extends Grid{
 	private int[] myPropState;
 	private Color[] myColors;
 	
-	public InfiniteGrid(int size, int[] propState, Color[] colors) {
-		super(size+2,propState,colors);
+	public InfiniteGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
+		super(size+2,propState,colors, cellLayout);
 		myColors = colors;
 		myPropState = propState;
 		
@@ -46,7 +47,7 @@ public class InfiniteGrid extends Grid{
 		}
 		while(!outsideCells.isEmpty()) {
 			if(outsideCells.pop().getCurrentState() != 0) { //Current State or NextState?
-				Grid updatedGrid = new InfiniteGrid(mySize,myPropState,myColors);
+				Grid updatedGrid = new InfiniteGrid(mySize-1,myPropState,myColors,null);
 				for(int i=0; i<mySize; i++) {
 					for(int k=0; k<mySize; k++) {
 						updatedGrid.myArray[i+1][k+1].updateInfiniteVitals(myArray[i][k].getCurrentState(), myColors);

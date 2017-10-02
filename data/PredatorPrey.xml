@@ -13,31 +13,26 @@
 	</Variables>
 
 	<Cells>
-		<Cell>
+		<Cell color="#3498DB" proportion="50">
 			<Name>KELP</Name>
 			<Value>0</Value>
-			<Proportion>50</Proportion>
-			<Color>#3498DB</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#239B56" proportion="20">
 			<Name>FISH</Name>
 			<Value>1</Value>
-			<Proportion>20</Proportion>
-			<Color>#239B56</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#F7DC6F" proportion="30">
 			<Name>SHARK</Name>
 			<Value>2</Value>
-			<Proportion>30</Proportion>
-			<Color>#F7DC6F</Color>
 		</Cell>
 	</Cells>
 
 	<Grid>
 		<Size>5</Size>
 		<Type>Normal</Type>
+		<Visibile>false</Visibile>
 	</Grid>
 
 </Simulation> 

@@ -1,33 +1,52 @@
 package cellsociety_team02.grid;
 
 import cellsociety_team02.cells.*;
+import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Grid {
 	
 	protected int mySize;
+	protected int state;
 	protected Cell[][] myArray;
 	private Random rand = new Random();
-	protected int state;
+	private int[] cellAmounts;
 	
 	public Grid() {
 		mySize = 0;
 	}
 			
-	public Grid(int size, int[] propState, Color[] colors) {
+	public Grid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
 		mySize = size;
 		myArray = new Cell[size][size];
-
-		int[] propDistribution = generateStateDistr(propState);
+		cellAmounts = new int[colors.length];
 		
-		//Populate grid with appropriate cells
-		populateGrid(size, colors, propDistribution);
+		if(cellLayout.isEmpty() || cellLayout.equals(null)) {
+			int[] propDistribution = generateStateDistr(propState);
+			populateGrid(size, colors, propDistribution);
+		}else {
+			loadSpecificLayout(size, colors, cellLayout);
+		}
+		
+		//store neighbours
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
 				storeNeighbours(myArray[i][k]);
+			}
+		}
+	}
+
+	private void loadSpecificLayout(int size, Color[] colors, List<List<Integer>> cellLayout) {
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				int state = cellLayout.get(i).get(j);
+				if(state>=colors.length) state = 0;
+				myArray[i][j] = new Cell(i,j,state,colors,360/mySize, mySize, myArray);
+				cellAmounts[myArray[i][j].getCurrentState()]++;
 			}
 		}
 	}
@@ -37,6 +56,7 @@ public class Grid {
 			for(int k=0; k<size; k++) {
 				assignPropState(propDistribution);
 				myArray[i][k] = new Cell(i,k,state,colors,360/mySize, mySize, myArray);
+				cellAmounts[myArray[i][k].getCurrentState()]++;
 			}
 		}
 	}
@@ -85,6 +105,25 @@ public class Grid {
 		}
 	}
 	
+	public void updateCellArray(Simulation sim) {
+		int size = this.getSize();
+		for (int i= 0; i<size;i++) {
+			for (int j = 0; j<size; j++) {
+				sim.updateCell(this.getArr()[i][j]);
+			}
+		}
+		for (int i= 0; i<size;i++) {
+			for (int j = 0; j<size; j++) {
+				Cell cell = this.getArr()[i][j];
+				if(cell.stateHasChanged()) {
+					cellAmounts[cell.getCurrentState()]--;
+					cellAmounts[cell.getNextState()]++;
+					cell.updateState();
+				}
+			}
+		}
+	}
+	
 	public int getSize() {
 		return mySize;
 	}
@@ -95,6 +134,15 @@ public class Grid {
 	
 	public Cell[][] getArr(){
 		return myArray;
+	}
+	
+	public int[] getCellProportions() {
+		int[] cellProportions = new int[cellAmounts.length];
+		int cellCount = mySize * mySize;
+		for(int i = 0; i<cellAmounts.length; i++) {
+			cellProportions[i] = (int) (((double) cellAmounts[i]/cellCount) * 100);
+		}
+		return cellProportions;
 	}
 	
 	

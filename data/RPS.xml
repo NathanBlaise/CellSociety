@@ -11,38 +11,31 @@
 	</Variables>
 
 	<Cells>
-		<Cell>
+		<Cell color="#FDFEFE" proportion="10">
 			<Name>EMPTY</Name>
 			<Value>0</Value>
-			<Proportion>10</Proportion>
-			<Color>#FDFEFE</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#E74C3C" proportion="30">
 			<Name>ROCK</Name>
 			<Value>1</Value>
-			<Proportion>30</Proportion>
-			<Color>#E74C3C</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#3498DB" proportion="30">
 			<Name>PAPER</Name>
 			<Value>2</Value>
-			<Proportion>30</Proportion>
-			<Color>#3498DB</Color>
 		</Cell>
 		
-		<Cell>
+		<Cell color="#239B56" proportion="30">
 			<Name>SCISSORS</Name>
 			<Value>2</Value>
-			<Proportion>30</Proportion>
-			<Color>#239B56</Color>
 		</Cell>
 	</Cells>
 
 	<Grid>
 		<Size>10</Size>
 		<Type>Normal</Type>
+		<Visibile>true</Visibile>
 	</Grid>
 
 </Simulation> 

@@ -11,31 +11,34 @@
 	</Variables>
 
 	<Cells>
-		<Cell>
-			<Name>TREE</Name>
+		<Cell color="#F7DC6F" proportion="10">
+			<Name>EMPTY</Name>
 			<Value>0</Value>
-			<Proportion>70</Proportion>
-			<Color>#239B56</Color>
 		</Cell>
 
-		<Cell>
-			<Name>Empty</Name>
+		<Cell color="#239B56" proportion="70">
+			<Name>TREE</Name>
 			<Value>1</Value>
-			<Proportion>10</Proportion>
-			<Color>#F7DC6F</Color>
 		</Cell>
 
-		<Cell>
+		<Cell color="#CB4335" proportion="20">
 			<Name>BURNING</Name>
 			<Value>2</Value>
-			<Proportion>20</Proportion>
-			<Color>#CB4335</Color>
 		</Cell>
+		
+		<Layout>
+			<Row>00100</Row>
+			<Row>10101</Row>
+			<Row>10220</Row>
+			<Row>02250</Row>
+			<Row>02201</Row>
+		</Layout>
 	</Cells>
 
 	<Grid>
 		<Size>5</Size>
 		<Type>Normal</Type>
+		<Visibile>true</Visibile>
 	</Grid>
 
 </Simulation> 

@@ -1,14 +1,15 @@
 package cellsociety_team02.grid;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team02.cells.Cell;
 import javafx.scene.paint.Color;
 
 public class ToroidalGrid extends Grid{
 
-	public ToroidalGrid(int size, int[] propState, Color[] colors) {
-		super(size,propState,colors);
+	public ToroidalGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
+		super(size,propState,colors, cellLayout);
 	}
 	
 	@Override

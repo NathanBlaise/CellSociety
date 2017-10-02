@@ -161,19 +161,11 @@ public class GUI {
 		//Initialize the line chart  
 	  
        xyChart.setLayoutX(505);
-       xyChart.setLayoutY(220);
+       xyChart.setLayoutY(240);
        xyChart.setPrefWidth(450);
        xyChart.setPrefHeight(225);
        
-       
-       // Initialize the simVarSilderBox
-       varSliderBox.setLayoutX(750);
-       varSliderBox.setLayoutY(30);
-       varSliderBox.setPrefWidth(250);
-	   varSliderBox.setPrefHeight(200);
-	   
-	   //ButtonsLayout
-	   
+      
 	}
 
 	
