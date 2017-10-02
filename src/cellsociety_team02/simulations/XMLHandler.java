@@ -2,6 +2,7 @@ package cellsociety_team02.simulations;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -90,5 +91,31 @@ public class XMLHandler {
 			}
 		}
 	}
-
+	
+	protected void readSpecificLayout(List<List<Integer>> cellLayout, int gridSize) {
+		NodeList layouts = configDoc.getElementsByTagName("Layout");
+		if(layouts.getLength()<=0) {
+			cellLayout = null;
+			return;
+		}
+		
+		Element layout = (Element) layouts.item(0);
+		NodeList rows = layout.getElementsByTagName("Row");
+		for(int i = 0; i<rows.getLength(); i++) {
+			String rowVals = rows.item(i).getTextContent();
+			if(rowVals.length() != gridSize) {
+				cellLayout = null;
+				return;
+			}
+			
+			List<Integer> row = new ArrayList<>();
+			for(int j = 0; j<rowVals.length(); j++) {
+				row.add(rowVals.charAt(j) - '0');
+			}
+			cellLayout.add(row);
+		}
+		if(cellLayout.size() != gridSize) {
+			cellLayout = null;
+		}
+	}
 }

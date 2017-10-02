@@ -194,7 +194,7 @@ public class ScreenDisplay{
 
 	private void addCellsToGrid() {
 		//Add if's for different types of Grid
-		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors());
+		cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(), sim.specificCellLayout());
 		
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {

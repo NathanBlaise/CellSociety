@@ -19,7 +19,9 @@ public abstract class Simulation {
 	private Map<String, String> gridAttributes;
 	private List<Integer> cellAttributes;
 	private List<Color> colorAttributes;
+	private List<List<Integer>> cellLayout;
 	
+	//accessible by subclasses so they can store modified default values
 	protected String layoutFile;
 	protected String defaultFile;
 	protected List<String> variables;
@@ -38,6 +40,7 @@ public abstract class Simulation {
 	private void initAttributes() {
 		simulationAttributes = new HashMap<>();
 		gridAttributes = new HashMap<>();
+		cellLayout = new ArrayList<>();
 		cellAttributes = new ArrayList<>();
 		colorAttributes = new ArrayList<>();
 		variables = new ArrayList<>();
@@ -49,9 +52,12 @@ public abstract class Simulation {
 		parser.tryToLoadDoc(defaultFile, layoutFile);
 		parser.addValueSet(simulationAttributes, "Attributes");
 		parser.addValueSet(gridAttributes, "Grid");
+		
 		parser.addVariableSet(variables, variableVals, variableMaxs);
 		checkForVariableErrors();
+		
 		parser.addCellSet(cellAttributes, colorAttributes);
+		parser.readSpecificLayout(cellLayout, simulationSize());
 	}
 	
 	/**
@@ -107,6 +113,14 @@ public abstract class Simulation {
 	 */
 	public Color[] cellColors(){
 		return colorAttributes.toArray(new Color[colorAttributes.size()]);
+	}
+	
+	/**
+	 * Returns a copy of the specified cell layout
+	 * @return
+	 */
+	public List<List<Integer>> specificCellLayout(){
+		return new ArrayList<>(cellLayout);
 	}
 	
 	/**

@@ -25,6 +25,14 @@
 			<Name>BURNING</Name>
 			<Value>2</Value>
 		</Cell>
+		
+		<Layout>
+			<Row>00100</Row>
+			<Row>10101</Row>
+			<Row>10220</Row>
+			<Row>02250</Row>
+			<Row>02201</Row>
+		</Layout>
 	</Cells>
 
 	<Grid>

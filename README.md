@@ -15,3 +15,15 @@ Currently, the program is able to handle the following types of user errors in d
 	
 *General Structure
 	1. If duplicated segments are provided, only the first block is considered
+	2. If layout file cannot be turned to a document element, will load working default file instead
+
+####XML Permutations
+* Grids: `<Grid></Grid>`
+	* Grid lines--`<Visible>true|false</Visible>` 
+	* Grid size--`<Size>Integer</Size>`
+	* Grid type--`<Type>Normal|Torodial|Infinite</Type>`
+
+* Cells: `<Cells><Cell></Cell></Cells>`
+	* Specific layout: `<Layout><Row>stringofints</Row><Layout>`
+	* Probability distribution: `<Cell proportion="0-100"></Cell>`
+	* Color: `<Cell color="#hexcode"></Cell>`

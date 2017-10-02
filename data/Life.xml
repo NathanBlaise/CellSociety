@@ -20,10 +20,11 @@
 			<Name>ALIVE</Name>
 			<Value>1</Value>
 		</Cell>
+		
 	</Cells>
 
 	<Grid>
-		<Size>10</Size>
+		<Size>5</Size>
 		<Type>Normal</Type>
 		<Visibile>true</Visibile>
 	</Grid>
