@@ -63,7 +63,7 @@ public class SimVariableSliderBar extends SliderBar {
 			gui.values.put(name, (Double) newVal);
 			valueField.setText(String.format("%.2f", newVal));
 			
-			//this.mySim.simChangeVariable(myIndex,newVal);
+			this.mySim.changeVariables(myIndex,(Double)newVal);
 			
 			
 		});
