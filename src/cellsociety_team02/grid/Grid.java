@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Grid superclass, handles assigning states to cells, placing them in the grid, and updating the
+ * layout
+ * @author benwelton
+ *
+ */
 public class Grid {
 	
 	protected int mySize;
@@ -92,6 +98,7 @@ public class Grid {
 		state = propDistr[rand.nextInt(propDistr.length)];
 	}
 	
+	//generate an integer array to approximate a probability distribution to place states at
 	private int[] generateStateDistr(int[] propState) {
 		correctPercentages(propState);
 		int[] distr = new int[100];
@@ -104,6 +111,7 @@ public class Grid {
 		return distr;
 	}
 		
+	//normalize percentages when the user fails to get them adding to 100
 	private void correctPercentages(int[] propState) {
 		int totalPercent = 0;
 		
@@ -117,6 +125,10 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * Update the grid according to the parameter's rule set
+	 * @param sim
+	 */
 	public void updateCellArray(Simulation sim) {
 		int size = this.getSize();
 		for (int i= 0; i<size;i++) {
@@ -144,10 +156,18 @@ public class Grid {
 		mySize=size;
 	}
 	
+	/**
+	 * Returns the cell array held by the grid
+	 * @return
+	 */
 	public Cell[][] getArr(){
 		return myArray;
 	}
 	
+	/**
+	 * Access the proportion of each cell type in the current count
+	 * @return
+	 */
 	public int[] getCellProportions() {
 		int[] cellProportions = new int[cellAmounts.length];
 		int cellCount = mySize * mySize;

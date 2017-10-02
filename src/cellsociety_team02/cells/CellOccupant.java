@@ -5,6 +5,12 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 
+/**
+ * Superclass for the occupants on the cells. These should hold information about direction and control
+ * motion of the occupants from cell to cell
+ * @author benwelton
+ *
+ */
 public abstract class CellOccupant {
 	private List<Cell> viewableNeighbours;
 	private List<Cell> nonViewableNeighbours;
@@ -29,6 +35,10 @@ public abstract class CellOccupant {
 		return nonViewableNeighbours;
 	}
 	
+	/**
+	 * Moves an occupant to the new location and updates the orientation accordingly
+	 * @param newLocation
+	 */
 	public void move(Cell newLocation) {
 		currentCell.removeOccupant(this);
 		newLocation.addOccupants(this, 1);
@@ -49,6 +59,11 @@ public abstract class CellOccupant {
 		
 	}
 	
+	/**
+	 * Change the direction that the occupant is facing by pointing them towards a new cell.
+	 * Changes the viewable neighbours
+	 * @param newLocation
+	 */
 	public void changeOrientation(Cell newLocation) {
 		if(!currentCell.getNeighbours().contains(newLocation)) return;
 
@@ -65,11 +80,16 @@ public abstract class CellOccupant {
 		viewableNeighbours.add(newLocation);
 	}
 	
+	//edge case when there are no viewable neighbours
 	private void offmapOrientation(Cell newLocation) {
 		initLists();
 		nonViewableNeighbours = newLocation.getNeighbours();
 	}
 	
+	/**
+	 * Must override this method to ensure that an image is specified for a new occupant
+	 * @return
+	 */
 	protected abstract Image drawImage();
 
 	protected int getDesiredOccupancy() {

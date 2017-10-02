@@ -2,6 +2,13 @@ package cellsociety_team02.simulations;
 
 import cellsociety_team02.cells.Cell;
 
+/**
+ * Rock paper scissors simulation that has three types of cells where each beats one and loses to the
+ * other. Colors spawn offspring in empty locations and can take several "hits" before they lose to 
+ * the other cell type
+ * @author benwelton
+ *
+ */
 public class RPSSimulation extends Simulation {
 	private final int EMPTY = 0;
 	private final int ROCK = 1;

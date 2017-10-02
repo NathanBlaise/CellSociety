@@ -11,6 +11,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+/**
+ * Main cell class. Holds a "patch of ground" in the form of a cell background and a cell overlay
+ * that represents a cell occupant. If new shapes were to be implemented, they would be changed here
+ * with sub classes that modify the shape for the patch of ground. Functionally holds data about its
+ * state, its occupants, and its neighbours.
+ * @author benwelton
+ *
+ */
 public class Cell extends StackPane {
 	
 	protected ArrayList<Cell> myNeighbours = new ArrayList<Cell>();
@@ -54,15 +62,29 @@ public class Cell extends StackPane {
 		});
 	}
 	
+	/**
+	 * Return the designated neighbours, as fed in by the grid subclass
+	 * @return
+	 */
 	public List<Cell> getNeighbours(){
 		return myNeighbours;
 	}
 	
+	/**
+	 * Set the surrounding neighbours
+	 * @param neighbours
+	 */
 	public void setMyNeighbours(ArrayList<Cell> neighbours) {
 		myNeighbours = neighbours;
 	}
 	
-	public Cell getNeighbour(int x, int y) {
+	/**
+	 * Return the nearest neighbour in the x, y direction. If none exists, return null
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	protected Cell getNeighbour(int x, int y) {
 		for(Cell cell:this.getNeighbours()) {
 			if(cell.getX() == x && cell.getY() == y) {
 				return cell;
@@ -71,6 +93,11 @@ public class Cell extends StackPane {
 		return null;
 	}
 	
+	/**
+	 * Get the adjacent neighbours. Would eventually be calculated by the grid class and only return
+	 * the corresponding list.
+	 * @return
+	 */
 	public List<Cell> getAdjacentNeighbours(){
 		 myAdjacentNeighbours.clear();
 		if(yPos<myGridSize - 1) myAdjacentNeighbours.add(myGridArray[xPos][yPos+1]); //East
@@ -80,25 +107,45 @@ public class Cell extends StackPane {
 		return myAdjacentNeighbours;
 	}
 
-
-	
+	/**
+	 * Finds a random neighbour from the neighbour set
+	 * @param neighbours
+	 * @return
+	 */
 	public Cell chooseRandomNeighbour(List<Cell> neighbours) {
 		Random rand = new Random();
 		return neighbours.get(rand.nextInt(neighbours.size()));
 	}
 	
+	/**
+	 * Checks if there are any occupants on the cell
+	 * @return
+	 */
 	public boolean isOccupied() {
 		return(occupants.size() > 0);
 	}
 	
+	/**
+	 * Check if the cell is at maximum occupancy
+	 * @return
+	 */
 	public boolean atOccupancy() {
 		return(occupants.size() >= maxOccupancy);
 	}
 	
+	/**
+	 * Return a copy of the cell occupant list
+	 * @return
+	 */
 	public List<CellOccupant> getOccupants(){
 		return new ArrayList<CellOccupant>(occupants);
 	}
 	
+	/**
+	 * Add a specified number of new occupants to the cell or until the cell is at occupancy
+	 * @param newOccupant
+	 * @param number
+	 */
 	public void addOccupants(CellOccupant newOccupant, int number) {
 		if(occupants.size() == 0) cellNowOccupied(newOccupant);
 		for(int i = 0; i<number; i++) {
@@ -107,6 +154,10 @@ public class Cell extends StackPane {
 		}
 	}
 	
+	/**
+	 * Remove a designated occupant and update the image if no occupants remain
+	 * @param occupant
+	 */
 	protected void removeOccupant(CellOccupant occupant) {
 		occupants.remove(occupant);
 		if(occupants.size() <= 0) cellIsEmpty();
@@ -134,6 +185,9 @@ public class Cell extends StackPane {
 		return yPos;
 	}
 	
+	/**
+	 * Change the state of the patch of ground
+	 */
 	public void updateState() {
 		if(stateChanged) {
 			currentState = nextState;
@@ -159,12 +213,11 @@ public class Cell extends StackPane {
 		return currentState;
 	}
 
-	// add an getmyColors() method
 	public Color[] getMyColors() {
 		return myColors;
 	}
 	
-
+	//methods to view basic items held on the patch of ground
 	public double survivalTime() {
 		return survivalVal;
 	}
@@ -181,6 +234,11 @@ public class Cell extends StackPane {
 		replicationVal = newDaysUntil;
 	}
 	
+	/**
+	 * update cell color for infinite grid case
+	 * @param state
+	 * @param colors
+	 */
 	public void updateInfiniteVitals(int state, Color[] colors) {
 		currentState = state;
 		cellBackground.setFill(colors[state]);

@@ -5,8 +5,14 @@ import java.util.List;
 
 import cellsociety_team02.cells.Cell;
 
+/**
+ * Simulation where sharks try to eat fish to survive and fish try and avoid sharks. Fish is eaten
+ * and removed when overlapping a shark. Shark dies if it doesn't eat frequently. Both spawn offspring
+ * at the previous cell after a variable number of days
+ * @author benwelton
+ *
+ */
 //TODO: Find a better way to handle animal death and spawning
-//TODO: Check if implementation works
 public class PredatorPreySimulation extends Simulation {
 	
 	private final int KELP = 0;

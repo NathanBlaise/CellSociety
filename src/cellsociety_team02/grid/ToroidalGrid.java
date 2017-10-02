@@ -7,6 +7,11 @@ import cellsociety_team02.cells.Cell;
 import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
+/**
+ * Subclass of the grid, wraps each edge of the grid to the opposite end.
+ * @author benwelton
+ *
+ */
 public class ToroidalGrid extends Grid{
 
 	public ToroidalGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout,Simulation sim) {

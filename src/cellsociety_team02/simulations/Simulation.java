@@ -9,6 +9,16 @@ import java.util.Map;
 import cellsociety_team02.cells.Cell;
 import javafx.scene.paint.Color;
 
+/**
+ * Superclass for the simulation. This class handles the data storage for parameters of a given
+ * simulation, interacts exclusively with the XML parser, and updates and primes cells according
+ * to a rule algorithm specified by each subclass
+ * 
+ * Every simulation must have a default file that it passes in for configuration as well as default
+ * variable names, vals, and maximums to check new configuration files with
+ * @author benwelton
+ *
+ */
 public abstract class Simulation {
 	private final String DEFAULT_GRID_SIZE = "5";
 	private final String DEFAULT_GRID_TYPE = "Normal";
@@ -86,6 +96,10 @@ public abstract class Simulation {
 		return gridAttributes.getOrDefault("Type", DEFAULT_GRID_TYPE);
 	}
 	
+	/**
+	 * Returns a string of a boolean that dictates if the grid outline should be on or off
+	 * @return
+	 */
 	public String gridVisibility() {
 		String visibility = gridAttributes.getOrDefault("Visibile", DEFAULT_GRID_VISIBILITY);
 		if(visibility.toLowerCase().equals("true") || visibility.toLowerCase().equals("false")) {

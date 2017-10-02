@@ -6,6 +6,12 @@ import java.util.Queue;
 
 import cellsociety_team02.cells.Cell;
 
+/**
+ * Moves two populations of cells around until they are around a specified proportion of same-type
+ * neighbours. Uses a queue to keep track of empty locations to move to
+ * @author benwelton
+ *
+ */
 public class SegregationSimulation extends Simulation{
 	
 	private final int EMPTY = 0;
