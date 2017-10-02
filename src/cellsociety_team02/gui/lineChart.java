@@ -19,6 +19,7 @@ public class lineChart extends LineChart {
 		myY = yAxis;
 		myX.setLabel("Time/Round");
 		myY.setLabel("Percentage");
+		this.setCreateSymbols(false);
 		
 	}
 	

@@ -29,13 +29,16 @@ public class ScreenDisplay{
 	private GridPane myGrid;
 	private Timeline animation = new Timeline();
 	private KeyFrame frame;
+	private String savedFile = null;
+	private Simulation savedSimulation = null;
 	private boolean isStarting = true;
 	private boolean isPaused = true;
 	private int gridSize = 5;
+	private int round = 0;
 	private Simulation sim;
 	private Grid cellArray;
 	private Grid newArray;
-	private int round = 0;
+	
 
 	
 	/**
@@ -60,6 +63,7 @@ public class ScreenDisplay{
 			root.getChildren().add(gui.SlidTittle);
 		}
 		
+		initSaveButton();
 		initResetButton();
 		initStepButton();
 		initGoButton();
@@ -67,6 +71,16 @@ public class ScreenDisplay{
 		initSizeSlider();
 		initSpeedSlider();
 		
+	}
+	
+	private void initSaveButton() {
+		gui.saveButton.setOnAction((event) -> {
+			if(sim != null && cellArray != null) {
+				XMLBuilder saver = new XMLBuilder(cellArray, sim);
+				savedFile = saver.getFile();
+				savedSimulation = sim;
+			}
+		});
 	}
 	
 	private void initResetButton() {
@@ -154,7 +168,10 @@ public class ScreenDisplay{
 		else if (gui.simToLoad.equals("Game of Life")) sim = new LifeSimulation();
 		else if (gui.simToLoad.equals("RPS")) sim = new RPSSimulation();
 		else if (gui.simToLoad.equals("Foraging")) sim = new ForagingSimulation();
-		
+		else if (gui.simToLoad.equals("Saved State") && savedFile != null) {
+			sim = savedSimulation;
+			sim.changeInitConfig(savedFile);
+		}
 		
 		if(root.getChildren().contains(gui.varSliderBox)) {
 			root.getChildren().remove(gui.varSliderBox);
@@ -214,7 +231,8 @@ public class ScreenDisplay{
 	private void resetGrid() {
 		gui.xyChart.getData().clear();
 		gui.xyChart.seriesList.clear();
-
+		round = 0;
+		
 		this.root.getChildren().remove(myGrid);
 		drawNewGrid();
 		this.root.getChildren().add(myGrid);

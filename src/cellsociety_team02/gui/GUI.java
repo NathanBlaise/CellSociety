@@ -41,6 +41,7 @@ public class GUI {
 	protected Button pauseButton;
 	protected Button stepButton;
 	protected Button goButton;
+	protected Button saveButton;
 	protected HBox buttons;
 	
 	protected RadioButton normalButton;
@@ -75,15 +76,17 @@ public class GUI {
 	}
 	
 	protected void init() {
-		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS", "Foraging");
+		ObservableList<String> list = FXCollections.observableArrayList("Fire","Segregation","Game of Life","Predator-Prey", "RPS", "Foraging", "Saved State");
 		paneBox = new VBox(30);
 		
 		goButton = new Button("GO");
 		resetButton = new Button("RESET");
 		stepButton = new Button("STEP");
 		pauseButton = new Button("PLAY");
+		saveButton = new Button("SAVE");
 		
 		buttons = new HBox(10);
+		buttons.getChildren().add(saveButton);
 		buttons.getChildren().add(resetButton);
 		buttons.getChildren().add(pauseButton);
 		buttons.getChildren().add(stepButton);
