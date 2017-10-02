@@ -1,10 +1,17 @@
 package cellsociety_team02.gui;
 
-import java.io.IOException;
+import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,7 +23,7 @@ public class XMLBuilder {
 	private Grid myGrid;
 	private Document configDoc;
 	private Simulation sim;
-	private String file;
+	private String file = "data/test.xml";
 	
 	public XMLBuilder(Grid grid, Simulation sim) {
 		this.myGrid = grid;
@@ -49,10 +56,6 @@ public class XMLBuilder {
 		variables = setupVariables(variables);
 		setupCells(cells);
 		setupGrid(grid);
-		System.out.println(attributes);
-		System.out.println(variables);
-		System.out.println(cells);
-		System.out.println(grid);
 		
 		root.appendChild(attributes);
 		root.appendChild(variables);
@@ -110,8 +113,23 @@ public class XMLBuilder {
 		grid.appendChild(visible);
 	}
 	
+	//TODO: Spend more time dealing with error handling here!!
 	private void createFile() {
-		System.out.println(configDoc);
+		//Credit to https://www.journaldev.com/1112/how-to-write-xml-file-in-java-dom-parser
+		//for explanation of how to print to file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(configDoc);
+			StreamResult writeFile = new StreamResult(new File(file));
+			transformer.transform(source, writeFile);
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected String getFile() {

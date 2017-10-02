@@ -1,1 +1,29 @@
-<Simulation></Simulation>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Simulation>
+<Attributes/>
+<Variables>
+<lifeLength maximum="10.0" name="lifeLength" value="10.0"/>
+</Variables>
+<Cells>
+<Layout>
+<Row>3321313323332</Row>
+<Row>2313233123322</Row>
+<Row>3333131223113</Row>
+<Row>3131133123131</Row>
+<Row>1331321223133</Row>
+<Row>1232233313321</Row>
+<Row>3333231112132</Row>
+<Row>3332233311232</Row>
+<Row>2232122122233</Row>
+<Row>1321221223131</Row>
+<Row>3132112333221</Row>
+<Row>1232211232221</Row>
+<Row>3133222223131</Row>
+</Layout>
+</Cells>
+<Grid>
+<Size>10</Size>
+<Type>Normal</Type>
+<Visibile>true</Visibile>
+</Grid>
+</Simulation>
