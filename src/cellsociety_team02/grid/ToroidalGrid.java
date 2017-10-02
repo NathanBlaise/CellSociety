@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cellsociety_team02.cells.Cell;
+import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
 public class ToroidalGrid extends Grid{
 
-	public ToroidalGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
-		super(size,propState,colors, cellLayout);
+	public ToroidalGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout,Simulation sim) {
+		super(size,propState,colors, cellLayout,sim);
 	}
 	
 	@Override
@@ -39,4 +40,17 @@ public class ToroidalGrid extends Grid{
 		return x;
 	}
 	
+	@Override
+	protected void storeAdjacentNeighbours(Cell cell) {
+		ArrayList<Cell> cellNeighbours = new ArrayList<Cell>();
+		if(cell.getY() == mySize-1) cellNeighbours.add(myArray[cell.getX()][0]); //East
+		else cellNeighbours.add(myArray[cell.getX()][cell.getY()+1]);
+		if(cell.getY() == 0) cellNeighbours.add(myArray[cell.getX()][mySize-1]); //West
+		else cellNeighbours.add(myArray[cell.getX()][cell.getY()-1]);
+		if(cell.getX() == mySize - 1) cellNeighbours.add(myArray[0][cell.getY()]); //South
+		else cellNeighbours.add(myArray[cell.getX()+1][cell.getY()]);
+		if(cell.getX() == 0) cellNeighbours.add(myArray[mySize-1][cell.getY()]); //North
+		else cellNeighbours.add(myArray[cell.getX()-1][cell.getY()]);
+		cell.setMyNeighbours(cellNeighbours);
+	}
 }

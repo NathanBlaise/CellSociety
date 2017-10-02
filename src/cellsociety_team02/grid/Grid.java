@@ -1,7 +1,7 @@
 package cellsociety_team02.grid;
 
 import cellsociety_team02.cells.*;
-import cellsociety_team02.simulations.Simulation;
+import cellsociety_team02.simulations.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class Grid {
 		mySize = 0;
 	}
 			
-	public Grid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
+	public Grid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout, Simulation sim) {
 		mySize = size;
 		myArray = new Cell[size][size];
 		cellAmounts = new int[colors.length];
@@ -35,7 +35,10 @@ public class Grid {
 		//store neighbours
 		for(int i=0; i<size; i++) {
 			for(int k=0; k<size; k++) {
-				storeNeighbours(myArray[i][k]);
+				if(sim instanceof FireSimulation || sim instanceof PredatorPreySimulation) {
+					storeAdjacentNeighbours(myArray[i][k]);
+				}
+				else storeNeighbours(myArray[i][k]);
 			}
 		}
 	}
@@ -73,6 +76,15 @@ public class Grid {
 			}
 		}
 		cellNeighbours.remove(myArray[cell.getX()][cell.getY()]);
+		cell.setMyNeighbours(cellNeighbours);
+	}
+	
+	protected void storeAdjacentNeighbours(Cell cell) {
+		ArrayList<Cell> cellNeighbours = new ArrayList<Cell>();
+		if(cell.getY()<mySize - 1) cellNeighbours.add(myArray[cell.getX()][cell.getY()+1]); //East
+		if(cell.getY()>0) cellNeighbours.add(myArray[cell.getX()][cell.getY()-1]); //West
+		if(cell.getX()<mySize - 1) cellNeighbours.add(myArray[cell.getX()+1][cell.getY()]); //South
+		if(cell.getX()>0) cellNeighbours.add(myArray[cell.getX()-1][cell.getY()]); //North
 		cell.setMyNeighbours(cellNeighbours);
 	}
 

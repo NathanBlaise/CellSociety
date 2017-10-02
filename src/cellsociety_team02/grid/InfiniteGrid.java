@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Stack;
 
 import cellsociety_team02.cells.Cell;
+import cellsociety_team02.simulations.Simulation;
 import javafx.scene.paint.Color;
 
 public class InfiniteGrid extends Grid{
@@ -11,12 +12,13 @@ public class InfiniteGrid extends Grid{
 	private Stack<Cell> outsideCells;
 	private int[] myPropState;
 	private Color[] myColors;
+	private Simulation mySim;
 	
-	public InfiniteGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout) {
-		super(size+2,propState,colors, cellLayout);
+	public InfiniteGrid(int size, int[] propState, Color[] colors, List<List<Integer>> cellLayout, Simulation sim) {
+		super(size+2,propState,colors, cellLayout, sim);
 		myColors = colors;
 		myPropState = propState;
-		
+		mySim = sim;
 	}
 	
 	@Override
@@ -47,7 +49,7 @@ public class InfiniteGrid extends Grid{
 		}
 		while(!outsideCells.isEmpty()) {
 			if(outsideCells.pop().getCurrentState() != 0) { //Current State or NextState?
-				Grid updatedGrid = new InfiniteGrid(mySize-1,myPropState,myColors,null);
+				Grid updatedGrid = new InfiniteGrid(mySize,myPropState,myColors,null,mySim);
 				for(int i=0; i<mySize; i++) {
 					for(int k=0; k<mySize; k++) {
 						updatedGrid.myArray[i+1][k+1].updateInfiniteVitals(myArray[i][k].getCurrentState(), myColors);
