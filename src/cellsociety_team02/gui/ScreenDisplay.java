@@ -79,7 +79,13 @@ public class ScreenDisplay{
 		gui.stepButton.setOnAction((event) -> {
 			cellArray.updateCellArray(sim);
 			updateSeries();
-			
+			if(gui.infiniteButton.isSelected()) {
+				newArray = ((InfiniteGrid) cellArray).expandGridArray();
+				if(newArray.getSize()!=0) {
+					cellArray = (InfiniteGrid) newArray;
+					drawExpandedGrid();
+				}
+			}
 		});
 	}
 	
@@ -219,6 +225,7 @@ public class ScreenDisplay{
 	}
 	
 	private void updateInfiniteCellsToGrid() {
+		System.out.println(cellArray.getArr().length + " Vs. "+gridSize);
 		for (int i= 0; i<cellArray.getArr().length;i++) {
 			for (int j = 0; j<cellArray.getArr().length; j++) {
 				Cell cell = cellArray.getArr()[i][j];
@@ -231,9 +238,9 @@ public class ScreenDisplay{
 	}
 
 	private void addCellsToGrid() {
-		if(gui.normalButton.isSelected()) cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
-		else if(gui.toroidalButton.isSelected()) cellArray = new ToroidalGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
-		else if(gui.infiniteButton.isSelected()) cellArray = new InfiniteGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout());
+		if(gui.normalButton.isSelected()) cellArray = new Grid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout(),sim);
+		else if(gui.toroidalButton.isSelected()) cellArray = new ToroidalGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout(),sim);
+		else if(gui.infiniteButton.isSelected()) cellArray = new InfiniteGrid(gridSize, sim.cellFrequencies(), sim.cellColors(),sim.specificCellLayout(),sim);
 		for (int i= 0; i<gridSize;i++) {
 			for (int j = 0; j<gridSize; j++) {
 				Cell cell = new Cell();
