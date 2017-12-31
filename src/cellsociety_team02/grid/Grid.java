@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Grid superclass, handles assigning states to cells, placing them in the grid, and updating the
  * layout
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class Grid {

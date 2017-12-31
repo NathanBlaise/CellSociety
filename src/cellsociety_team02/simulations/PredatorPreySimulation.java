@@ -9,7 +9,7 @@ import cellsociety_team02.cells.Cell;
  * Simulation where sharks try to eat fish to survive and fish try and avoid sharks. Fish is eaten
  * and removed when overlapping a shark. Shark dies if it doesn't eat frequently. Both spawn offspring
  * at the previous cell after a variable number of days
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 //TODO: Find a better way to handle animal death and spawning

@@ -16,7 +16,7 @@ import javafx.scene.shape.Shape;
  * that represents a cell occupant. If new shapes were to be implemented, they would be changed here
  * with sub classes that modify the shape for the patch of ground. Functionally holds data about its
  * state, its occupants, and its neighbours.
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class Cell extends StackPane {

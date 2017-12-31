@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 /**
  * Subclass of the grid, expands in all four directions by one cell if an active cell is found at the
  * edge
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class InfiniteGrid extends Grid{

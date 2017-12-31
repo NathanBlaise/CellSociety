@@ -6,7 +6,7 @@ import cellsociety_team02.cells.Cell;
 
 /**
  * Game of life famous simulation. 
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class LifeSimulation extends Simulation {

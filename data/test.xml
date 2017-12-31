@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Simulation>
 <Attributes>
-<Type>RPS</Type>
+<Type>Segregation</Type>
 </Attributes>
 <Variables>
-<lifeLength maximum="10.0" name="lifeLength" value="10.0"/>
+<percentOfNeighbours maximum="1.0" name="percentOfNeighbours" value="0.75"/>
 </Variables>
 <Cells>
-<Cell color="#FDFEFE" proportion="10"/>
+<Cell color="#FDFEFE" proportion="30"/>
 <Cell color="#E74C3C" proportion="30"/>
-<Cell color="#3498DB" proportion="30"/>
-<Cell color="#239B56" proportion="30"/>
+<Cell color="#3498DB" proportion="20"/>
 <Layout>
-<Row>1231121133</Row>
-<Row>1111323313</Row>
-<Row>1111232122</Row>
-<Row>3111211222</Row>
-<Row>3113232112</Row>
-<Row>3311323112</Row>
-<Row>2211221132</Row>
-<Row>2222223123</Row>
-<Row>2222222232</Row>
-<Row>3213111112</Row>
+<Row>221212121122222111</Row>
+<Row>111110011002220111</Row>
+<Row>100200111102220011</Row>
+<Row>002221111000222222</Row>
+<Row>222201111100222222</Row>
+<Row>222011211100220222</Row>
+<Row>222001111100221000</Row>
+<Row>222211100000000011</Row>
+<Row>222010000220000011</Row>
+<Row>000210000000100011</Row>
+<Row>000100000000110011</Row>
+<Row>001000000001100111</Row>
+<Row>001000001100001111</Row>
+<Row>001000111000011111</Row>
+<Row>000001110000011101</Row>
+<Row>110001100001101002</Row>
+<Row>110001110121120211</Row>
+<Row>111211112120121222</Row>
 </Layout>
 </Cells>
 <Grid>
-<Size>10</Size>
+<Size>18</Size>
 <Type>Normal</Type>
-<Visibile>true</Visibile>
+<Visibile>false</Visibile>
 </Grid>
 </Simulation>

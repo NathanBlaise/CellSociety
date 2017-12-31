@@ -7,7 +7,7 @@ import cellsociety_team02.cells.*;
 /**
  * Simulation that models a population of trees facing a fire that spreads with a certain percent
  * likelihood at each time step
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class FireSimulation extends Simulation{

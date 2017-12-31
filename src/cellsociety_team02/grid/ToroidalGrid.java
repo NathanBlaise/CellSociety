@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Subclass of the grid, wraps each edge of the grid to the opposite end.
- * @author benwelton
+ * @author benwelton nathan.lewis
  *
  */
 public class ToroidalGrid extends Grid{
